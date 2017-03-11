@@ -1,0 +1,25 @@
+title Menu de Usuario - Registrarse
+note over Página Web, Usuario, Cliente, Server, Base de Datos
+Inicio del Proceso
+end note
+
+Usuario->Cliente: Pedir Registrarse
+Cliente->Página Web: Abrir pagina web
+
+Página Web->Usuario: Pedir Datos
+Usuario->Página Web: Introducir Datos
+Página Web->Base de Datos: Check Credenciales
+
+alt Credenciales Incorrectas
+loop Mientras Incorrectas
+Base de Datos->Página Web: Comunicar Incorrecto
+Página Web->Usuario: Volver a pedir
+note over Usuario: Si quiere aqui puede salir
+Usuario->Página Web: Volver a introducir
+Página Web->Base de Datos: Volver a Comprobar
+end
+else Credenciales Correctas
+Base de Datos->Base de Datos: Almacenar
+Base de Datos->Página Web: Comunicar Correcto
+Página Web->Usuario: Informar
+end

@@ -1,0 +1,67 @@
+title Menú de Usuario - Comenzar Partida Nueva
+
+note over Usuario, Cliente, Server, Base de Datos
+    Inicio de la actividad.
+end note
+
+Usuario->Cliente: Iniciar Cliente
+Cliente->Usuario: Pedir Credenciales
+
+alt Login Usuario
+Usuario->Cliente: Introducir Credenciales
+Cliente->Server: Mandar Credenciales
+Server->Base de Datos: Comprobar Credenciales
+Base de Datos->Server: Comunicar Resultado
+Server->Cliente: Comunicar Resultado
+
+alt Credenciales Incorrectas
+loop Mientras Incorrecto
+Cliente->Usuario: Volver a pedir
+Usuario->Cliente: Introducir de nuevo
+Cliente->Server: Pasar credenciales
+Server->Base de Datos: Comprobar
+Base de Datos->Server: Comunicar resultado
+Server->Cliente: Comunicar resultado
+end
+else Credenciales Correctas
+Cliente->Usuario: Informar
+end
+else Entrar como Invitado
+Usuario->Cliente: Login como Invitado
+Cliente->Server: Comunicar Invitado
+Server->Server: Asignar Invitado
+Server->Cliente: Comunicar Satisfactorio
+Cliente->Usuario: Informar
+end
+Usuario->Cliente: Boton Nueva Partida
+Cliente->Usuario: Pedir Referencia Partida
+Usuario->Cliente: Introducir nueva Ref.
+Cliente->Server: Mandar Ref.
+Server->Server: Check referencia existe.
+alt Referencia existe
+loop while existe
+Server->Cliente: Comunicar existe
+Cliente->Usuario: Volver a pedir
+note over Usuario: Aqui se le ofrecera si quiere una aleatoria.
+Usuario->Cliente: Volver a introducir
+Cliente->Server: Mandar
+Server->Server: Comprobar de nuevo
+end
+else Referencia no existe
+Server->Server: Juego nuevo con referencia
+Server->Cliente: Comunicar todo correcto
+Cliente-->Usuario: Informar
+end
+
+Cliente->Usuario: Pedir #Jugadores
+Usuario->Cliente: Introducir #Jugadores
+Cliente->Server: Mandar #Jugadores
+
+Server->Cliente: Comunicar en espera de todos
+Cliente-->Usuario: Informar
+
+Cliente->Server: Esperando respuesta
+Server->Server: Esperando a que se unan todos
+note over Usuario, Cliente, Server, Base de Datos
+    El resto continua en el caso de uso de unirse a una partida ya existente.
+end note

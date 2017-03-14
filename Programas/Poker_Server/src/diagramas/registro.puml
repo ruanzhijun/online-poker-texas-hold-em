@@ -1,7 +1,32 @@
 @startuml
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+title Menu de Usuario - Registro
+entity Web
+actor User
+entity Cliente
+entity Server
+database Database
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+User->Cliente: Pedir registrarse
+Cliente->Web: Abrir pagina web
+
+Web->User: Pedir datos
+User->Web: Introducir datos
+
+Web->Database: Check Credenciales
+
+alt Credenciales incorrectas
+    loop Mientras Incorrecto
+        Database->Web: Comunicar incorrecto
+        Web->User: Volver a pedir
+        note right: Aqui puede salir
+
+        User->Web: Volver a introducir
+        Web->Database: Volver a comprobar
+    end
+else Credenciales Correctas
+    Database->Web: Comunicar correcto
+    Web->Database: Almacenar
+    Database->Web: Resultado
+    Web->User: Informar
+end
 @enduml

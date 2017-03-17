@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="16cf64e3-4fe0-446a-87f9-2fb01bfb67d2" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/diagramas/nueva_partida.puml" afterPath="$PROJECT_DIR$/src/diagramas/nueva_partida.puml" />
-    </list>
+    <list default="true" id="16cf64e3-4fe0-446a-87f9-2fb01bfb67d2" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -19,11 +16,21 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="nueva_partida.puml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="nueva_partida.puml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/diagramas/nueva_partida.puml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="29" column="19" lean-forward="false" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
+            <state relative-caret-position="0">
+              <caret line="0" column="9" lean-forward="true" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="unirse_partida.puml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/diagramas/unirse_partida.puml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="76">
+              <caret line="12" column="66" lean-forward="false" selection-start-line="12" selection-start-column="66" selection-end-line="12" selection-end-column="66" />
               <folding />
             </state>
           </provider>
@@ -51,6 +58,7 @@
       <list>
         <option value="$PROJECT_DIR$/src/diagramas/registro.puml" />
         <option value="$PROJECT_DIR$/src/diagramas/nueva_partida.puml" />
+        <option value="$PROJECT_DIR$/src/diagramas/unirse_partida.puml" />
       </list>
     </option>
   </component>
@@ -538,12 +546,12 @@
       <workItem from="1489515453200" duration="307000" />
       <workItem from="1489521216580" duration="1320000" />
       <workItem from="1489586824866" duration="2315000" />
-      <workItem from="1489752465140" duration="786000" />
+      <workItem from="1489752465140" duration="1652000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4728000" />
+    <option name="totallyTimeSpent" value="5594000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -665,8 +673,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/diagramas/nueva_partida.puml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="29" column="19" lean-forward="false" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
+        <state relative-caret-position="0">
+          <caret line="0" column="9" lean-forward="true" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/diagramas/unirse_partida.puml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="12" column="66" lean-forward="false" selection-start-line="12" selection-start-column="66" selection-end-line="12" selection-end-column="66" />
           <folding />
         </state>
       </provider>

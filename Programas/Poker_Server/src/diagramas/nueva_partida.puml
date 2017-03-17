@@ -10,37 +10,6 @@ Usuario->Cliente: Iniciar Cliente
 
 activate Cliente
 Cliente->Usuario: Pedir Credenciales
-
-alt Login Usuario
-Usuario->Cliente: Introducir Credenciales
-Cliente->Server: Mandar Credenciales
-activate Server
-Server->Database: Comprobar Credenciales
-activate Database
-Database->Server: Comunicar Resultado
-Server->Cliente: Comunicar Resultado
-
-alt Credenciales Incorrectas
-loop Mientras Incorrecto
-Cliente->Usuario: Volver a pedir
-Usuario->Cliente: Introducir de nuevo
-Cliente->Server: Pasar credenciales
-Server->Database: Comprobar
-Database->Server: Comunicar resultado
-deactivate Database
-Server->Cliente: Comunicar resultado
-end
-else Credenciales Correctas
-Cliente->Usuario: Informar
-end
-else Entrar como Invitado
-Usuario->Cliente: Login como Invitado
-Cliente->Server: Comunicar Invitado
-Server->Server: Asignar Invitado
-Server->Cliente: Comunicar Satisfactorio
-Cliente->Usuario: Informar
-end
-
 Usuario->Cliente: Boton Nueva Partida
 Cliente->Usuario: Pedir Referencia Partida
 Usuario->Cliente: Introducir nueva Ref.

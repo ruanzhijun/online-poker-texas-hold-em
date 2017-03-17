@@ -5,13 +5,18 @@ entity Cliente
 entity Server
 database Database
 
+activate Usuario
 Usuario->Cliente: Iniciar Cliente
+
+activate Cliente
 Cliente->Usuario: Pedir Credenciales
 
 alt Login Usuario
 Usuario->Cliente: Introducir Credenciales
 Cliente->Server: Mandar Credenciales
+activate Server
 Server->Database: Comprobar Credenciales
+activate Database
 Database->Server: Comunicar Resultado
 Server->Cliente: Comunicar Resultado
 
@@ -22,6 +27,7 @@ Usuario->Cliente: Introducir de nuevo
 Cliente->Server: Pasar credenciales
 Server->Database: Comprobar
 Database->Server: Comunicar resultado
+deactivate Database
 Server->Cliente: Comunicar resultado
 end
 else Credenciales Correctas
@@ -44,10 +50,17 @@ alt Referencia existe
 loop while existe
 Server->Cliente: Comunicar existe
 Cliente->Usuario: Volver a pedir
-rnote over Usuario: Ofrecer una aleatoria.
+
+alt User acepta Ref. Aleatoria
+Usuario->Cliente: Aceptar Aleatoria
+Cliente->Server: Comunicar Aleatoria
+Server->Server: Asignar Ref. Random
+else Introducir Manual
+
 Usuario->Cliente: Volver a introducir
 Cliente->Server: Mandar
 Server->Server: Comprobar de nuevo
+end
 end
 else Referencia no existe
 Server->Server: Juego nuevo con referencia

@@ -6,8 +6,10 @@ entity Cliente
 entity Server
 database Database
 
+activate Usuario
 alt Login Usuario
 Usuario->Cliente: Introducir Credenciales
+activate Cliente
 Cliente->Server: Mandar Credenciales
 activate Server
 Server->Database: Comprobar Credenciales

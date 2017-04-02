@@ -1,0 +1,13 @@
+@startuml
+title: Status Thread
+activate Client
+activate Server
+
+Client -> Server: Menu option ping
+Server -> Client: Game's Phase
+Server -> Client: Current ID turn
+Server -> Client: Common pool
+
+deactivate Client
+deactivate Server
+@enduml

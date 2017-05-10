@@ -51,4 +51,30 @@ public class Connection {
             ex.printStackTrace();
         }
     }
+    
+    /**
+     * Gets the menu option desired by the client.
+     * @return Int. Option to be used in the menu. -1 error.
+     */
+    public static int menu() {
+        try {
+            return ois.readInt();
+        } catch (IOException ex) { ex.printStackTrace(); }
+        
+        return -1;
+    }
+    
+    public static String reference() {
+        try {
+            return ois.readUTF();
+        } catch(IOException ex) { ex.printStackTrace(); }
+        
+        return null;
+    }
+    
+    public static void sendResult(boolean result) {
+        try {
+            oos.writeBoolean(result);
+        } catch(IOException ex) { ex.printStackTrace(); }
+    }
 }

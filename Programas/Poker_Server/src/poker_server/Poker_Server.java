@@ -1,6 +1,5 @@
 package poker_server;
 
-import entities.Games;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -23,23 +22,13 @@ public class Poker_Server {
             ServerSocket serverSocket = new ServerSocket(PORT);
         
             while(true) {
-                // Primero pillar comprobar si crea juego o se une.
-            
-                // Si lo crea, crearlo.
-            
-                // Si se une, comprobar si existe.
-            
-                System.out.println(Games.create("SU"));
-                System.out.println("Game exists: " +Games.check("SU"));
-                
                 socket = serverSocket.accept(); 
-                System.out.println("Connection Accepted");
+                System.out.println("Connection Accepted.");
                 
                 Connection.open(socket);
-                System.out.println("Connection Opened");
                 
-                Connection.close();
-                System.out.println("Connection Closed");
+                Runnable menu = () -> { Menu.selector(); }; // New Thread where it does its operations.
+                new Thread(menu).start();
             }
         }catch(IOException ex) {
             ex.printStackTrace();

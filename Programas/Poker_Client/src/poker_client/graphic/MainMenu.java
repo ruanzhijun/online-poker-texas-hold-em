@@ -5,7 +5,7 @@ import network.Connection;
 /**
  * Client's MainMenu Window.
  * @author Mario Codes Sánchez
- * @version 0.01
+ * @version 0.0.1 Just created, setting basics.
  */
 public class MainMenu extends javax.swing.JFrame {
 
@@ -194,7 +194,7 @@ public class MainMenu extends javax.swing.JFrame {
             public void run() {
                 // new MainMenu().setVisible(true);
                 System.out.println("Connection Opened");                
-                boolean result = Connection.createGame("SU");
+                boolean result = Connection.createGame("SU", 1);
                 System.out.println("Result is: " +result);
             }
         });

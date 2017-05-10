@@ -10,13 +10,13 @@ import java.net.Socket;
 /**
  * Static class to encapsulate everything related to Client's connection management.
  * @author Mario Codes
- * @version 0.1 Created. Doing the basics.
+ * @version 0.0.2 Connection achieved. Working on create_game.
  */
 public class Connection {
     private static final int PORT = 8143;
     private static final String SERVER_IP = "127.0.0.1";
     
-    // Check them! They need to be the same as the server.
+    // Check them! They need to be the same as in the server.
     private static final int CREATE_GAME = 1; // First Menu, before the game starts.
     private static final int JOIN_GAME = 2;
     private static final int BET = 4; // Second Menu, once the game's started.
@@ -47,6 +47,7 @@ public class Connection {
     
     /**
      * Closes the oppened (and only oppened) data streams and socket.
+     * The client is the one who should end the communication.
      * todo: think about setting this in a shutdown hook.
      */
     private static void close() {
@@ -60,28 +61,20 @@ public class Connection {
     }
     
     /**
-     * Sends the desired option so the server knows what to do.
-     * @param option int. Number of the option we want to execute.
-     */
-    public static void menu(int option) {
-        try {
-            oos.writeInt(option);
-            oos.flush();
-        }catch(IOException ex) { ex.printStackTrace(); }
-    }
-    
-    /**
-     * Creates a new game with the reference.
+     * Creates a new game with the reference and number of players specified.
+     * The server will check if the game already exists.
      * @param reference String. Reference to ID the game.
+     * @param totalPlayers int. Total number of players there will be in our game.
      * @return Boolean. Status of the operation, true if everything went well. False if ID in use.
      */
-    public static boolean createGame(String reference) {
+    public static boolean createGame(String reference, int totalPlayers) {
         boolean status = false;
         
         try {
             open();
             oos.writeInt(CREATE_GAME);
             oos.writeUTF(reference);
+            oos.writeInt(totalPlayers);
             oos.flush();
             
             status = ois.readBoolean();

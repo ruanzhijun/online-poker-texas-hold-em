@@ -3,7 +3,7 @@ package entities;
 /**
  * Representation of a player.
  * @author Mario Codes
- * @version 0.1
+ * @version 0.0.1 Just created. Setting the basics.
  */
 public class Player {
     // private Hand hand = new Hand();

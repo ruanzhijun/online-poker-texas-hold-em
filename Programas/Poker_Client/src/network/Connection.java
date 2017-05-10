@@ -63,6 +63,10 @@ public class Connection {
     /**
      * Creates a new game with the reference and number of players specified.
      * The server will check if the game already exists.
+     * Sends menu option.
+     * Sends reference of the game.
+     * Sends total number of Players. Flush all.
+     * Receives result of the operation.
      * @param reference String. Reference to ID the game.
      * @param totalPlayers int. Total number of players there will be in our game.
      * @return Boolean. Status of the operation, true if everything went well. False if ID in use.
@@ -75,6 +79,30 @@ public class Connection {
             oos.writeInt(CREATE_GAME);
             oos.writeUTF(reference);
             oos.writeInt(totalPlayers);
+            oos.flush();
+            
+            status = ois.readBoolean();
+            close();
+        } catch(IOException ex) { ex.printStackTrace(); }
+        
+        return status;
+    }
+    
+    /**
+     * Joins this player to a previously created game.
+     * Sends menu option.
+     * Sends game reference. Flush them.
+     * Receives status of the operation.
+     * @param reference
+     * @return 
+     */
+    public static boolean joinGame(String reference) {
+        boolean status = false;
+        
+        try {
+            open();
+            oos.writeInt(JOIN_GAME);
+            oos.writeUTF(reference);
             oos.flush();
             
             status = ois.readBoolean();

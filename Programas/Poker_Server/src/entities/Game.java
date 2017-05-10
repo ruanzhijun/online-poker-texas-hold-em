@@ -12,7 +12,7 @@ public class Game {
     
     private final String REFERENCE; // Own ID to handle multi-matches.
     
-    private int totalPlayers = 0, joinedPlayers = 0; // Number of players setted by user, number of players joined until now. The game will start when the second equals the first.
+    private int totalPlayers = 0, joinedPlayers = 1; // Number of players setted by user, number of players joined until now. The game will start when the second equals the first.
     
     private int chips_pool = 0; // Chips betted in the actual round by all players. The winner gets it all.
 

@@ -194,7 +194,7 @@ public class MainMenu extends javax.swing.JFrame {
             public void run() {
                 // new MainMenu().setVisible(true);
                 System.out.println("Connection Opened");                
-                boolean result = Connection.createGame("SU", 1);
+                boolean result = Connection.joinGame("SU2");
                 System.out.println("Result is: " +result);
             }
         });

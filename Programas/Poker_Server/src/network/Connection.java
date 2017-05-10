@@ -1,4 +1,4 @@
-package poker_client.graphic;
+package network;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,38 +8,37 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 /**
- * Static class to encapsulate everything related to Client's connection management.
+ * Everything related to the Server's connection and network.
  * @author Mario Codes
- * @version 0.1
+ * @version 0.0.2 First methods. Open and close the connection.
  */
 public class Connection {
-    private static final int PORT = 8143;
-    private static final String SERVER_IP = "127.0.0.1";
-    
     private static Socket socket = null;
     
     private static InputStream in = null;
     private static OutputStream out = null;
-    private static ObjectOutputStream oos = null;
     private static ObjectInputStream ois = null;
+    private static ObjectOutputStream oos = null;
     
     /**
-     * Opens the connection to send and receive data.
+     * Opens the connection and sets the static channels to be used.
+     * @param socket Socket opened by main.
      */
-    public static void open() {
+    public static void open(Socket socket) {
         try {
-            socket = new Socket(SERVER_IP, PORT);
-            
+            Connection.socket = socket;
             in = socket.getInputStream();
             out = socket.getOutputStream();
-            ois = new ObjectInputStream(in);
             oos = new ObjectOutputStream(out);
-        } catch(IOException ex) { ex.printStackTrace(); }
+            ois = new ObjectInputStream(in);
+        }catch(IOException ex) {
+            ex.printStackTrace();
+        }
     }
     
     /**
-     * Closes the oppened (and only oppened) data streams and socket.
-     * todo: think about setting this in a shutdown hook.
+     * Closes a connection if is opened.
+     * ATENTION! Shouldn't really use it until close the server. The Client should disconnect.
      */
     public static void close() {
         try {
@@ -48,6 +47,8 @@ public class Connection {
             if(out != null) out.close();
             if(in != null) in.close();
             if(socket != null) socket.close();
-        }catch(IOException ex) { ex.printStackTrace(); }
+        }catch(IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

@@ -1,51 +1,46 @@
 package poker_server;
 
-import entities.Game;
+import entities.Games;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
+import network.Connection;
 
 /**
- * Multithreading Server. It's able to serve multiple hosts simultaneously.
+ * Multithread Server. It's able to serve multiple hosts simultaneously.
  * @author Mario Codes
- * @version 0.0.1
+ * @version 0.0.1 Just created and doing basics.
  */
 public class Poker_Server {
-    private static final int PUERTO = 8143;
+    private static final int PORT = 8143; // todo: It should ask it when first run.
     private static Socket socket = null;
-    private static final HashMap GAMES = new <String, Game>HashMap();
-    
-    private static final int CREATE_GAME = 1; // First Menu, before the game starts.
-    private static final int JOIN_GAME = 2;
-    
-    private static final int BET = 1; // Second Menu, once the game´s started.
-    private static final int GET_CARDS_COMMON = 2;
-    private static final int GET_CARDS_PRIVATE = 3;
-    private static final int RETIRE = 4;
-    
-    // private static Juego juego = new Juego();
     
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         try {
-            ServerSocket serverSocket = new ServerSocket(PUERTO);
+            ServerSocket serverSocket = new ServerSocket(PORT);
         
-            // Primero pillar comprobar si crea juego o se une.
+            while(true) {
+                // Primero pillar comprobar si crea juego o se une.
             
-            // Si lo crea, crearlo.
+                // Si lo crea, crearlo.
             
-            // Si se une, comprobar si existe.
-            /*
-            while(!Game.isFinalizado()) {
-                socket = serverSocket.accept(); 
+                // Si se une, comprobar si existe.
+            
+                System.out.println(Games.create("SU"));
+                System.out.println("Game exists: " +Games.check("SU"));
                 
-                if(!juego.isComenzado()) accionesMenu();
-                else accionesJuego();
+                socket = serverSocket.accept(); 
+                System.out.println("Connection Accepted");
+                
+                Connection.open(socket);
+                System.out.println("Connection Opened");
+                
+                Connection.close();
+                System.out.println("Connection Closed");
             }
-            */
         }catch(IOException ex) {
             ex.printStackTrace();
         }

@@ -190,7 +190,12 @@ public class MainMenu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainMenu().setVisible(true);
+                // new MainMenu().setVisible(true);
+                System.out.println("Connection ready");
+                Connection.open();
+                System.out.println("Connection Opened");
+                // Connection.closeConnection();
+                // System.out.println("Connection Closed");
             }
         });
     }

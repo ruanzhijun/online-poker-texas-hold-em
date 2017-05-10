@@ -81,6 +81,18 @@ public class Connection {
     }
     
     /**
+     * Gets the reference of a game.
+     * @return String. Reference of the game.
+     */
+    public static String getReference() {
+        try {
+            return ois.readUTF();
+        } catch(IOException ex) { ex.printStackTrace(); }
+        
+        return null;
+    }
+    
+    /**
      * Sends the result of an operation through the socket. Generic method.
      * @param result boolean. Result of the operation we want to inform the user.
      */

@@ -31,8 +31,14 @@ public class Menu {
         Connection.sendResult(result);
     }
     
+    /**
+     * Join a previously created game.
+     * Does check if the game exists, adds a player to it and sends the result of the operation.
+     */
     private static void joinGame() {
-        ArrayList parameters = Connection.gameParemeters();
+        String reference = Connection.getReference();
+        boolean result = Games.join(reference);
+        Connection.sendResult(result);
     }
     
     /**
@@ -47,6 +53,7 @@ public class Menu {
                 createGame();
                 break;
             case JOIN_GAME:
+                joinGame();
                 break;
             case 4: case 5: case 6: case 7:
                 break;

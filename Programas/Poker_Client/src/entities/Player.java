@@ -1,4 +1,4 @@
-package poker_client.graphic;
+package entities;
 
 /**
  * Representation of a player.

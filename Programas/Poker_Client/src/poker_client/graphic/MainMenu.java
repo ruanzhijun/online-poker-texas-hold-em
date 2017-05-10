@@ -1,5 +1,7 @@
 package poker_client.graphic;
 
+import network.Connection;
+
 /**
  * Client's MainMenu Window.
  * @author Mario Codes Sánchez
@@ -191,11 +193,9 @@ public class MainMenu extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 // new MainMenu().setVisible(true);
-                System.out.println("Connection ready");
-                Connection.open();
-                System.out.println("Connection Opened");
-                // Connection.closeConnection();
-                // System.out.println("Connection Closed");
+                System.out.println("Connection Opened");                
+                boolean result = Connection.createGame("SU");
+                System.out.println("Result is: " +result);
             }
         });
     }

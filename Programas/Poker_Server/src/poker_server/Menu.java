@@ -1,10 +1,12 @@
 package poker_server;
 
 import entities.Games;
+import java.util.ArrayList;
 import network.Connection;
 
 /**
  * Static class to encapsulate menus and options selection.
+ * It is also a monitor so threads do not collide.
  * @author Mario Codes
  * @version 0.0.1 Just created. Setting Basics.
  */
@@ -23,10 +25,14 @@ public class Menu {
      * Gets the reference to be used, checks it. If it doesn't exist, it creates the game with it.
      * Sends the result of the operation through the socket.
      */
-    private static void createGame() {
-        String reference = Connection.reference();
-        boolean result = Games.create(reference);
+    private synchronized static void createGame() {
+        ArrayList parameters = Connection.gameParemeters();
+        boolean result = Games.create(parameters);
         Connection.sendResult(result);
+    }
+    
+    private static void joinGame() {
+        ArrayList parameters = Connection.gameParemeters();
     }
     
     /**

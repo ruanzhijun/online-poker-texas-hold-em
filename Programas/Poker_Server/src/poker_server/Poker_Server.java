@@ -26,7 +26,6 @@ public class Poker_Server {
                 System.out.println("Connection Accepted.");
                 
                 Connection.open(socket);
-                
                 Runnable menu = () -> { Menu.selector(); }; // New Thread where it does its operations.
                 new Thread(menu).start();
             }

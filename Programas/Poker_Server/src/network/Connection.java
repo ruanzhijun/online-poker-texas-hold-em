@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * Everything related to the Server's connection and network.
@@ -64,14 +65,25 @@ public class Connection {
         return -1;
     }
     
-    public static String reference() {
+    /**
+     * Gets from the client the parameters needed to start a new game. (ID and number of players).
+     * @return AL. Contains [0] Ref of the new game; [1] Total number of players in the game.
+     */
+    public static ArrayList gameParemeters() {
+        ArrayList parameters = new ArrayList();
+        
         try {
-            return ois.readUTF();
+            parameters.add(ois.readUTF());
+            parameters.add(ois.readInt());
         } catch(IOException ex) { ex.printStackTrace(); }
         
-        return null;
+        return parameters;
     }
     
+    /**
+     * Sends the result of an operation through the socket. Generic method.
+     * @param result boolean. Result of the operation we want to inform the user.
+     */
     public static void sendResult(boolean result) {
         try {
             oos.writeBoolean(result);

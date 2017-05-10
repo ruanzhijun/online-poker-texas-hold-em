@@ -20,7 +20,17 @@ public class Game {
      * Default constructor. Assigns the ID to the game.
      * @param reference Unique ID so other players can join it.
      */
-    public Game(String reference) { this.REFERENCE = reference; }
+    public Game(String reference, int totalPlayers) { 
+        this.REFERENCE = reference;
+        this.totalPlayers = totalPlayers;
+    }
+    
+    boolean joinPlayer() {
+        if(!started && (joinedPlayers < totalPlayers)) {
+            joinedPlayers++;
+            return true;
+        }else return false;
+    }
     
     /**
      * @return the isStarted

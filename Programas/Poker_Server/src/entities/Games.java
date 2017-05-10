@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -23,13 +24,16 @@ public class Games {
      * First it checks if a game with this reference already exists, if it does not then it creates it and
      * saves it into the local HashMap.
      * @param reference String. ID to locate the game. Unique.
+     * @param totalPlayers int. Number of fixed players to know when to start the game.
      * @return Status of the operation. True if created correctly.
      */
-    public static boolean create(String reference) {
+    public static boolean create(ArrayList parameters) {
+        String reference = (String) parameters.get(0);
+        int totalPlayers = (int) parameters.get(1);
         boolean result = false;
         
         if(!check(reference)) {
-            GAMES.put(reference, new Game(reference));
+            GAMES.put(reference, new Game(reference, totalPlayers));
             result = true;
         }
         
@@ -39,5 +43,16 @@ public class Games {
     // Send a signal to the clients so they disconnect themselves. Then stop and delete the game from HM.
     public static void delete(String reference) {
         throw new UnsupportedOperationException("To be done. Will need checks and a correct stop.");
+    }
+    
+    public static boolean join(String reference) {
+        boolean result = false;
+        
+        if(check(reference)) {
+            Game game = (Game) GAMES.get(reference);
+            result = game.joinPlayer();
+        }
+        
+        return result;
     }
 }

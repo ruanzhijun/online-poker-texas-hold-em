@@ -75,6 +75,7 @@ public class Connection {
     public static void sendResult(boolean result) {
         try {
             oos.writeBoolean(result);
+            oos.flush();
         } catch(IOException ex) { ex.printStackTrace(); }
     }
 }

@@ -1,37 +1,38 @@
 package entities;
 
 /**
- * Encapsulates the logic of a game. Handles the transitions between phases.
+ * Encapsulates the logic of a game. Handles everything so it's playable.
  * @author Mario Codes
- * @version 0.1
+ * @version 0.1 Just created. Setting basics.
  */
 public class Game {
     // private Phase phase = null; // State machine.
+    private boolean started = false;
     private Deck deck = new Deck();
-    private final String ID; // Own ID to handle multi-matches.
     
-    private int numberTotalPlayers = 0, actualPlayers = 0;
-    private int chips_pool = 0; // Chips betted in the actual round by all players.
+    private final String REFERENCE; // Own ID to handle multi-matches.
     
-    private boolean isStarted = false;
+    private int totalPlayers = 0, joinedPlayers = 0; // Number of players setted by user, number of players joined until now. The game will start when the second equals the first.
+    
+    private int chips_pool = 0; // Chips betted in the actual round by all players. The winner gets it all.
 
     /**
      * Default constructor. Assigns the ID to the game.
-     * @param ID Unique ID so other players can join it.
+     * @param reference Unique ID so other players can join it.
      */
-    public Game(String ID) { this.ID = ID; }
+    public Game(String reference) { this.REFERENCE = reference; }
     
     /**
      * @return the isStarted
      */
-    public boolean isIsStarted() {
-        return isStarted;
+    public boolean isStarted() {
+        return started;
     }
 
     /**
-     * @param isStarted the isStarted to set
+     * @param started the isStarted to set
      */
-    public void setIsStarted(boolean isStarted) {
-        this.isStarted = isStarted;
+    public void setStarted(boolean started) {
+        this.started = started;
     }
 }

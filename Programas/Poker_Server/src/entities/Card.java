@@ -11,7 +11,7 @@ public class Card implements Serializable {
     private final String VALUE, SUIT;
     
     /**
-     * Defaults constructor.
+     * Default constructor.
      * @param value Own value in a deck (2 - A).
      * @param suit Suit of the card.
      */
@@ -37,6 +37,4 @@ public class Card implements Serializable {
     public String getVALUE() {
         return VALUE;
     }
-    
-    
 }

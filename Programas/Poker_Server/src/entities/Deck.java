@@ -8,7 +8,6 @@ import java.util.concurrent.ThreadLocalRandom;
  * Card's deck composition and usage.
  * @author Mario Codes
  * @version 0.1
- * @see https://es.wikipedia.org/wiki/Algoritmo_Fisher-Yates#Tabla_paso_a_paso_.28implementaci.C3.B3n_Fisher-Yates.29
  */
 public class Deck {
     private ArrayList<Card> cards_table = new ArrayList<Card>();
@@ -22,7 +21,7 @@ public class Deck {
     }
     
     /**
-     * Ini of the 13 cards of every suit. Must be repetead 4 times, once per suit.
+     * Ini of the 13 cards of every suit. Must be repeated 4 times, once per suit.
      * @param suit Suit being initialized in the current run. 
      */
     private void iniSuits(String suit) {

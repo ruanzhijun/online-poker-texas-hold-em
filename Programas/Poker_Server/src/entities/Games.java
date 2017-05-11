@@ -79,19 +79,18 @@ public class Games {
         return null;
     }
     
-    
-    public static String getID(String reference) {
+    /**
+     * Checks inside the game specified, the user ID to see if it's this user's turn to speak.
+     * @param reference Reference of the game we want to check.
+     * @param id ID of the player to check.
+     * @return Boolean. True if he speaks. False if not such game or does not speak.
+     */
+    public static boolean speaks(String reference, String id) {
         if(GAMES.containsKey(reference)) {
             Game game = (Game) GAMES.get(reference);
-            // Obtain current ID talking.
+            return game.speaks(id);
         }
-    }
-    
-    
-    public static ArrayList<Card> getPlayerCards(String reference, String id) {
-        if(GAMES.containsKey(reference)) {
-            Game game = (Game) GAMES.get(reference);
-            return game.getPlayerCards(id);
-        } else return null; 
+        
+        return false;
     }
 }

@@ -113,7 +113,11 @@ public class Connection {
         } catch(IOException ex) { ex.printStackTrace(); }
     }
     
-    public static void sendInformation() {
-        
+    public static void sendInformation(String phase, boolean speaks) {
+        try {
+            oos.writeUTF(phase);
+            oos.writeBoolean(speaks);
+            oos.flush();
+        } catch(IOException ex) { ex.printStackTrace(); }
     }
 }

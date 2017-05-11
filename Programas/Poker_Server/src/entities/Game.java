@@ -21,7 +21,7 @@ public class Game {
     private LinkedHashMap<String, ArrayList> ROUNDPLAYERS = new LinkedHashMap<>(); /* Used to know players who are in this round and didn't retire. Will copy the LHM 1 line above every new round.
                                                                                         It also stores personal information about the player: 
                                                                                         [0] - boolean, player turn to speak?
-                                                                                        [1] - boolean, player can bet? 
+                                                                                        [1] - boolean, can this player bet?
                                                                                         [2][3] - private cards #1 and #2 */
     
     private int totalPlayers = 0, joinedPlayers = 1; // Number of players setted by user, number of players joined until now. The game will start when the second equals the first.
@@ -43,7 +43,7 @@ public class Game {
     
     /**
      * Draws the private cards from the deck for every player still in game.
-     * It adds them in the player's HashMap as entries [1] and [2] inside the AL.
+     * It adds them in the player's HashMap as entries [2] and [3] inside the AL.
      */
     private void drawCards() {
         for(Map.Entry<String, ArrayList> entry : ALLPLAYERS.entrySet()) {
@@ -75,6 +75,7 @@ public class Game {
      */
     private void addPlayerToList(String id) {
         ArrayList actions = new ArrayList<>();
+        actions.add(false);
         actions.add(true);
         ALLPLAYERS.put(id, actions);
     }
@@ -119,9 +120,13 @@ public class Game {
         }
     }
     
-    
-    private String getIdSpeaking() {
-        
+    /**
+     * Check if it's this user's turn to speak.
+     * @param id ID of the user to check the turn.
+     * @return Boolean. True if the player may speak.
+     */
+    boolean speaks(String id) {
+        return (boolean) ROUNDPLAYERS.get(id).get(0);
     }
     
     
@@ -129,16 +134,16 @@ public class Game {
      * Gets the assigned player private cards. To be used from Games.
      * @param id ID of the player we want to retrieve it's cards.
      * @return AL<Card> with it's 2 cards.
-     */
+     
     ArrayList<Card> getPlayerCards(String id) {
         if(ROUNDPLAYERS.containsKey(id)) {
             ArrayList<Card> cards = new ArrayList<>();
-            cards.add((Card) ROUNDPLAYERS.get(id).get(1));
             cards.add((Card) ROUNDPLAYERS.get(id).get(2));
+            cards.add((Card) ROUNDPLAYERS.get(id).get(3));
             
             return cards;
         } else return null;
-    }
+    } */
     
     
     /**

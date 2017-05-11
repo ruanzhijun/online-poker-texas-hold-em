@@ -1,6 +1,5 @@
 package poker_server;
 
-import entities.Card;
 import entities.Games;
 import java.util.ArrayList;
 import network.Connection;
@@ -9,7 +8,7 @@ import network.Connection;
  * Static class to encapsulate menus and options selection.
  * It is also a monitor so threads do not collide.
  * @author Mario Codes
- * @version 0.0.1 Just created. Setting Basics.
+ * @version 0.0.2 Setting side thread information.
  */
 public class Menu {
     private static final int INFORMATION = 0;
@@ -22,6 +21,7 @@ public class Menu {
     private static final int GET_CARDS_PRIVATE = 6;
     private static final int RETIRE = 7;
     
+    
     /**
      * Creates a whole new game.
      * Gets the reference to be used, checks it. If it doesn't exist, it creates the game with it.
@@ -32,6 +32,7 @@ public class Menu {
         boolean result = Games.create(parameters);
         Connection.sendResult(result);
     }
+    
     
     /**
      * Join a previously created game.
@@ -44,15 +45,23 @@ public class Menu {
         Connection.sendResult(result);
     }
     
+    
+    /**
+     * Check which does a secondary thread.
+     * With the games reference and players id, sends the games phase and if this player may speak or wait.
+     */
     private static void information() {
         String reference = Connection.getReference();
         boolean exists = Games.check(reference);
         Connection.sendResult(exists);
         if(exists) {
+            String id = Connection.getID();
             String phase = Games.getPhase(reference);
-            // String id = Games. //Get id.
+            boolean speaks = Games.speaks(reference, id);
+            Connection.sendInformation(phase, speaks);
         }
     }
+    
     
     /**
      * Main Switch which derives everything where it needs to be.

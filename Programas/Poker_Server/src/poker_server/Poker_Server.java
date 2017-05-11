@@ -5,6 +5,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import network.Connection;
 
+/*
+* TODOs:
+* Set the server so it asks on which port to run at start.
+*/
+
 /**
  * Multithread Server. It's able to serve multiple hosts simultaneously.
  * @author Mario Codes
@@ -20,10 +25,9 @@ public class Poker_Server {
     public static void main(String[] args) {
         try {
             ServerSocket serverSocket = new ServerSocket(PORT);
-        
+            System.out.println("Server started and ready.");
             while(true) {
                 socket = serverSocket.accept(); 
-                System.out.println("Connection Accepted.");
                 
                 Connection.open(socket);
                 Runnable menu = () -> { Menu.selector(); }; // New Thread where it does its operations.

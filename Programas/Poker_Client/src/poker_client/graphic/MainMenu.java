@@ -2,6 +2,12 @@ package poker_client.graphic;
 
 import network.Connection;
 
+/*
+    TODOs:
+
+    * I leave everything related to users and the web to when I've mine uploaded and on the Internet.
+*/
+
 /**
  * Client's MainMenu Window.
  * @author Mario Codes Sánchez
@@ -193,8 +199,12 @@ public class MainMenu extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 // new MainMenu().setVisible(true);
-                System.out.println("Connection Opened");                
-                boolean result = Connection.joinGame("SU2");
+                System.out.println("Connection Opened");     
+                
+                // boolean result = Connection.createGame("SU", 2);
+                // System.out.println("Result is: " +result);
+                
+                boolean result = Connection.joinGame("SU");
                 System.out.println("Result is: " +result);
             }
         });

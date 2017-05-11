@@ -1,5 +1,7 @@
 package entities;
 
+import java.util.ArrayList;
+
 /**
  * Encapsulates the logic of a game. Handles everything so it's playable.
  * @author Mario Codes
@@ -14,6 +16,7 @@ public class Game {
     
     private int totalPlayers = 0, joinedPlayers = 1; // Number of players setted by user, number of players joined until now. The game will start when the second equals the first.
     
+    
     private int chips_pool = 0; // Chips betted in the actual round by all players. The winner gets it all.
 
     /**
@@ -25,11 +28,21 @@ public class Game {
         this.totalPlayers = totalPlayers;
     }
     
+    /**
+     * Sets +1 to the number of current players and starts the game if all the players did join.
+     */
     boolean joinPlayer() {
         if(!started && (joinedPlayers < totalPlayers)) {
-            joinedPlayers++;
+            System.out.println("Player Joined. Game #" +REFERENCE +"; " +(++joinedPlayers) +"/" +totalPlayers +" players.");
+            if(joinedPlayers >= totalPlayers) { // Already do ++ in msg 1 line up.
+                started = true;
+                System.out.println("Game #" +REFERENCE +" has started.");
+            }
             return true;
-        }else return false;
+        }else {
+            System.out.println("Player rejected. Game #" +REFERENCE +" has already started or is full.");
+            return false;
+        }
     }
     
     /**

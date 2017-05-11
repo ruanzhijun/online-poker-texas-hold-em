@@ -34,8 +34,9 @@ public class Games {
         
         if(!check(reference)) {
             GAMES.put(reference, new Game(reference, totalPlayers));
+            System.out.println("Game #" +reference +" created. 1/" +totalPlayers +" player(s). " +GAMES.size() +" simultaneous games.");
             result = true;
-        }
+        } else System.out.println("Game rejected. This # already exists.");
         
         return result;
     }
@@ -45,13 +46,18 @@ public class Games {
         throw new UnsupportedOperationException("To be done. Will need checks and a correct stop.");
     }
     
+    /**
+     * Adds a player to the selected game. Only if there's room left and the game's not started yet.
+     * @param reference String. Reference of the game we want to join.
+     * @return Boolean. Result of the operation.
+     */
     public static boolean join(String reference) {
         boolean result = false;
         
         if(check(reference)) {
             Game game = (Game) GAMES.get(reference);
             result = game.joinPlayer();
-        }
+        } else System.out.println("Join rejected. There's no game #" +reference);
         
         return result;
     }

@@ -47,6 +47,7 @@ public class Menu {
      */
     static void selector() {
         int option = Connection.menu();
+        System.out.println("New connection. Option " +option);
         
         switch(option) {
             case CREATE_GAME:

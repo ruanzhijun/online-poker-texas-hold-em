@@ -14,9 +14,9 @@ public class Game {
     private Deck deck = new Deck();
     
     private final String REFERENCE; // Own ID to handle multi-matches.
-    private final LinkedHashMap<String, ArrayList> ALLPLAYERS = new LinkedHashMap(); /* A copy of every player in the game. A player will only get deleted from here when he has no more chips and cannot continue playing.
+    private final LinkedHashMap<String, ArrayList> ALLPLAYERS = new LinkedHashMap<>(); /* A copy of every player in the game. A player will only get deleted from here when he has no more chips and cannot continue playing.
                                                                                             Also, the AL<Boolean> contains whether an user can use it's action or it has already done. (true it's not yet done. false when done.)*/
-    private LinkedHashMap<String, ArrayList> ROUNDPLAYERS; //<player id, AL of actions> [0] = Betted. Temporal copy of the players used in the current round. A player will get deleted from here when he retires. A new copy will be made on new round with all players in game.
+    private LinkedHashMap<String, ArrayList> ROUNDPLAYERS = new LinkedHashMap<>(); //<player id, AL of actions> [0] = Betted. Temporal copy of the players used in the current round. A player will get deleted from here when he retires. A new copy will be made on new round with all players in game.
     
     private int totalPlayers = 0, joinedPlayers = 1; // Number of players setted by user, number of players joined until now. The game will start when the second equals the first.
     private int playersTurn = 0; // Numeric index to access LinkedHashMap. The order to do it's action will be the order the players join in.
@@ -34,6 +34,7 @@ public class Game {
         addPlayerToList(id);
     }
     
+    
     /**
      * Adds the player to the list of all players. It also sets it's actions all to true.
      * @param id ID of the player to be used as check condition.
@@ -44,23 +45,45 @@ public class Game {
         ALLPLAYERS.put(id, actions);
     }
     
+    
     /**
-     * Sets +1 to the number of current players and starts the game if all the players did join.
+     * Starts the game when all the players have joined.
+     * Makes a copy of all the players in the game to the local round Map.
+     */
+    private void start() {
+        started = true;
+        ROUNDPLAYERS.putAll(ALLPLAYERS);
+        System.out.println("Game #" +REFERENCE +" has started.");
+    }
+    
+    /**
+     * Checks whether users can still join to this game.
+     * @return Boolean. True if the game has not started and still room left.
+     */
+    private boolean joinable() {
+        return !started && (joinedPlayers < totalPlayers);
+    }
+    
+    /**
+     * Checks if the game has room left and !started.
+     * Sets +1 to the number of current players, starts the game if all the players did join. Adds the player to global Map.
+     * Makes a copy of the Map with all the players to the local round Map.
      */
     boolean joinPlayer(String id) {
-        if(!started && (joinedPlayers < totalPlayers)) {
+        if(joinable()) {
             System.out.println(id +" joined game #" +REFERENCE +"; " +(++joinedPlayers) +"/" +totalPlayers +" players.");
             if(joinedPlayers >= totalPlayers) { // Already do ++ in msg 1 line up.
-                started = true;
-                System.out.println("Game #" +REFERENCE +" has started.");
-            }
-            addPlayerToList(id);
+                addPlayerToList(id);
+                start();
+            } else addPlayerToList(id);
+            
             return true;
         }else {
             System.out.println("Player rejected. Game #" +REFERENCE +" has already started or is full.");
             return false;
         }
     }
+    
     
     /**
      * @return the isStarted

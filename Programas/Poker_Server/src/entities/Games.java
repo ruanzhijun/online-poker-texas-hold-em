@@ -28,10 +28,11 @@ public class Games {
      * @return Status of the operation. True if created correctly.
      */
     public static boolean create(ArrayList parameters) {
+        boolean result = false;
+        
         String reference = (String) parameters.get(0);
         String id = (String) parameters.get(1);
         int totalPlayers = (int) parameters.get(2);
-        boolean result = false;
         
         if(!check(reference)) {
             GAMES.put(reference, new Game(reference, id, totalPlayers));
@@ -50,7 +51,7 @@ public class Games {
     /**
      * Adds a player to the selected game. Only if there's room left and the game's not started yet.
      * @param reference String. Reference of the game we want to join.
-     * @return Boolean. Result of the operation.
+     * @return Boolean. Result of the operation. False if game does not exist.
      */
     public static boolean join(String reference, String id) {
         boolean result = false;

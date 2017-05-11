@@ -22,10 +22,6 @@ public class PreFlop implements Phase{
     public void change(Game game) {
         game.setPhase(this);
         game.newRound();
-//        System.out.println("Nueva Ronda. Fase de PreFlop.");
-//        
-//        System.out.println("Jugadores en juego despues de la limpieza: ");
-//        for(String s: juego.getConFichas()) System.out.println("ID: " +s);
     }
 
     @Override

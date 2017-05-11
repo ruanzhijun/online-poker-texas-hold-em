@@ -8,7 +8,7 @@ import states.PreFlop;
 /**
  * Encapsulates the logic of a game. Handles everything so it's playable.
  * @author Mario Codes
- * @version 0.0.2.1 Getting everything ready to start a game.
+ * @version 0.0.2.2 Doing so the game flows and does its actions.
  */
 public class Game {
     private Phase phase = null; // State machine. Read interface's code.
@@ -16,9 +16,11 @@ public class Game {
     private Deck deck;
     
     private final String REFERENCE; // Own ID to handle multi-matches.
-    private final LinkedHashMap<String, ArrayList> ALLPLAYERS = new LinkedHashMap<>(); /* A copy of every player in the game. A player will only get deleted from here when he has no more chips and cannot continue playing.
-                                                                                            Also, the AL<Boolean> contains whether an user can use it's action or it has already done. (true it's not yet done. false when done.)*/
-    private LinkedHashMap<String, ArrayList> ROUNDPLAYERS = new LinkedHashMap<>(); //<player id, AL of actions> [0] = Betted. Temporal copy of the players used in the current round. A player will get deleted from here when he retires. A new copy will be made on new round with all players in game.
+    private final LinkedHashMap<String, ArrayList> ALLPLAYERS = new LinkedHashMap<>(); /* A copy of every player in the game. A player will only get deleted from here when he has no more chips and cannot continue playing. */
+    private LinkedHashMap<String, ArrayList> ROUNDPLAYERS = new LinkedHashMap<>(); /* Used to know players who are in this round and didn't retire. Will copy the LHM 1 line above every new round.
+                                                                                        It also stores personal information about the player: 
+                                                                                        [0] - boolean, player can bet? 
+                                                                                        [1][2] - private cards #1 and #2 */
     
     private int totalPlayers = 0, joinedPlayers = 1; // Number of players setted by user, number of players joined until now. The game will start when the second equals the first.
     private int playersTurn = 0; // Numeric index to access LinkedHashMap. The order to do it's action will be the order the players join in.
@@ -37,6 +39,7 @@ public class Game {
     }
     
     /**
+     * To be called by state machine -> PreFlop.
      * Gets everything ready to start a new fresh round.
      * Erases and copies all the players to a new round Map.
      * Creates a new fresh deck.
@@ -55,7 +58,7 @@ public class Game {
      * @param id ID of the player to be used as check condition.
      */
     private void addPlayerToList(String id) {
-        ArrayList<Boolean> actions = new ArrayList<>();
+        ArrayList actions = new ArrayList<>();
         actions.add(true);
         ALLPLAYERS.put(id, actions);
     }

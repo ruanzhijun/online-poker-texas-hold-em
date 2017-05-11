@@ -2,6 +2,8 @@ package entities;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import states.Phase;
+import states.PreFlop;
 
 /**
  * Encapsulates the logic of a game. Handles everything so it's playable.
@@ -9,9 +11,9 @@ import java.util.LinkedHashMap;
  * @version 0.0.2.1 Getting everything ready to start a game.
  */
 public class Game {
-    // private Phase phase = null; // State machine. To implement.
+    private Phase phase = null; // State machine. Read interface's code.
     private boolean started = false;
-    private Deck deck = new Deck();
+    private Deck deck;
     
     private final String REFERENCE; // Own ID to handle multi-matches.
     private final LinkedHashMap<String, ArrayList> ALLPLAYERS = new LinkedHashMap<>(); /* A copy of every player in the game. A player will only get deleted from here when he has no more chips and cannot continue playing.
@@ -21,7 +23,7 @@ public class Game {
     private int totalPlayers = 0, joinedPlayers = 1; // Number of players setted by user, number of players joined until now. The game will start when the second equals the first.
     private int playersTurn = 0; // Numeric index to access LinkedHashMap. The order to do it's action will be the order the players join in.
     
-    private int chips_pool = 0; // Chips betted in the actual round by all players. The winner gets it all.
+    private int chips = 0; // Chips betted in the actual round by all players. The winner gets it all.
 
     /**
      * Default constructor. Assigns the ID to the game.
@@ -32,6 +34,19 @@ public class Game {
         this.REFERENCE = reference;
         this.totalPlayers = totalPlayers;
         addPlayerToList(id);
+    }
+    
+    /**
+     * Gets everything ready to start a new fresh round.
+     * Erases and copies all the players to a new round Map.
+     * Creates a new fresh deck.
+     */
+    public void newRound() {
+        ROUNDPLAYERS = new LinkedHashMap<>();
+        ROUNDPLAYERS.putAll(ALLPLAYERS);
+        deck = new Deck();
+        System.out.println("Game #" +REFERENCE +" has started a new round. " +ROUNDPLAYERS.size() +"/" +totalPlayers +" players left.");
+        // todo: reset player action AL. Chips to 0. Erase players jugada.
     }
     
     
@@ -53,7 +68,8 @@ public class Game {
     private void start() {
         started = true;
         ROUNDPLAYERS.putAll(ALLPLAYERS);
-        System.out.println("Game #" +REFERENCE +" has started.");
+        System.out.println("All players joined; Game #" +REFERENCE +" starting!.");
+        new PreFlop().change(this);
     }
     
     /**
@@ -97,5 +113,22 @@ public class Game {
      */
     public void setStarted(boolean started) {
         this.started = started;
+    }
+
+    /**
+     * @return the phase
+     */
+    public Phase getPhase() {
+        return phase;
+    }
+
+    /**
+     * DO NOT USE!!! Use instead Phase.change();
+     * I do need it to make the change internally inside the phase.
+     * Apart of this, DO NOT USE IT -NEVER- DIRECTLY!!
+     * @param phase the phase to set
+     */
+    public void setPhase(Phase phase) {
+        this.phase = phase;
     }
 }

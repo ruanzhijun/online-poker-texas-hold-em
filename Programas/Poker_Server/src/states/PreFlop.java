@@ -9,15 +9,19 @@ import entities.Game;
 import java.util.ArrayList;
 
 /**
- * PreFlop Phase.
- * The players get their private cards. After this minimal bets and players bet's.
- * @author Mario Codes Sánchez
+ * PreFlop. Initial phase.
+ * The players get their private cards. After this, players bet's.
+ * @author Mario Codes
  */
 public class PreFlop implements Phase{
+    /**
+     * To be called when the game starts, and after a round has ended.
+     * @param game Game we're operating with.
+     */
     @Override
     public void change(Game game) {
-//        juego.newRound();
-//        juego.setFase(this);
+        game.setPhase(this);
+        game.newRound();
 //        System.out.println("Nueva Ronda. Fase de PreFlop.");
 //        
 //        System.out.println("Jugadores en juego despues de la limpieza: ");

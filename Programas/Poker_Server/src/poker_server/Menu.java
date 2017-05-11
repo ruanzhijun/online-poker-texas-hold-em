@@ -1,5 +1,6 @@
 package poker_server;
 
+import entities.Card;
 import entities.Games;
 import java.util.ArrayList;
 import network.Connection;
@@ -11,6 +12,7 @@ import network.Connection;
  * @version 0.0.1 Just created. Setting Basics.
  */
 public class Menu {
+    private static final int INFORMATION = 0;
     private static final int CREATE_GAME = 1; // First Menu, before the game starts.
     private static final int JOIN_GAME = 2;
     
@@ -42,6 +44,16 @@ public class Menu {
         Connection.sendResult(result);
     }
     
+    private static void information() {
+        String reference = Connection.getReference();
+        boolean exists = Games.check(reference);
+        Connection.sendResult(exists);
+        if(exists) {
+            String phase = Games.getPhase(reference);
+            // String id = Games. //Get id.
+        }
+    }
+    
     /**
      * Main Switch which derives everything where it needs to be.
      * Here the socket's connection has already been opened!.
@@ -51,6 +63,9 @@ public class Menu {
         System.out.println("New connection. Option " +option);
         
         switch(option) {
+            case INFORMATION:
+                information();
+                break;
             case CREATE_GAME:
                 createGame();
                 break;

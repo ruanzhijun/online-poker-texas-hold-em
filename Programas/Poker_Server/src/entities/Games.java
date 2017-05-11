@@ -63,4 +63,35 @@ public class Games {
         
         return result;
     }
+    
+    
+    /**
+     * Gets the phase from the game with the specified reference.
+     * @param reference Game's reference we want to obtain it's phase from.
+     * @return String. Phase this game is currently at.
+     */
+    public static String getPhase(String reference) {
+        if(GAMES.containsKey(reference)) {
+            Game game = (Game) GAMES.get(reference);
+            return game.getPhase().toString();
+        }
+        
+        return null;
+    }
+    
+    
+    public static String getID(String reference) {
+        if(GAMES.containsKey(reference)) {
+            Game game = (Game) GAMES.get(reference);
+            // Obtain current ID talking.
+        }
+    }
+    
+    
+    public static ArrayList<Card> getPlayerCards(String reference, String id) {
+        if(GAMES.containsKey(reference)) {
+            Game game = (Game) GAMES.get(reference);
+            return game.getPlayerCards(id);
+        } else return null; 
+    }
 }

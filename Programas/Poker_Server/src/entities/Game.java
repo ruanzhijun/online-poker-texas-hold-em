@@ -20,8 +20,9 @@ public class Game {
     private final LinkedHashMap<String, ArrayList> ALLPLAYERS = new LinkedHashMap<>(); /* A copy of every player in the game. A player will only get deleted from here when he has no more chips and cannot continue playing. */
     private LinkedHashMap<String, ArrayList> ROUNDPLAYERS = new LinkedHashMap<>(); /* Used to know players who are in this round and didn't retire. Will copy the LHM 1 line above every new round.
                                                                                         It also stores personal information about the player: 
-                                                                                        [0] - boolean, player can bet? 
-                                                                                        [1][2] - private cards #1 and #2 */
+                                                                                        [0] - boolean, player turn to speak?
+                                                                                        [1] - boolean, player can bet? 
+                                                                                        [2][3] - private cards #1 and #2 */
     
     private int totalPlayers = 0, joinedPlayers = 1; // Number of players setted by user, number of players joined until now. The game will start when the second equals the first.
     private int playersTurn = 0; // Numeric index to access LinkedHashMap. The order to do it's action will be the order the players join in.
@@ -119,6 +120,27 @@ public class Game {
     }
     
     
+    private String getIdSpeaking() {
+        
+    }
+    
+    
+    /**
+     * Gets the assigned player private cards. To be used from Games.
+     * @param id ID of the player we want to retrieve it's cards.
+     * @return AL<Card> with it's 2 cards.
+     */
+    ArrayList<Card> getPlayerCards(String id) {
+        if(ROUNDPLAYERS.containsKey(id)) {
+            ArrayList<Card> cards = new ArrayList<>();
+            cards.add((Card) ROUNDPLAYERS.get(id).get(1));
+            cards.add((Card) ROUNDPLAYERS.get(id).get(2));
+            
+            return cards;
+        } else return null;
+    }
+    
+    
     /**
      * @return the isStarted
      */
@@ -141,9 +163,9 @@ public class Game {
     }
 
     /**
-     * DO NOT USE!!! Use instead Phase.change();
+     * DO NOT USE THIS!!! Do use Phase.change(); instead.
      * I do need it to make the change internally inside the phase.
-     * Apart of this, DO NOT USE IT -NEVER- DIRECTLY!!
+     * Apart of this, DO NOT USE IT - NEVER - DIRECTLY!!
      * @param phase the phase to set
      */
     public void setPhase(Phase phase) {

@@ -74,10 +74,19 @@ public class Connection {
         
         try {
             parameters.add(ois.readUTF());
+            parameters.add(ois.readUTF());
             parameters.add(ois.readInt());
         } catch(IOException ex) { ex.printStackTrace(); }
         
         return parameters;
+    }
+    
+    public static String getID() {
+        try {
+            return ois.readUTF();
+        } catch(IOException ex) { ex.printStackTrace(); }
+        
+        return null;
     }
     
     /**

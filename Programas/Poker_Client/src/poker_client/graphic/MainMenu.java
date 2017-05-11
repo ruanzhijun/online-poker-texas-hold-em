@@ -3,9 +3,9 @@ package poker_client.graphic;
 import network.Connection;
 
 /*
-    TODOs:
-
-    * I leave everything related to users and the web to when I've mine uploaded and on the Internet.
+* TODOs:
+* Set the client so it asks for IP and Port on login.
+* I leave everything related to users and the web to when I've mine uploaded and on the Internet.
 */
 
 /**
@@ -201,10 +201,10 @@ public class MainMenu extends javax.swing.JFrame {
                 // new MainMenu().setVisible(true);
                 System.out.println("Connection Opened");     
                 
-                // boolean result = Connection.createGame("SU", 2);
-                // System.out.println("Result is: " +result);
+                boolean result = Connection.createGame("SU", "SHI",  2);
+                System.out.println("Result is: " +result);
                 
-                boolean result = Connection.joinGame("SU");
+                result = Connection.joinGame("SU", "MARIO");
                 System.out.println("Result is: " +result);
             }
         });

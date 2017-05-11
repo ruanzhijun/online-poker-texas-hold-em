@@ -29,12 +29,13 @@ public class Games {
      */
     public static boolean create(ArrayList parameters) {
         String reference = (String) parameters.get(0);
-        int totalPlayers = (int) parameters.get(1);
+        String id = (String) parameters.get(1);
+        int totalPlayers = (int) parameters.get(2);
         boolean result = false;
         
         if(!check(reference)) {
-            GAMES.put(reference, new Game(reference, totalPlayers));
-            System.out.println("Game #" +reference +" created. 1/" +totalPlayers +" player(s). " +GAMES.size() +" simultaneous games.");
+            GAMES.put(reference, new Game(reference, id, totalPlayers));
+            System.out.println(id +" has created the game #" +reference +". 1/" +totalPlayers +" player(s). " +GAMES.size() +" simultaneous games.");
             result = true;
         } else System.out.println("Game rejected. This # already exists.");
         
@@ -51,12 +52,12 @@ public class Games {
      * @param reference String. Reference of the game we want to join.
      * @return Boolean. Result of the operation.
      */
-    public static boolean join(String reference) {
+    public static boolean join(String reference, String id) {
         boolean result = false;
         
         if(check(reference)) {
             Game game = (Game) GAMES.get(reference);
-            result = game.joinPlayer();
+            result = game.joinPlayer(id);
         } else System.out.println("Join rejected. There's no game #" +reference);
         
         return result;

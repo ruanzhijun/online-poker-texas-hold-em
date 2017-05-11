@@ -1,43 +1,60 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 /**
  * Encapsulates the logic of a game. Handles everything so it's playable.
  * @author Mario Codes
- * @version 0.1 Just created. Setting basics.
+ * @version 0.0.2.1 Getting everything ready to start a game.
  */
 public class Game {
-    // private Phase phase = null; // State machine.
+    // private Phase phase = null; // State machine. To implement.
     private boolean started = false;
     private Deck deck = new Deck();
     
     private final String REFERENCE; // Own ID to handle multi-matches.
+    private final LinkedHashMap<String, ArrayList> ALLPLAYERS = new LinkedHashMap(); /* A copy of every player in the game. A player will only get deleted from here when he has no more chips and cannot continue playing.
+                                                                                            Also, the AL<Boolean> contains whether an user can use it's action or it has already done. (true it's not yet done. false when done.)*/
+    private LinkedHashMap<String, ArrayList> ROUNDPLAYERS; //<player id, AL of actions> [0] = Betted. Temporal copy of the players used in the current round. A player will get deleted from here when he retires. A new copy will be made on new round with all players in game.
     
     private int totalPlayers = 0, joinedPlayers = 1; // Number of players setted by user, number of players joined until now. The game will start when the second equals the first.
-    
+    private int playersTurn = 0; // Numeric index to access LinkedHashMap. The order to do it's action will be the order the players join in.
     
     private int chips_pool = 0; // Chips betted in the actual round by all players. The winner gets it all.
 
     /**
      * Default constructor. Assigns the ID to the game.
      * @param reference Unique ID so other players can join it.
+     * @param totalPlayers Number of max players we want the game to have.
      */
-    public Game(String reference, int totalPlayers) { 
+    public Game(String reference, String id, int totalPlayers) { 
         this.REFERENCE = reference;
         this.totalPlayers = totalPlayers;
+        addPlayerToList(id);
+    }
+    
+    /**
+     * Adds the player to the list of all players. It also sets it's actions all to true.
+     * @param id ID of the player to be used as check condition.
+     */
+    private void addPlayerToList(String id) {
+        ArrayList<Boolean> actions = new ArrayList<>();
+        actions.add(true);
+        ALLPLAYERS.put(id, actions);
     }
     
     /**
      * Sets +1 to the number of current players and starts the game if all the players did join.
      */
-    boolean joinPlayer() {
+    boolean joinPlayer(String id) {
         if(!started && (joinedPlayers < totalPlayers)) {
-            System.out.println("Player Joined. Game #" +REFERENCE +"; " +(++joinedPlayers) +"/" +totalPlayers +" players.");
+            System.out.println(id +" joined game #" +REFERENCE +"; " +(++joinedPlayers) +"/" +totalPlayers +" players.");
             if(joinedPlayers >= totalPlayers) { // Already do ++ in msg 1 line up.
                 started = true;
                 System.out.println("Game #" +REFERENCE +" has started.");
             }
+            addPlayerToList(id);
             return true;
         }else {
             System.out.println("Player rejected. Game #" +REFERENCE +" has already started or is full.");

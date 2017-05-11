@@ -71,13 +71,14 @@ public class Connection {
      * @param totalPlayers int. Total number of players there will be in our game.
      * @return Boolean. Status of the operation, true if everything went well. False if ID in use.
      */
-    public static boolean createGame(String reference, int totalPlayers) {
+    public static boolean createGame(String reference, String id, int totalPlayers) {
         boolean status = false;
         
         try {
             open();
             oos.writeInt(CREATE_GAME);
             oos.writeUTF(reference);
+            oos.writeUTF(id);
             oos.writeInt(totalPlayers);
             oos.flush();
             
@@ -96,13 +97,14 @@ public class Connection {
      * @param reference
      * @return 
      */
-    public static boolean joinGame(String reference) {
+    public static boolean joinGame(String reference, String id) {
         boolean status = false;
         
         try {
             open();
             oos.writeInt(JOIN_GAME);
             oos.writeUTF(reference);
+            oos.writeUTF(id);
             oos.flush();
             
             status = ois.readBoolean();

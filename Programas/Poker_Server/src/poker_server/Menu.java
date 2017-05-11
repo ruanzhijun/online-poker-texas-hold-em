@@ -37,7 +37,8 @@ public class Menu {
      */
     private static void joinGame() {
         String reference = Connection.getReference();
-        boolean result = Games.join(reference);
+        String id = Connection.getID();
+        boolean result = Games.join(reference, id);
         Connection.sendResult(result);
     }
     

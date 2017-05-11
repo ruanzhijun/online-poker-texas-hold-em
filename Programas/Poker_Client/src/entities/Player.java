@@ -15,5 +15,7 @@ public class Player {
      * It assigns the ID of the player. 'Guest' if none.
      * @param ID Own players ID.
      */
-    public Player(String ID) { this.ID = ID; }
+    public Player(String ID) { 
+        this.ID = ID;
+    }
 }

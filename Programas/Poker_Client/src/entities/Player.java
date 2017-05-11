@@ -1,12 +1,14 @@
 package entities;
 
+import java.util.ArrayList;
+
 /**
  * Representation of a player.
  * @author Mario Codes
  * @version 0.0.1 Just created. Setting the basics.
  */
 public class Player {
-    // private Hand hand = new Hand();
+    private Hand hand = new Hand();
     private int chips = 1000;
     private final String ID;
     
@@ -17,5 +19,27 @@ public class Player {
      */
     public Player(String ID) { 
         this.ID = ID;
+    }
+    
+    public ArrayList<Card> getOwnCards() {
+        return getHand().getOwn();
+    }
+    
+    public ArrayList<Card> getTableCards() {
+        return getHand().getTable();
+    }
+
+    /**
+     * @return the ID
+     */
+    public String getID() {
+        return ID;
+    }
+
+    /**
+     * @return the hand
+     */
+    public Hand getHand() {
+        return hand;
     }
 }

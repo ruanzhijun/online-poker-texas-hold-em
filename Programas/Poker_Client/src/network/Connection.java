@@ -1,11 +1,14 @@
 package network;
 
+import entities.Card;
+import entities.Player;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * Static class to encapsulate everything related to Client's connection management.
@@ -17,11 +20,13 @@ public class Connection {
     private static final String SERVER_IP = "127.0.0.1";
     
     // Check them! They need to be the same as in the server.
+    private static final int INFORMATION = 0;
     private static final int CREATE_GAME = 1; // First Menu, before the game starts.
     private static final int JOIN_GAME = 2;
+    
     private static final int BET = 4; // Second Menu, once the game's started.
-    private static final int GET_CARDS_COMMON = 5;
-    private static final int GET_CARDS_PRIVATE = 6;
+    private static final int GET_OWN_CARDS = 5;
+    private static final int GET_TABLE_CARDS = 6;
     private static final int RETIRE = 7;
     
     private static Socket socket = null;
@@ -112,5 +117,62 @@ public class Connection {
         } catch(IOException ex) { ex.printStackTrace(); }
         
         return status;
+    }
+    
+    /**
+     * Retrieving information on the current game. Will be executed periodically in a separated thread.
+     * @param reference String. Game's ID we want to obtain information on.
+     * @return AL. [0] = Current phase of the game. [1] = Players turn to talk (ID).
+     */
+    public static ArrayList<String> information(String reference) {
+        ArrayList<String> inf = new ArrayList<>();
+        
+        try {
+            open();
+            oos.writeInt(INFORMATION);
+            oos.writeUTF(reference);
+            oos.flush();
+            
+            boolean exists = ois.readBoolean();
+            if(exists) {
+                inf.add(ois.readUTF()); //Current Phase.
+                inf.add(ois.readUTF()); // Players turn (ID).
+            }
+        } catch(IOException ex) { ex.printStackTrace(); }
+        
+        return null;
+    }
+    
+    /**
+     * Gets this player's private cards retrieved by the server. The confirmation that he needs those cards is done by the standalone thread.
+     * @param player Player from which we want to retrieve it's cards.
+     * @param reference Reference of the game the player is currently playing.
+     * @return AL<Card> with the user's private cards.
+     */
+    public static ArrayList<Card> getOwnCards(Player player, String reference) {
+        ArrayList<Card> cards = new ArrayList<>();
+        
+        try {
+            open();
+            oos.writeInt(GET_OWN_CARDS);
+            oos.writeUTF(reference);
+            oos.flush();
+            
+            boolean exists = ois.readBoolean();
+            if(exists) {
+                oos.writeUTF(player.getID());
+                oos.flush();
+                
+                Card card1 = (Card) ois.readObject();
+                Card card2 = (Card) ois.readObject();
+
+                cards.add(card1);
+                cards.add(card2);
+
+                return cards;
+            }
+        } catch(IOException|ClassNotFoundException ex) { ex.printStackTrace(); }
+        
+        return null;
     }
 }

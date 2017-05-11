@@ -14,8 +14,9 @@ public class Hand {
      * Adds a card to the private player's cards.
      * @param card Card to add.
      */
-    public void addOwn(Card card) {
-        getOwn().add(card);
+    public void addOwn(ArrayList<Card> cards) {
+        own = new ArrayList<>();
+        own.addAll(cards);
     }
     
     /**

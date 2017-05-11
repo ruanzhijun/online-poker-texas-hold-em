@@ -2,13 +2,14 @@ package entities;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import states.Phase;
 import states.PreFlop;
 
 /**
  * Encapsulates the logic of a game. Handles everything so it's playable.
  * @author Mario Codes
- * @version 0.0.2.2 Doing so the game flows and does its actions.
+ * @version 0.0.2.3 Doing so the game flows and does its actions. Cards for every player are obtained from deck.
  */
 public class Game {
     private Phase phase = null; // State machine. Read interface's code.
@@ -38,6 +39,19 @@ public class Game {
         addPlayerToList(id);
     }
     
+    
+    /**
+     * Draws the private cards from the deck for every player still in game.
+     * It adds them in the player's HashMap as entries [1] and [2] inside the AL.
+     */
+    private void drawCards() {
+        for(Map.Entry<String, ArrayList> entry : ALLPLAYERS.entrySet()) {
+            ArrayList list = entry.getValue();
+            list.add(deck.getCard());
+            list.add(deck.getCard());
+        }
+    }
+    
     /**
      * To be called by state machine -> PreFlop.
      * Gets everything ready to start a new fresh round.
@@ -50,6 +64,7 @@ public class Game {
         deck = new Deck();
         System.out.println("Game #" +REFERENCE +" has started a new round. " +ROUNDPLAYERS.size() +"/" +totalPlayers +" players left.");
         // todo: reset player action AL. Chips to 0. Erase players jugada.
+        drawCards();
     }
     
     

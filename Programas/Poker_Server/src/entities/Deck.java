@@ -7,11 +7,11 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Card's deck composition and usage.
  * @author Mario Codes
- * @version 0.1
+ * @version 0.0.2 Creating methods so the game can draw cards from this deck.
  */
 public class Deck {
     private ArrayList<Card> cards_table = new ArrayList<Card>();
-    private ArrayList<Card> deck = new ArrayList<Card>();
+    private ArrayList<Card> deck = new ArrayList<Card>(52);
     
     /**
      * Default constructor. Gets everything ready.
@@ -67,6 +67,41 @@ public class Deck {
         iniDeck();
         shuffle(deck);
     }
+    
+    
+    /**
+     * As stated by the rules, burns the required number of cards.
+     * @param cards Int. Number of cards to burn from the deck.
+     * todo: check if used, if not delete.
+     */
+    private void burn(int cards) {
+        for (int i = 0; i < cards; i++) {
+            deck.remove(0);
+        }
+    }
+    
+    
+    /**
+     * Obtains one card from the deck.
+     * @return Card removed from the deck.
+     */
+    public Card getCard() {
+        return deck.remove(0);
+    }
+    
+    
+    /**
+     * Obtains i cards from the deck.
+     * @param number Number of cards we want to obtain.
+     * @return AL<Card>. Contains the cards removed from the deck.
+     */
+    public ArrayList<Card> getCards(int number) {
+        ArrayList<Card> cards = new ArrayList<>();
+        for (int i = 0; i < number; i++) cards.add(deck.remove(0));
+        
+        return cards;
+    }
+    
     
     @Override
     public String toString() {

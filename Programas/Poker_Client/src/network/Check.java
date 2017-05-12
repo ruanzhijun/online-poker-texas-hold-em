@@ -26,6 +26,7 @@ public class Check {
     */
     
     private static boolean needsCards(ArrayList<Card> cards, int number) {
+        System.out.println("Needs cards: " +cards.size());
         return (cards.size() < number);
     }
     

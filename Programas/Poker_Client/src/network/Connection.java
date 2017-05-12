@@ -24,9 +24,9 @@ public class Connection {
     private static final int CREATE_GAME = 1; // First Menu, before the game starts.
     private static final int JOIN_GAME = 2;
     
-    private static final int BET = 4; // Second Menu, once the game's started.
-    private static final int GET_OWN_CARDS = 5;
-    private static final int GET_TABLE_CARDS = 6;
+    private static final int BET = 6; // Second Menu, once the game's started.
+    private static final int GET_OWN_CARDS = 4;
+    private static final int GET_TABLE_CARDS = 5;
     private static final int RETIRE = 7;
     
     private static Socket socket = null;
@@ -170,11 +170,11 @@ public class Connection {
                 oos.writeUTF(player.getID());
                 oos.flush();
                 
-                Card card1 = (Card) ois.readObject();
-                Card card2 = (Card) ois.readObject();
-
-                cards.add(card1);
-                cards.add(card2);
+                int number = ois.readInt(); // todo: split it so I can re-use it.
+                for (int i = 0; i < number; i++) {
+                    Card card = (Card) ois.readObject();
+                    cards.add(card);
+                }
 
                 return cards;
             }

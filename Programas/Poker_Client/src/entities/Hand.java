@@ -14,7 +14,7 @@ public class Hand {
      * Adds a card to the private player's cards.
      * @param card Card to add.
      */
-    public void addOwn(ArrayList<Card> cards) {
+    void addOwn(ArrayList<Card> cards) {
         own = new ArrayList<>();
         own.addAll(cards);
     }
@@ -23,7 +23,7 @@ public class Hand {
      * Empties the table and adds the cards into the AL.
      * @param card Cards which make the table.
      */
-    public void addTable(ArrayList<Card> card) {
+    void addTable(ArrayList<Card> card) {
         table = new ArrayList<>();
         getTable().addAll(card);
     }
@@ -36,7 +36,7 @@ public class Hand {
         own = new ArrayList<>();
         table = new ArrayList<>();
     }
-
+    
     /**
      * @return the own
      */

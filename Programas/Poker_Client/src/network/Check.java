@@ -23,11 +23,24 @@ public class Check {
             player.getHand().addOwn(serverCards);
         }
     }
+    */
     
-    private static void checkPhase(Player player, String reference, String phase) {
+    private static boolean needsCards(ArrayList<Card> cards, int number) {
+        return (cards.size() < number);
+    }
+    
+    private static void getCards(Player player, ArrayList<Card> cards, String reference, int number) {
+        if(needsCards(cards, number)) {
+            ArrayList<Card> obtained = Connection.getOwnCards(player, reference);
+            player.addOwn(obtained);
+            System.out.println("Private player's cards added.");
+        }
+    }
+    
+    private static void cards(Player player, String reference) {
         switch(phase) {
             case "PreFlop":
-                ownCards(player, reference);
+                getCards(player, player.getOwnCards(), reference, 2);
                 break;
             case "Flop":
                 break;
@@ -37,7 +50,6 @@ public class Check {
                 break;
         }
     }
-    */
     
     /**
      * Main method to be executed by the thread. It updates the static parameters in this class. (b. players turn and S. games phase).
@@ -50,10 +62,10 @@ public class Check {
         if(data.size() > 0) {
             phase = (String) data.get(0);
             turn = (boolean) data.get(1);
-            System.out.println("Data updated: phase " +phase +", turn " +turn);
+            System.out.println("Data updated: phase " +phase +", turn " +turn); // todo: delete when not needed.
+            
+            cards(player, reference);
         } else { System.out.println("The game #" +reference +" does not exist."); };
-        
-        // checkPhase(player, reference, phase);
     }
 
     /**

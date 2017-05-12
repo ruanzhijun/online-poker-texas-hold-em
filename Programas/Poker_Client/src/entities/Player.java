@@ -21,6 +21,14 @@ public class Player {
         this.ID = ID;
     }
     
+    /**
+     * Deletes the previous cards in the hand (if any) and adds the new ones.
+     * @param cards AL<Card> to add as private cards.
+     */
+    public void addOwn(ArrayList<Card> cards) {
+        this.hand.addOwn(cards);
+    }
+    
     public ArrayList<Card> getOwnCards() {
         return getHand().getOwn();
     }

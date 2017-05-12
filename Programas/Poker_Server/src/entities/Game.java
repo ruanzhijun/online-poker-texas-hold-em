@@ -145,6 +145,20 @@ public class Game {
         } else return null;
     }
     
+    /**
+     * Checks if the player may bet.
+     * That means: its his turn, and didn't bet yet.
+     * @param id ID of the player to check.
+     * @return boolean. AND between bool his turn and bool did he already bet?
+     */
+    boolean mayBet(String id) {
+        return ((boolean) ROUNDPLAYERS.get(id).get(0) && (boolean) ROUNDPLAYERS.get(id).get(1));
+    }
+    
+    int bet(int amount) {
+        chips += amount;
+        return chips;
+    }
     
     /**
      * @return the isStarted

@@ -143,4 +143,19 @@ public class Connection {
             oos.flush();
         }catch(IOException ex) { ex.printStackTrace(); }
     }
+    
+    public static int getBet() {
+        try {
+            return ois.readInt();
+        } catch(IOException ex) { ex.printStackTrace(); }
+        
+        return -1;
+    }
+    
+    public static void sendChips(int amount) {
+        try {
+            oos.writeInt(amount);
+            oos.flush();
+        } catch(IOException ex) { ex.printStackTrace(); }
+    }
 }

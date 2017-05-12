@@ -108,5 +108,24 @@ public class Games {
         
         return null;
     }
-            
+    
+    
+    public static boolean mayBet(String reference, String id) {
+        if(GAMES.containsKey(reference)) {
+            Game game = (Game) GAMES.get(reference);
+            return game.mayBet(id);
+        } 
+        
+        return false;
+    }
+    
+    public static int bet(String reference, String id, int amount) {
+        if(mayBet(reference, id)) {
+            Game game = (Game)GAMES.get(reference);
+            int pool = game.bet(amount);
+            return pool;
+        }
+        
+        return -1;
+    }
 }

@@ -13,7 +13,8 @@ import java.util.ArrayList;
  * The players get their private cards. After this, players bet's.
  * @author Mario Codes
  */
-public class PreFlop implements Phase{
+public class PreFlop implements Phase {
+    
     /**
      * To be called when the game starts, and after a round has ended.
      * @param game Game we're operating with.

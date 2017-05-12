@@ -78,6 +78,22 @@ public class Menu {
     }
     
     
+    private static void bet() {
+        String reference = Connection.getReference();
+        String id = Connection.getID();
+        boolean exist = Games.check(reference);
+        Connection.sendResult(exist);
+        if(exist) {
+            boolean mayBet = Games.mayBet(reference, id);
+            Connection.sendResult(mayBet);
+            if(mayBet) {
+                int amount = Connection.getBet();
+                int chips = Games.bet(reference, id, amount);
+                Connection.sendChips(chips);
+            }
+        }
+    }
+    
     /**
      * Main Switch which derives everything where it needs to be.
      * Here the socket's connection has already been opened!.
@@ -99,7 +115,10 @@ public class Menu {
             case GET_CARDS_PRIVATE: 
                 private_cards();
                 break;
-            case 5: case 6: case 7:
+            case BET:
+                bet();
+                break;
+            case 5: case 7:
                 break;
             case -1:
                 System.out.println("Problem with the connection. Error output by main switch.");

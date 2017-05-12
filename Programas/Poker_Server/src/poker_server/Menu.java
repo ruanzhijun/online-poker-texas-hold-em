@@ -1,5 +1,6 @@
 package poker_server;
 
+import entities.Card;
 import entities.Games;
 import java.util.ArrayList;
 import network.Connection;
@@ -16,9 +17,9 @@ public class Menu {
     private static final int JOIN_GAME = 2;
     
     /* ATENTION! Before doing any of these, I should check the game's status. */
-    private static final int BET = 4; // Second Menu, once the game's started.
+    private static final int BET = 6; // Second Menu, once the game's started.
     private static final int GET_CARDS_COMMON = 5;
-    private static final int GET_CARDS_PRIVATE = 6;
+    private static final int GET_CARDS_PRIVATE = 4;
     private static final int RETIRE = 7;
     
     
@@ -45,7 +46,6 @@ public class Menu {
         Connection.sendResult(result);
     }
     
-    
     /**
      * Check which does a secondary thread.
      * With the games reference and players id, sends the games phase and if this player may speak or wait.
@@ -59,6 +59,21 @@ public class Menu {
             String phase = Games.getPhase(reference);
             boolean speaks = Games.speaks(reference, id);
             Connection.sendInformation(phase, speaks);
+        }
+    }
+    
+    
+    /**
+     * Retrieves and sends the private user cards through the socket.
+     */
+    private static void private_cards() {
+        String reference = Connection.getReference();
+        boolean exist = Games.check(reference);
+        Connection.sendResult(exist);
+        if(exist) {
+            String id = Connection.getID();
+            ArrayList<Card> cards = Games.privateCards(reference, id);
+            Connection.sendCards(cards);
         }
     }
     
@@ -81,7 +96,10 @@ public class Menu {
             case JOIN_GAME:
                 joinGame();
                 break;
-            case 4: case 5: case 6: case 7:
+            case GET_CARDS_PRIVATE: 
+                private_cards();
+                break;
+            case 5: case 6: case 7:
                 break;
             case -1:
                 System.out.println("Problem with the connection. Error output by main switch.");

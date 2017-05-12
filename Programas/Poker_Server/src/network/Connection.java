@@ -108,6 +108,7 @@ public class Connection {
         return null;
     }
     
+    
     /**
      * Sends the result of an operation through the socket. Generic method.
      * @param result boolean. Result of the operation we want to inform the user.
@@ -119,11 +120,27 @@ public class Connection {
         } catch(IOException ex) { ex.printStackTrace(); }
     }
     
+    
     public static void sendInformation(String phase, boolean speaks) {
         try {
             oos.writeUTF(phase);
             oos.writeBoolean(speaks);
             oos.flush();
         } catch(IOException ex) { ex.printStackTrace(); }
+    }
+    
+    
+    /**
+     * Sends the cards through the socket. Dynamic number of cards.
+     * Integer. Number of cards to be sent.
+     * Card. Card #i.
+     * @param cards Number of cards to be sent.
+     */
+    public static void sendCards(ArrayList<Card> cards) {
+        try {
+            oos.writeInt(cards.size());
+            for (int i = 0; i < cards.size(); i++) oos.writeObject(cards.get(i));
+            oos.flush();
+        }catch(IOException ex) { ex.printStackTrace(); }
     }
 }

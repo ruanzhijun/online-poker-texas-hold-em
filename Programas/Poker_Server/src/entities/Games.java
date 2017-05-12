@@ -67,7 +67,7 @@ public class Games {
     
     /**
      * Gets the phase from the game with the specified reference.
-     * @param reference Game's reference we want to obtain it's phase from.
+     * @param reference Games reference we want to obtain it's phase from.
      * @return String. Phase this game is currently at.
      */
     public static String getPhase(String reference) {
@@ -93,4 +93,20 @@ public class Games {
         
         return false;
     }
+    
+    /**
+     * Checks the game with x reference and retrieves the user with id i private cards.
+     * @param reference Reference of the game the player is playing on.
+     * @param id Unique ID to know from which player get its cards.
+     * @return AL<Card>. Private player cards.
+     */
+    public static ArrayList<Card> privateCards(String reference, String id) {
+        if(GAMES.containsKey(reference)) {
+            Game game = (Game) GAMES.get(reference);
+            return game.getPlayerCards(id);
+        }
+        
+        return null;
+    }
+            
 }

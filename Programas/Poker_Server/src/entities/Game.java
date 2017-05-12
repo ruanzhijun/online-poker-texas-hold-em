@@ -134,7 +134,7 @@ public class Game {
      * Gets the assigned player private cards. To be used from Games.
      * @param id ID of the player we want to retrieve it's cards.
      * @return AL<Card> with it's 2 cards.
-     
+     */
     ArrayList<Card> getPlayerCards(String id) {
         if(ROUNDPLAYERS.containsKey(id)) {
             ArrayList<Card> cards = new ArrayList<>();
@@ -143,7 +143,7 @@ public class Game {
             
             return cards;
         } else return null;
-    } */
+    }
     
     
     /**

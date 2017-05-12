@@ -8,6 +8,7 @@ import network.Connection;
 * TODOs:
 * Set the client so it asks for IP and Port on login.
 * I leave everything related to users and the web to when I've mine uploaded and on the Internet.
+* Set something to return when the thread checks for a user which is not in this game. NullPointer right now.
 */
 
 /**
@@ -204,10 +205,10 @@ public class MainMenu extends javax.swing.JFrame {
                 System.out.println("Connection Opened");     
                 Player p = new Player("mario");
                 
-                boolean result = Connection.createGame("SU", "SHI",  2);
+                boolean result = Connection.createGame("SU", "mario",  2);
                 System.out.println("Result is: " +result);
                 
-                result = Connection.joinGame("SU", "MARIO");
+                result = Connection.joinGame("SU", "SHI");
                 System.out.println("Result is: " +result);
                 
                 Runnable t = () -> { Check.checks(p, "SU");};

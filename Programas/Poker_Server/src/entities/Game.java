@@ -75,8 +75,8 @@ public class Game {
      */
     private void addPlayerToList(String id) {
         ArrayList actions = new ArrayList<>();
-        actions.add(false);
-        actions.add(true);
+        actions.add(new Boolean(false));
+        actions.add(new Boolean(true));
         ALLPLAYERS.put(id, actions);
     }
     
@@ -126,8 +126,7 @@ public class Game {
      * @return Boolean. True if the player may speak.
      */
     boolean speaks(String id) {
-        //return (boolean) ROUNDPLAYERS.get(id).get(0);
-        return true; // fixme: implement in the game who does speak.
+        return (boolean) ROUNDPLAYERS.get(id).get(0);
     }
     
     

@@ -204,6 +204,9 @@ public class MainMenu extends javax.swing.JFrame {
                 result = Connection.joinGame("SU", "SHI");
                 System.out.println("Result is: " +result);
                 
+                int pool = p.bet("SU", 100);
+                System.out.println("Pool after bet: " +pool);
+                
                 Runnable t = () -> { Check.checks(p, "SU");};
                 
                 while(true) {

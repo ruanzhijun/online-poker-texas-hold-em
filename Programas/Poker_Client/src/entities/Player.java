@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.ArrayList;
+import network.Connection;
 
 /**
  * Representation of a player.
@@ -19,6 +20,12 @@ public class Player {
      */
     public Player(String ID) { 
         this.ID = ID;
+    }
+    
+    public int bet(String reference, int amount) {
+        int pool = Connection.bet(this, reference, amount);
+        if(pool > 0) chips -= amount;
+        return pool;
     }
     
     /**

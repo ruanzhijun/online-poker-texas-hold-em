@@ -182,4 +182,28 @@ public class Connection {
         
         return null;
     }
+    
+    public static int bet(Player player, String reference, int amount) {
+        try {
+            open();
+            oos.writeInt(BET);
+            oos.writeUTF(reference);
+            oos.writeUTF(player.getID());
+            oos.flush();
+            
+            boolean exists = ois.readBoolean();
+            if(exists) {
+                boolean mayBet = ois.readBoolean();
+                if(mayBet) {
+                    oos.writeInt(amount);
+                    oos.flush();
+                    
+                    int chips = ois.readInt();
+                    return chips;
+                } else return -2;
+            } else return -1;
+        } catch(IOException ex) { ex.printStackTrace(); }
+        
+        return -1;
+    }
 }

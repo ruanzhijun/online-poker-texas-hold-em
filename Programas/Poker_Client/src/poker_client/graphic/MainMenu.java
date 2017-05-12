@@ -4,13 +4,6 @@ import entities.Player;
 import network.Check;
 import network.Connection;
 
-/*
-* TODOs:
-* Set the client so it asks for IP and Port on login.
-* I leave everything related to users and the web to when I've mine uploaded and on the Internet.
-* Set something to return when the thread checks for a user which is not in this game. NullPointer right now.
-*/
-
 /**
  * Client's MainMenu Window.
  * @author Mario Codes Sánchez

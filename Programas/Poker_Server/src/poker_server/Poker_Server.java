@@ -5,11 +5,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import network.Connection;
 
-/*
-* TODOs:
-* Set the server so it asks on which port to run at start.
-*/
-
 /**
  * Multi-thread Server. It's able to serve multiple hosts simultaneously.
  * @author Mario Codes

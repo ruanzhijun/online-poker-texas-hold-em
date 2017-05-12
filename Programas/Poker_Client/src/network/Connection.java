@@ -122,7 +122,7 @@ public class Connection {
     /**
      * Retrieving information on the current game. Will be executed periodically in a separated thread.
      * @param reference String. Games ID we want to obtain information on.
-     * @return AL. [0] = Current phase of the game. [1] = Players turn to talk (ID).
+     * @return AL. If length == 0 the game does not exist. Otherwise [0] = Current phase of the game. [1] = Players turn to talk (ID).
      */
     public static ArrayList information(String reference, String id) {
         ArrayList inf = new ArrayList<>();
@@ -140,9 +140,11 @@ public class Connection {
                 
                 inf.add(ois.readUTF()); //Current Phase.
                 inf.add(ois.readBoolean()); // Players turn (ID).
-                
+
                 return inf;
             }
+           
+            return inf;
         } catch(IOException ex) { ex.printStackTrace(); }
         
         return null;

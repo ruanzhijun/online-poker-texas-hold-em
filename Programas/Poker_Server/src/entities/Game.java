@@ -126,7 +126,8 @@ public class Game {
      * @return Boolean. True if the player may speak.
      */
     boolean speaks(String id) {
-        return (boolean) ROUNDPLAYERS.get(id).get(0);
+        //return (boolean) ROUNDPLAYERS.get(id).get(0);
+        return true; // fixme: implement in the game who does speak.
     }
     
     

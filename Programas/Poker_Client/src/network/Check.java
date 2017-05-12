@@ -46,11 +46,12 @@ public class Check {
      * @param reference Reference of the game the player is playing in.
      */
     public static void checks(Player player, String reference) {
-        ArrayList data = Connection.information(player.getID(), reference);
-        phase = (String) data.get(0);
-        turn = (boolean) data.get(1);
-        
-        System.out.println("Data updated: phase " +phase +", turn " +turn);
+        ArrayList data = Connection.information(reference, player.getID());
+        if(data.size() > 0) {
+            phase = (String) data.get(0);
+            turn = (boolean) data.get(1);
+            System.out.println("Data updated: phase " +phase +", turn " +turn);
+        } else { System.out.println("The game #" +reference +" does not exist."); };
         
         // checkPhase(player, reference, phase);
     }

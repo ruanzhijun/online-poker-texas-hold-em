@@ -10,8 +10,9 @@ import java.util.ArrayList;
  * @author Mario Codes
  */
 public class Check {
-    private static String turn = "";
+    private static boolean turn = false;
     
+    /*
     private static void ownCards(Player player, String reference) {
         ArrayList<Card> own = player.getOwnCards();
         ArrayList<Card> serverCards;
@@ -35,12 +36,26 @@ public class Check {
                 break;
         }
     }
+    */
     
-    public static void check(Player player, String reference) {
-        ArrayList<String> data = Connection.information(reference);
-        String phase = data.get(0);
-        turn = data.get(1);
+    /**
+     * Main method to be executed by the thread. It updates the static parameters in this class. (b. players turn and S. games phase).
+     * Also calls the method to obtain cards depending on the phase and player cards.
+     * @param player Player who calls this. Need its ID to know if its his / her turn.
+     * @param reference Reference of the game the player is playing in.
+     */
+    public static void checks(Player player, String reference) {
+        ArrayList data = Connection.information(player.getID(), reference);
+        String phase = (String) data.get(0);
+        turn = (boolean) data.get(1);
         
-        checkPhase(player, reference, phase);
+        // checkPhase(player, reference, phase);
+    }
+
+    /**
+     * @return the turn
+     */
+    public static boolean isTurn() {
+        return turn;
     }
 }

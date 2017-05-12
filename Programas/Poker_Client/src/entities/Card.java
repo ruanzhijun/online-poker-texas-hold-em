@@ -29,11 +29,4 @@ public class Card implements Serializable {
         
         return sb.toString();
     }
-
-    /**
-     * @return the PALO
-     */
-    public String getSUIT() {
-        return SUIT;
-    }
 }

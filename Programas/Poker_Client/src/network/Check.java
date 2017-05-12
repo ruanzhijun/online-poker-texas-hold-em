@@ -13,20 +13,7 @@ public class Check {
     private static String phase = "";
     private static boolean turn = false;
     
-    /*
-    private static void ownCards(Player player, String reference) {
-        ArrayList<Card> own = player.getOwnCards();
-        ArrayList<Card> serverCards;
-        
-        if(own.size() > 2) {
-            serverCards = Connection.getOwnCards(player, reference);
-            player.getHand().addOwn(serverCards);
-        }
-    }
-    */
-    
     private static boolean needsCards(ArrayList<Card> cards, int number) {
-        System.out.println("Needs cards: " +cards.size());
         return (cards.size() < number);
     }
     

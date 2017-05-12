@@ -30,11 +30,4 @@ public class Card implements Serializable {
         
         return sb.toString();
     }
-
-    /**
-     * @return the VALUE
-     */
-    public String getVALUE() {
-        return VALUE;
-    }
 }

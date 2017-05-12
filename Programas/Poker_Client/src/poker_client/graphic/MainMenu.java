@@ -1,5 +1,7 @@
 package poker_client.graphic;
 
+import entities.Player;
+import network.Check;
 import network.Connection;
 
 /*
@@ -200,12 +202,22 @@ public class MainMenu extends javax.swing.JFrame {
             public void run() {
                 // new MainMenu().setVisible(true);
                 System.out.println("Connection Opened");     
+                Player p = new Player("mario");
                 
                 boolean result = Connection.createGame("SU", "SHI",  2);
                 System.out.println("Result is: " +result);
                 
                 result = Connection.joinGame("SU", "MARIO");
                 System.out.println("Result is: " +result);
+                
+                Runnable t = () -> { Check.checks(p, "SU");};
+                
+                while(true) {
+                    try {
+                        new Thread(t).start();
+                        Thread.sleep(5000);
+                    } catch(InterruptedException ex) { ex.printStackTrace(); }
+                }
             }
         });
     }

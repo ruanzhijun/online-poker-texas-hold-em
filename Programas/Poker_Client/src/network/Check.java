@@ -10,6 +10,7 @@ import java.util.ArrayList;
  * @author Mario Codes
  */
 public class Check {
+    private static String phase = "";
     private static boolean turn = false;
     
     /*
@@ -46,8 +47,10 @@ public class Check {
      */
     public static void checks(Player player, String reference) {
         ArrayList data = Connection.information(player.getID(), reference);
-        String phase = (String) data.get(0);
+        phase = (String) data.get(0);
         turn = (boolean) data.get(1);
+        
+        System.out.println("Data updated: phase " +phase +", turn " +turn);
         
         // checkPhase(player, reference, phase);
     }

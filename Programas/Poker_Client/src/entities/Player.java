@@ -29,10 +29,18 @@ public class Player {
         this.hand.addOwn(cards);
     }
     
+    /**
+     * Get the private player cards.
+     * @return AL<Card>. Private player cards.
+     */
     public ArrayList<Card> getOwnCards() {
         return getHand().getOwn();
     }
     
+    /**
+     * Gets the saved common cards.
+     * @return AL<Card>. Player common cards.
+     */
     public ArrayList<Card> getTableCards() {
         return getHand().getTable();
     }

@@ -32,7 +32,7 @@ public class Hand {
      * Removes every card from this player.
      * To do when starting a new round.
      */
-    public void clean() {
+    void clean() {
         own = new ArrayList<>();
         table = new ArrayList<>();
     }

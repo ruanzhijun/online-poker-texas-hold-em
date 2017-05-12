@@ -50,7 +50,7 @@ public class Menu {
      * Check which does a secondary thread.
      * With the games reference and players id, sends the games phase and if this player may speak or wait.
      */
-    private static void information() {
+    private synchronized static void information() {
         String reference = Connection.getReference();
         boolean exists = Games.check(reference);
         Connection.sendResult(exists);
@@ -76,7 +76,6 @@ public class Menu {
             Connection.sendCards(cards);
         }
     }
-    
     
     private static void bet() {
         String reference = Connection.getReference();

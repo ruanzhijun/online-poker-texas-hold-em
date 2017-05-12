@@ -122,7 +122,7 @@ public class Games {
     public static int bet(String reference, String id, int amount) {
         if(mayBet(reference, id)) {
             Game game = (Game)GAMES.get(reference);
-            int pool = game.bet(amount);
+            int pool = game.bet(id, amount);
             return pool;
         }
         

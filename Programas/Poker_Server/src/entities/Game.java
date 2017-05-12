@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import states.Phase;
@@ -100,6 +101,11 @@ public class Game {
         return !started && (joinedPlayers < totalPlayers);
     }
     
+    private void setFirstTurn() {
+        String id = ROUNDPLAYERS.keySet().iterator().next();
+        ROUNDPLAYERS.get(id).set(0, true);
+    }
+    
     /**
      * Checks if the game has room left and !started.
      * Sets +1 to the number of current players, starts the game if all the players did join. Adds the player to global Map.
@@ -111,6 +117,7 @@ public class Game {
             if(joinedPlayers >= totalPlayers) { // Already do ++ in msg 1 line up.
                 addPlayerToList(id);
                 start();
+                setFirstTurn();
             } else addPlayerToList(id);
             
             return true;
@@ -155,8 +162,27 @@ public class Game {
         return ((boolean) ROUNDPLAYERS.get(id).get(0) && (boolean) ROUNDPLAYERS.get(id).get(1));
     }
     
-    int bet(int amount) {
+    private String nextID(String id) {
+        Iterator it = ROUNDPLAYERS.keySet().iterator();
+        while(it.hasNext()) {
+            String tmp = (String) it.next();
+            if(tmp.matches(id)) return (String) it.next();
+        }
+        
+        // todo: check here if its the last one. if it is, must clean the booleans, set them to true and after set the first player turn to speak.
+        return "mario";
+    }
+    
+    private void manageTurns(String id) {
+        ROUNDPLAYERS.get(id).set(0, false);
+        ROUNDPLAYERS.get(id).set(1, false);
+        String next = nextID(id);
+        ROUNDPLAYERS.get(next).set(0, true);
+    }
+    
+    int bet(String id, int amount) {
         chips += amount;
+        manageTurns(id);
         return chips;
     }
     

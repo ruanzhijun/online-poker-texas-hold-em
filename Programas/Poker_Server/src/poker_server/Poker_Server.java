@@ -11,9 +11,9 @@ import network.Connection;
 */
 
 /**
- * Multithread Server. It's able to serve multiple hosts simultaneously.
+ * Multi-thread Server. It's able to serve multiple hosts simultaneously.
  * @author Mario Codes
- * @version 0.0.1 Just created and doing basics.
+ * @version 0.0.2 Did it multi-thread.
  */
 public class Poker_Server {
     private static final int PORT = 8143; // todo: It should ask it when first run.

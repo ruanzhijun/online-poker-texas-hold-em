@@ -82,6 +82,11 @@ public class Connection {
         return parameters;
     }
     
+    
+    /**
+     * Gets the ID of a player.
+     * @return String. ID of the player.
+     */
     public static String getID() {
         try {
             return ois.readUTF();
@@ -89,6 +94,7 @@ public class Connection {
         
         return null;
     }
+    
     
     /**
      * Gets the reference of a game.

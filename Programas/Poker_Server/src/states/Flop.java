@@ -30,18 +30,6 @@ public class Flop implements Phase {
         int pool = Actions.bet(game, id, amount);
         if(Actions.isLastPlayer(game, id)) new Turn().change(game);        
         return pool;
-        
-//        if(juego.getHABLADO().contains(false)) Conexion.sendBooleano(false); //Si todos no han hablado no se puede apostar.
-//        else {
-//            Conexion.sendBooleano(true);
-//            int id = Conexion.getID();
-//            if(juego.getAPOSTADO().get(id)) Conexion.sendBooleano(false);
-//            else {
-//                Conexion.sendBooleano(true);
-//                Conexion.getApuesta(juego);
-//                juego.getAPOSTADO().set(id, true);
-//            }
-//        }
     }
     
     @Override

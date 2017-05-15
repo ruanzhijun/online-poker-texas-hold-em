@@ -268,7 +268,7 @@ public class Game {
     }
 
     /**
-     * DO NOT USE THIS!!! Do use Phase.change(); instead.
+     * DO NOT USE THIS!!! Use Phase.change(); instead.
      * I do need it to make the change internally inside the phase.
      * Apart of this, DO NOT USE IT - NEVER - DIRECTLY!!
      * @param phase the phase to set

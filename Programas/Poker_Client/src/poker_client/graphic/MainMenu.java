@@ -6,8 +6,8 @@ import network.Connection;
 
 /**
  * Client's MainMenu Window.
- * @author Mario Codes Sánchez
- * @version 0.0.2 First phase completed. Doing Flop.
+ * @author Mario Codes
+ * @version 0.0.3 Phases completed but the last one. Check errors und so.
  */
 public class MainMenu extends javax.swing.JFrame {
 
@@ -195,50 +195,54 @@ public class MainMenu extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 // new MainMenu().setVisible(true);
+                
                 System.out.println("Connection Opened");     
                 Player o = new Player("mario");
                 Player a = new Player("maria");
                 
-                boolean result = Connection.createGame("SU", o.getID(),  2);
-//                System.out.println("Result is: " +result);
+                Connection.createGame("SU", o.getID(),  2);
+                Connection.joinGame("SU", a.getID());
                 
-                result = Connection.joinGame("SU", a.getID());
-//                System.out.println("Result is: " +result);
-                
-                System.out.println("Cards mario: " +o.getOwnCards());
-                System.out.println("Cards maria: " +a.getOwnCards());
+                Check.checks(o, "SU");
+                Check.checks(a, "SU");
 
+                System.out.println("");
                 int pool = o.bet("SU", 100);
                 System.out.println("Pool after bet: " +pool);
-                
-                pool = a.bet("SU", 150);
+                pool = a.bet("SU", 100);
                 System.out.println("Pool after bet: " +pool);
+                Check.checks(o, "SU");
+                Check.checks(a, "SU");
+                System.out.println("Private: " +o.getOwnCards());
+                System.out.println("Private: " +a.getOwnCards());
+                System.out.println("Table: " +o.getTableCards());
+                System.out.println("Table: " +a.getTableCards());
+                System.out.println("");
                 
-//                pool = o.bet("SU", 150);
-//                System.out.println("Pool after bet: " +pool);
+                pool = o.bet("SU", 100);
+                System.out.println("Pool after bet: " +pool);
+                pool = a.bet("SU", 100);
+                System.out.println("Pool after bet: " +pool);
+                Check.checks(o, "SU");
+                Check.checks(a, "SU");
+                System.out.println("Common: " +o.getTableCards());
+                System.out.println("Common: " +a.getTableCards());
+                System.out.println("");
                 
-//                pool = a.bet("SU", 150);
-//                System.out.println("Pool after bet: " +pool);
+                pool = o.bet("SU", 100);
+                System.out.println("Pool after bet: " +pool);
+                pool = a.bet("SU", 100);
+                System.out.println("Pool after bet: " +pool);
+                Check.checks(o, "SU");
+                Check.checks(a, "SU");
+                System.out.println("Common: " +o.getTableCards());
+                System.out.println("Common: " +a.getTableCards());
+                System.out.println("");
                 
-//                pool = o.bet("SU", 150);
-//                System.out.println("Pool after bet: " +pool);
-                
-                Runnable t = () -> { Check.checks(o, "SU");};
-                Runnable t2 = () -> { Check.checks(a, "SU");};
-                
-                while(true) {
-                    try {
-                        System.out.println("O: ");
-                        new Thread(t).start();
-                        System.out.println("Cards: " +o.getTableCards());
-                        Thread.sleep(2000);
-                        
-                        System.out.println("A: ");
-                        new Thread(t2).start();
-                        System.out.println("Cards: " +a.getTableCards());
-                        Thread.sleep(2000);
-                    } catch(InterruptedException ex) { ex.printStackTrace(); }
-                }
+                pool = o.bet("SU", 100);
+                System.out.println("Pool after bet: " +pool);
+                pool = a.bet("SU", 100);
+                System.out.println("Pool after bet: " +pool);
             }
         });
     }

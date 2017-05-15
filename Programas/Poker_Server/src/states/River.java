@@ -15,10 +15,9 @@ import java.util.ArrayList;
 public class River implements Phase {
     @Override
     public void change(Game game) {
-//        juego.resetTurnos();
-//        juego.setFase(this);
-//        juego.extraerCartaComun();
-//        System.out.println("Fase de River");
+        game.setPhase(this);
+        game.resetTurns();
+        game.retrieveTableCards(1);
     }
 
     @Override
@@ -28,19 +27,9 @@ public class River implements Phase {
     
     @Override
     public int bet(Game game, String id, int amount) {
-        return Actions.bet(game, id, amount);
-        
-//        if(juego.getHABLADO().contains(false)) Conexion.sendBooleano(false); //Si todos no han hablado no se puede apostar.
-//        else {
-//            Conexion.sendBooleano(true);
-//            int id = Conexion.getID();
-//            if(juego.getAPOSTADO().get(id)) Conexion.sendBooleano(false);
-//            else {
-//                Conexion.sendBooleano(true);
-//                Conexion.getApuesta(juego);
-//                juego.getAPOSTADO().set(id, true);
-//            }
-//        }
+        int pool = Actions.bet(game, id, amount);
+        if(Actions.isLastPlayer(game, id)) new River().change(game);        
+        return pool;
     }
     
     

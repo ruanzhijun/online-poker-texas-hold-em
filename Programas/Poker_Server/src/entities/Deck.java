@@ -604,6 +604,8 @@ public class Deck {
         
         /**
          * Main method to use, calls, checks and uses every other in here.
+         * It sets the best play which can be done with this cards.
+         * It sets the value of the play.
          * @param own Own private player cards.
          * @param common Common cards to all the players.
          */
@@ -635,6 +637,41 @@ public class Deck {
                         }
                     }
                 }
+            }
+            value = getScore(play);
+        }
+        
+        /**
+         * Calculates the score of a play. I add it to the score of the cards and compare it against the one of other players to check who is the winner.
+         * @param play Play to check. 
+         * Be sure the Strings match the ones in method checkPlay.
+         * @return Int. Numeric value of the play.
+         */
+        private static int getScore(String play) {
+            switch(play) {
+                case "Royal Flush":
+                    return 2000;
+                case "Color Straight":
+                    return 1800;
+                case "Four of a kind":
+                    return 1600;
+                case "Full House":
+                    return 1400;
+                case "Color":
+                    return 1200;
+                case "Straight":
+                    return 1000;
+                case "Three of a Kind":
+                    return 800;
+                case "Doble Pair":
+                    return 600;
+                case "Pair":
+                    return 400;
+                case "High Card":
+                    return 200;
+                default:
+                    System.out.println("Default Switch in Deck.getScore().");
+                    return 0;
             }
         }
     }

@@ -23,7 +23,8 @@ public class Game {
                                                                                         It also stores personal information about the player: 
                                                                                         [0] - boolean, player turn to speak?
                                                                                         [1] - boolean, can this player bet?
-                                                                                        [2][3] - private cards #1 and #2 */
+                                                                                        [2][3] - Card, private cards #1 and #2
+                                                                                        [4][5] - String, play with all the cards; Int, value of this play. */
     
     private int totalPlayers = 0, joinedPlayers = 1; // Number of players setted by user, number of players joined until now. The game will start when the second equals the first.
     private int playersTurn = 0; // Numeric index to access LinkedHashMap. The order to do it's action will be the order the players join in.
@@ -244,6 +245,36 @@ public class Game {
         }
         
         return false;
+    }
+    
+    private ArrayList<Card> getUserCards(ArrayList al) {
+        ArrayList<Card> cards = new ArrayList<>();
+        Card card1 = (Card) al.get(2);
+        Card card2 = (Card) al.get(3);
+        
+        cards.add(card1);
+        cards.add(card2);
+        
+        return cards;
+    }
+    
+    /**
+     * Checks the plays for all the players in game. I leave it here. Continue it tomorrow.
+     */
+    private void checkAllPlays() {
+        Iterator it = ROUNDPLAYERS.entrySet().iterator();
+        while(it.hasNext()) {
+            ArrayList user = (ArrayList) it.next();
+            ArrayList<Card> privateCards = getUserCards(user);
+            ArrayList result = deck.checkPlay(privateCards);
+            
+            user.add(4, result.get(0)); // String. Name of the play achieved.
+            user.add(5, result.get(1)); // int. score of that play.
+        }
+    }
+    
+    public void getWinner() {
+        
     }
     
     /**

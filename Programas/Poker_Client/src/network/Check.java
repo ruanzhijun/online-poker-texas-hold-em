@@ -39,7 +39,7 @@ public class Check {
     
     private static void getTableCards(Player player, ArrayList<Card> cards, String reference, int number) {
         if(needsCards(cards, number)) {
-            ArrayList<Card> obtained = Connection.getTableCards(player, reference);
+            ArrayList<Card> obtained = Connection.getTableCards(reference);
             player.addTable(obtained);
             System.out.println("Table cards added.");
         }

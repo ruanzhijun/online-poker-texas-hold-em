@@ -77,9 +77,11 @@ public class Menu {
         }
     }
     
+    /**
+     * Gets the common cards of the game and sends it to the user who requested it.
+     */
     private static void commonCards() {
         String reference = Connection.getReference();
-        String id = Connection.getID();
         boolean exists = Games.check(reference);
         Connection.sendResult(exists);
         if(exists) {

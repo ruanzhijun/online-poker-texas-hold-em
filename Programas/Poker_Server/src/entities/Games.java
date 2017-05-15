@@ -109,6 +109,11 @@ public class Games {
         return null;
     }
     
+    /**
+     * Checks if the game exists. Gets the common cards for all the players.
+     * @param reference
+     * @return 
+     */
     public static ArrayList<Card> commonCards(String reference) {
         if(GAMES.containsKey(reference)) {
             Game game = (Game) GAMES.get(reference);

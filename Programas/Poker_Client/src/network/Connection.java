@@ -186,14 +186,13 @@ public class Connection {
         return null;
     }
     
-    public static ArrayList<Card> getTableCards(Player player, String reference) {
+    public static ArrayList<Card> getTableCards(String reference) {
         ArrayList<Card> cards = new ArrayList<>();
         
         try {
             open();
             oos.writeInt(GET_TABLE_CARDS);
             oos.writeUTF(reference);
-            oos.writeUTF(player.getID());
             oos.flush();
             
             boolean exists = ois.readBoolean();

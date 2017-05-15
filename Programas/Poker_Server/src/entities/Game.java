@@ -160,6 +160,10 @@ public class Game {
         } else return null;
     }
     
+    /**
+     * Gets the common cards for all the players.
+     * @return AL<Card> with all the common cards.
+     */
     ArrayList<Card> getTableCards() {
         return deck.getCards_table();
     }

@@ -163,10 +163,13 @@ public class Game {
         return ((boolean) ROUNDPLAYERS.get(id).get(0) && (boolean) ROUNDPLAYERS.get(id).get(1));
     }
     
-    public void resetList() {
-        ROUNDPLAYERS = new LinkedHashMap<>();
-        ROUNDPLAYERS.putAll(ALLPLAYERS);
-        System.out.println(ROUNDPLAYERS);
+    /**
+     * Phase ended. Everyone has spoken. Set all booleans to true.
+     */
+    public void resetTurns() {
+//        ROUNDPLAYERS = new LinkedHashMap<>();
+//        ROUNDPLAYERS.putAll(ALLPLAYERS);
+        for(ArrayList al : ALLPLAYERS.values()) al.set(1, true);
     }
     
     private String getFirstKey() {

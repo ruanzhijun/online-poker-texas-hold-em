@@ -15,9 +15,8 @@ import java.util.ArrayList;
 public class Flop implements Phase {
     @Override
     public void change(Game game) {
-//        juego.resetTurnos();
         game.setPhase(this);
-        System.out.println("Flop phase!");
+        // game.resetList();
     }
 
     @Override

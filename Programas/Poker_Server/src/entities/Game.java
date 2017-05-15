@@ -163,9 +163,10 @@ public class Game {
         return ((boolean) ROUNDPLAYERS.get(id).get(0) && (boolean) ROUNDPLAYERS.get(id).get(1));
     }
     
-    private void resetList() {
+    public void resetList() {
         ROUNDPLAYERS = new LinkedHashMap<>();
         ROUNDPLAYERS.putAll(ALLPLAYERS);
+        System.out.println(ROUNDPLAYERS);
     }
     
     private String getFirstKey() {
@@ -185,8 +186,7 @@ public class Game {
         }
         
         // Here it will only reach when last player has betted.
-        // resetList();
-        return getFirstKey();
+        return getFirstKey(); // If it's the last, it will be overrided by the checking in the phase. Need a return that's a valid key tho.
     }
     
     /**
@@ -215,6 +215,11 @@ public class Game {
         return chips;
     }
     
+    /**
+     * Checks if it's the last entry in the hashmap. Executed after a bet. If so must advance to the next  phase.
+     * @param id String. ID to check.
+     * @return boolean. True if it's the last player to talk.
+     */
     public boolean isLastPlayer(String id) {
         Iterator it = ROUNDPLAYERS.keySet().iterator();
         while(it.hasNext()) {

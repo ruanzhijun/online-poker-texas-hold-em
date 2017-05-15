@@ -17,6 +17,12 @@ public class Actions {
         return game.mayBet(id);
     }
     
+    /**
+     * Checks if it was the last player to speak.
+     * @param game Game we're operating with.
+     * @param id ID of the player to check.
+     * @return True if it was the last player to speak. Change Phase if so.
+     */
     public static boolean isLastPlayer(Game game, String id) {
         return game.isLastPlayer(id);
     }

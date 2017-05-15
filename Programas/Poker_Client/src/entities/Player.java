@@ -36,6 +36,10 @@ public class Player {
         this.hand.addOwn(cards);
     }
     
+    public void addTable(ArrayList<Card> cards) {
+        this.hand.addTable(cards);
+    }
+    
     /**
      * Get the private player cards.
      * @return AL<Card>. Private player cards.

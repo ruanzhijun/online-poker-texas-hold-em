@@ -196,23 +196,47 @@ public class MainMenu extends javax.swing.JFrame {
             public void run() {
                 // new MainMenu().setVisible(true);
                 System.out.println("Connection Opened");     
-                Player p = new Player("mario");
+                Player o = new Player("mario");
+                Player a = new Player("maria");
                 
-                boolean result = Connection.createGame("SU", "mario",  2);
-                System.out.println("Result is: " +result);
+                boolean result = Connection.createGame("SU", o.getID(),  2);
+//                System.out.println("Result is: " +result);
                 
-                result = Connection.joinGame("SU", "SHI");
-                System.out.println("Result is: " +result);
+                result = Connection.joinGame("SU", a.getID());
+//                System.out.println("Result is: " +result);
                 
-                int pool = p.bet("SU", 100);
+                System.out.println("Cards mario: " +o.getOwnCards());
+                System.out.println("Cards maria: " +a.getOwnCards());
+
+                int pool = o.bet("SU", 100);
                 System.out.println("Pool after bet: " +pool);
                 
-                Runnable t = () -> { Check.checks(p, "SU");};
+                pool = a.bet("SU", 150);
+                System.out.println("Pool after bet: " +pool);
+                
+//                pool = o.bet("SU", 150);
+//                System.out.println("Pool after bet: " +pool);
+//                
+//                pool = a.bet("SU", 150);
+//                System.out.println("Pool after bet: " +pool);
+//                
+//                pool = o.bet("SU", 150);
+//                System.out.println("Pool after bet: " +pool);
+                
+                Runnable t = () -> { Check.checks(o, "SU");};
+                Runnable t2 = () -> { Check.checks(a, "SU");};
                 
                 while(true) {
                     try {
+                        System.out.println("O: ");
                         new Thread(t).start();
-                        Thread.sleep(5000);
+                        System.out.println("Cards: " +o.getTableCards());
+                        Thread.sleep(2000);
+                        
+                        System.out.println("A: ");
+                        new Thread(t2).start();
+                        System.out.println("Cards: " +a.getTableCards());
+                        Thread.sleep(2000);
                     } catch(InterruptedException ex) { ex.printStackTrace(); }
                 }
             }

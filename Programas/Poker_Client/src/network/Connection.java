@@ -150,6 +150,12 @@ public class Connection {
         return null;
     }
     
+    private static ArrayList<Card> getCards(int number) throws IOException, ClassNotFoundException {
+        ArrayList<Card> cards = new ArrayList<>();
+        for (int i = 0; i < number; i++) cards.add((Card) ois.readObject());
+        return cards;
+    }
+    
     /**
      * Gets this player's private cards retrieved by the server. The confirmation that he needs those cards is done by the standalone thread.
      * @param player Player from which we want to retrieve it's cards.
@@ -170,11 +176,8 @@ public class Connection {
                 oos.writeUTF(player.getID());
                 oos.flush();
                 
-                int number = ois.readInt(); // todo: split it so I can re-use it.
-                for (int i = 0; i < number; i++) {
-                    Card card = (Card) ois.readObject();
-                    cards.add(card);
-                }
+                int number = ois.readInt();
+                cards = getCards(number);
 
                 return cards;
             }
@@ -183,6 +186,35 @@ public class Connection {
         return null;
     }
     
+    public static ArrayList<Card> getTableCards(Player player, String reference) {
+        ArrayList<Card> cards = new ArrayList<>();
+        
+        try {
+            open();
+            oos.writeInt(GET_TABLE_CARDS);
+            oos.writeUTF(reference);
+            oos.writeUTF(player.getID());
+            oos.flush();
+            
+            boolean exists = ois.readBoolean();
+            if(exists) {
+                int number = ois.readInt();
+                cards = getCards(number);
+                
+                return cards;
+            }
+        } catch(IOException|ClassNotFoundException ex) { ex.printStackTrace(); }
+        
+        return null;
+    }
+    
+    /**
+     * Does a bet. Checks if the game exists. Checks if it's this player's turn to speak and may bet.
+     * @param player Player to bet.
+     * @param reference Reference of the game the player is in.
+     * @param amount Amount of chips to bet.
+     * @return Integer. Amount of chips in common pool. -1 exception or game does not exist. -2 player may not bet.
+     */
     public static int bet(Player player, String reference, int amount) {
         try {
             open();

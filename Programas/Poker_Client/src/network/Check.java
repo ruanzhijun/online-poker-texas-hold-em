@@ -29,13 +29,21 @@ public class Check {
      * @param cards Cards the player currently has.
      * @param reference Reference of the game the player is in.
      */
-    private static void private_cards(Player player, ArrayList<Card> cards, String reference) {
+    private static void getPrivateCards(Player player, ArrayList<Card> cards, String reference) {
         if(needsCards(cards, 2)) {
             ArrayList<Card> obtained = Connection.getOwnCards(player, reference);
             player.addOwn(obtained);
             System.out.println("Private player's cards added.");
         }
     }
+    
+    private static void getTableCards(Player player, ArrayList<Card> cards, String reference, int number) {
+        if(needsCards(cards, number)) {
+            ArrayList<Card> obtained = Connection.getTableCards(player, reference);
+            player.addTable(cards);
+            System.out.println("Table cards added.");
+        }
+    } 
     
     /**
      * Checks the phase of the game, depending which one is, tells which method has to be executed and how many cards there does need to be in it.
@@ -45,9 +53,10 @@ public class Check {
     private static void cards(Player player, String reference) {
         switch(phase) {
             case "PreFlop":
-                private_cards(player, player.getOwnCards(), reference);
+                getPrivateCards(player, player.getOwnCards(), reference);
                 break;
             case "Flop":
+                getTableCards(player, player.getTableCards(), reference, 3);
                 break;
             case "Turn":
                 break;

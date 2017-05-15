@@ -107,7 +107,7 @@ public class Deck {
      * @param number Number of cards to retrieve.
      */
     public void retrieveTableCards(int number) {
-        for (int i = 0; i < number; i++) cards_table.add(getCard());
+        for (int i = 0; i < number; i++) getCards_table().add(getCard());
     }
     
     @Override
@@ -124,5 +124,12 @@ public class Deck {
         }
         
         return sb.toString();
+    }
+
+    /**
+     * @return the cards_table
+     */
+    public ArrayList<Card> getCards_table() {
+        return cards_table;
     }
 }

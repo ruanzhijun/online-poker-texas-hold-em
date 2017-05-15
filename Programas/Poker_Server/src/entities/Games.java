@@ -109,6 +109,15 @@ public class Games {
         return null;
     }
     
+    public static ArrayList<Card> commonCards(String reference) {
+        if(GAMES.containsKey(reference)) {
+            Game game = (Game) GAMES.get(reference);
+            return game.getTableCards();
+        }
+        
+        return null;
+    }
+    
     /**
      * Check if this player may bet right now. This means it's his turn and he didn't speak yet.
      * @param reference String. Reference of the game to check.

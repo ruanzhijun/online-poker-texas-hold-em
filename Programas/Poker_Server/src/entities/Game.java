@@ -160,6 +160,9 @@ public class Game {
         } else return null;
     }
     
+    ArrayList<Card> getTableCards() {
+        return deck.getCards_table();
+    }
     
     /**
      * Checks if the player may bet.

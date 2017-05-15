@@ -77,6 +77,17 @@ public class Menu {
         }
     }
     
+    private static void commonCards() {
+        String reference = Connection.getReference();
+        String id = Connection.getID();
+        boolean exists = Games.check(reference);
+        Connection.sendResult(exists);
+        if(exists) {
+            ArrayList<Card> cards = Games.commonCards(reference);
+            Connection.sendCards(cards);
+        }
+    }
+    
     /**
      * Checks if it's the player's turn to bet.
      * If it is, it does bet.
@@ -120,10 +131,13 @@ public class Menu {
             case GET_CARDS_PRIVATE: 
                 private_cards();
                 break;
+            case GET_CARDS_COMMON:
+                commonCards();
+                break;
             case BET:
                 bet();
                 break;
-            case 5: case 7:
+            case 7:
                 break;
             case -1:
                 System.out.println("Problem with the connection. Error output by main switch.");

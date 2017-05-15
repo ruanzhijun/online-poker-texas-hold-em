@@ -17,6 +17,10 @@ public class Actions {
         return game.mayBet(id);
     }
     
+    public static boolean isLastPlayer(Game game, String id) {
+        return game.isLastPlayer(id);
+    }
+    
     /**
      * Does the action of a bet. Also manages the turns inside the game and calls the next phase when it's the moment to do so.
      * @param game Game to operate in.
@@ -25,6 +29,8 @@ public class Actions {
      * @return Int. Total chips of the common pool.
      */
     public static int bet(Game game, String id, int amount) {
-        return game.bet(id, amount);
+        int pool = game.bet(id, amount);
+        
+        return pool;
     }
 }

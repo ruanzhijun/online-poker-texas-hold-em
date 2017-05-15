@@ -215,6 +215,15 @@ public class Game {
         return chips;
     }
     
+    public boolean isLastPlayer(String id) {
+        Iterator it = ROUNDPLAYERS.keySet().iterator();
+        while(it.hasNext()) {
+            String tmp = (String) it.next();
+            if(tmp.matches(id)) return !it.hasNext();
+        }
+        
+        return false;
+    }
     
     /**
      * @return the isStarted

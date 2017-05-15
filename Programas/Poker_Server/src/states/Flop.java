@@ -10,14 +10,14 @@ import java.util.ArrayList;
 
 /**
  * Flop Phase.
- * @author Mario Codes Sánchez
+ * @author Mario Codes
  */
 public class Flop implements Phase {
     @Override
     public void change(Game game) {
 //        juego.resetTurnos();
-//        juego.setFase(this);
-//        System.out.println("Flop phase");
+        game.setPhase(this);
+        System.out.println("Flop phase!");
     }
 
     @Override

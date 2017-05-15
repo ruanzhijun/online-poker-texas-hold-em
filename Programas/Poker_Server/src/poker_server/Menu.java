@@ -77,6 +77,12 @@ public class Menu {
         }
     }
     
+    /**
+     * Checks if it's the player's turn to bet.
+     * If it is, it does bet.
+     * It does a special 'flow'. Goes through the state machine to manipulate turn changes.
+     * The order of execution is Menu -> Games -> Game Phase -> Game. The phase it's a filter.
+     */
     private static void bet() {
         String reference = Connection.getReference();
         String id = Connection.getID();

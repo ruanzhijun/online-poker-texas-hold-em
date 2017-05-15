@@ -144,6 +144,10 @@ public class Connection {
         }catch(IOException ex) { ex.printStackTrace(); }
     }
     
+    /**
+     * Gets the amount of chips to bet.
+     * @return Amount of chips to bet.
+     */
     public static int getBet() {
         try {
             return ois.readInt();
@@ -152,6 +156,10 @@ public class Connection {
         return -1;
     }
     
+    /**
+     * Sends the total amount of chips in the common pool.
+     * @param amount Total amount of chips in common pool.
+     */
     public static void sendChips(int amount) {
         try {
             oos.writeInt(amount);

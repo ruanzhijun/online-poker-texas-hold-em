@@ -109,7 +109,12 @@ public class Games {
         return null;
     }
     
-    
+    /**
+     * Check if this player may bet right now. This means it's his turn and he didn't speak yet.
+     * @param reference String. Reference of the game to check.
+     * @param id String. ID of the player who tries to speak.
+     * @return Boolean. States if the player may bet or not.
+     */
     public static boolean mayBet(String reference, String id) {
         if(GAMES.containsKey(reference)) {
             Game game = (Game) GAMES.get(reference);
@@ -119,21 +124,20 @@ public class Games {
         return false;
     }
     
-    
+    /**
+     * Does the action of a bet. Here it's already been checked if the player may.
+     * Sets the player action to used.
+     * @param reference Reference of the game the player is in.
+     * @param id ID of the player who's betting.
+     * @param amount Amount of chips to bet.
+     * @return Int. Total amount of the pool until now (after the bet has been added). -1 if the game does not exist.
+     */
     public static int bet(String reference, String id, int amount) {
         if(GAMES.containsKey(reference)) {
             Game game = (Game) GAMES.get(reference);
             int pool = game.getPhase().bet(game, id, amount);
             return pool;
         }
-        
-        /*
-        if(mayBet(reference, id)) {
-            Game game = (Game)GAMES.get(reference);
-            int pool = game.bet(id, amount);
-            return pool;
-        }
-        */
         
         return -1;
     }

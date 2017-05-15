@@ -185,7 +185,7 @@ public class Game {
         }
         
         // Here it will only reach when last player has betted.
-        resetList();
+        // resetList();
         return getFirstKey();
     }
     

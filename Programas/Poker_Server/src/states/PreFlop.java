@@ -24,11 +24,24 @@ public class PreFlop implements Phase {
         game.newRound();
     }
     
+    /**
+     * Checks if the player may or may not bet right now.
+     * @param game Game we're checking.
+     * @param id ID of the player to check.
+     * @return Boolean. May the player bet?
+     */
     @Override
     public boolean mayBet(Game game, String id) {
         return Actions.mayBet(game, id);
     }
     
+    /**
+     * Does the bet action. Here it's already been checked if the player may do it.
+     * @param game Game we're checking.
+     * @param id ID of the player who is betting.
+     * @param amount Amount of chips to bet.
+     * @return Int. Total amount of chips after the bet.
+     */
     @Override
     public int bet(Game game, String id, int amount) {
         return Actions.bet(game, id, amount);

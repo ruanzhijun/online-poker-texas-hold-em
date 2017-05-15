@@ -7,7 +7,7 @@ import network.Connection;
 /**
  * Client's MainMenu Window.
  * @author Mario Codes Sánchez
- * @version 0.0.1 Just created, setting basics.
+ * @version 0.0.2 First phase completed. Doing Flop.
  */
 public class MainMenu extends javax.swing.JFrame {
 
@@ -216,10 +216,10 @@ public class MainMenu extends javax.swing.JFrame {
                 
 //                pool = o.bet("SU", 150);
 //                System.out.println("Pool after bet: " +pool);
-//                
+                
 //                pool = a.bet("SU", 150);
 //                System.out.println("Pool after bet: " +pool);
-//                
+                
 //                pool = o.bet("SU", 150);
 //                System.out.println("Pool after bet: " +pool);
                 

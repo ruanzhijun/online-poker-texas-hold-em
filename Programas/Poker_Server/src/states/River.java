@@ -6,7 +6,6 @@
 package states;
 
 import entities.Game;
-import java.util.ArrayList;
 
 /**
  * River Phase. Last one.

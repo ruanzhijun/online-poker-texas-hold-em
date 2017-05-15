@@ -152,6 +152,7 @@ public class Game {
         } else return null;
     }
     
+    
     /**
      * Checks if the player may bet.
      * That means: its his turn, and didn't bet yet.
@@ -162,17 +163,38 @@ public class Game {
         return ((boolean) ROUNDPLAYERS.get(id).get(0) && (boolean) ROUNDPLAYERS.get(id).get(1));
     }
     
+    private void resetList() {
+        ROUNDPLAYERS = new LinkedHashMap<>();
+        ROUNDPLAYERS.putAll(ALLPLAYERS);
+    }
+    
+    private String getFirstKey() {
+        return ROUNDPLAYERS.keySet().iterator().next();
+    }
+    
+    /**
+     * Obtains the next following ID to the one tossed as parameter.
+     * @param id String. ID of the player who has betted.
+     * @return String. ID of the next player in line.
+     */
     private String nextID(String id) {
         Iterator it = ROUNDPLAYERS.keySet().iterator();
         while(it.hasNext()) {
             String tmp = (String) it.next();
-            if(tmp.matches(id)) return (String) it.next();
+            if(tmp.matches(id) && it.hasNext()) return (String) it.next();
         }
         
-        // todo: check here if its the last one. if it is, must clean the booleans, set them to true and after set the first player turn to speak.
-        return "mario";
+        // Here it will only reach when last player has betted.
+        resetList();
+        return getFirstKey();
     }
     
+    /**
+     * Manipulates the booleans of the HashLinkedMap after a player has betted. Sets the turn to speak of the next in line.
+     * [0] = turn to speak.
+     * [1] = can this player bet?
+     * @param id String. ID of the player who has betted.
+     */
     private void manageTurns(String id) {
         ROUNDPLAYERS.get(id).set(0, false);
         ROUNDPLAYERS.get(id).set(1, false);
@@ -180,11 +202,19 @@ public class Game {
         ROUNDPLAYERS.get(next).set(0, true);
     }
     
+    /**
+     * A player bets in this game, adds the amount of chips.
+     * Advances 1 turn or resets them if was the last player.
+     * @param id String. ID of the player who's betting. Used to advance the turn to the next one.
+     * @param amount Int. Number of chips to bet.
+     * @return Int. Total amount of the common pool after the bet was added.
+     */
     int bet(String id, int amount) {
         chips += amount;
         manageTurns(id);
         return chips;
     }
+    
     
     /**
      * @return the isStarted

@@ -243,6 +243,10 @@ public class MainMenu extends javax.swing.JFrame {
                 System.out.println("Pool after bet: " +pool);
                 pool = a.bet("SU", 100);
                 System.out.println("Pool after bet: " +pool);
+                System.out.println("");
+                
+                System.out.println("Chips of o: " +o.getChips());
+                System.out.println("Chips of a: " +a.getChips());
             }
         });
     }

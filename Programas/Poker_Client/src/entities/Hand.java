@@ -3,7 +3,7 @@ package entities;
 import java.util.ArrayList;
 
 /**
- * Player's hand. It's 2 personal cards and the 3 higher in the table.
+ * Player's hand. It has 2 personal cards and the 3 of 5 higher in the table.
  * @author Mario Codes
  */
 public class Hand {

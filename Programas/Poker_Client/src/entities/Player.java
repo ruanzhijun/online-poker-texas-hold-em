@@ -6,7 +6,7 @@ import network.Connection;
 /**
  * Representation of a player.
  * @author Mario Codes
- * @version 0.0.1 Just created. Setting the basics.
+ * @version 0.0.2 Added bets. Added common / private cards.
  */
 public class Player {
     private Hand hand = new Hand();
@@ -22,6 +22,12 @@ public class Player {
         this.ID = ID;
     }
     
+    /**
+     * Bets an amount of chips and adds them to the common pool.
+     * @param reference Reference of the game the player is playing.
+     * @param amount Number of chips to bet.
+     * @return Int. Number of chips in the common pool after the bet has been added.
+     */
     public int bet(String reference, int amount) {
         int pool = Connection.bet(this, reference, amount);
         if(pool > 0) chips -= amount;
@@ -36,6 +42,10 @@ public class Player {
         this.hand.addOwn(cards);
     }
     
+    /**
+     * Adds the tossed cards to the table cards AL.
+     * @param cards Cards to be added.
+     */
     public void addTable(ArrayList<Card> cards) {
         this.hand.addTable(cards);
     }
@@ -68,5 +78,12 @@ public class Player {
      */
     public Hand getHand() {
         return hand;
+    }
+
+    /**
+     * @return the chips
+     */
+    public int getChips() {
+        return chips;
     }
 }

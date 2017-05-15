@@ -24,25 +24,6 @@ public class PreFlop implements Phase {
         game.setPhase(this);
         game.newRound();
     }
-
-    @Override
-    public void sendPlayerCards(Game game) {
-//        int id = Conexion.getID();
-//        if(!juego.getHABLADO().get(id)) {
-//            Conexion.sendBooleano(true);
-//            ArrayList<Carta> cartas = juego.getCartasJugador();
-//            Conexion.repartoCartas(cartas);
-//            juego.getHABLADO().set(id, true);
-//        } else Conexion.sendBooleano(false);
-//        
-//        if(!juego.getHABLADO().contains(false)) System.out.println("Comenzada ronda de Apuestas.");
-    }
-
-    @Override
-    public void sendTableCards(Game game) {
-//        Conexion.getID();
-//        Conexion.sendBooleano(false);
-    }
     
     @Override
     public void bet(Game game) {
@@ -55,32 +36,6 @@ public class PreFlop implements Phase {
 //                Conexion.sendBooleano(true);
 //                Conexion.getApuesta(juego);
 //                juego.getAPOSTADO().set(id, true);
-//            }
-//        }
-    }
-
-    @Override
-    public void retire(Game game) {
-//        String id = Integer.toString(Conexion.getID()+1);
-//        System.out.println("ID a retirar: " +id);
-//        System.out.println("IDs en Juego antes de retirar: ");
-//        for(String s: juego.getJugando()) System.out.println("ID: " +s);
-//        
-//        if(!juego.getJugando().contains(id)) { //El Jugador ya esta retirado.
-//            Conexion.sendBooleano(false);
-//            System.out.println("Un Jugador que ya estaba retirado se ha intentado retirar de nuevo.");
-//        }
-//        else {
-//            Conexion.sendBooleano(true);
-//            juego.getJugando().remove(id);
-//            juego.setActualPlayers(juego.getActualPlayers()-1);
-//            juego.getHABLADO().set(Integer.parseInt(id)-1, Boolean.TRUE);
-//            juego.getAPOSTADO().set(Integer.parseInt(id)-1, Boolean.TRUE);
-//            
-//            //Output para testing.
-//            System.out.println("Se ha retirado al jugador con ID: " +id +".\nResto de Jugadores en Juego: ");
-//            for (int i = 0; i < juego.getJugando().size(); i++) {
-//                System.out.println("(ID: " +juego.getJugando().get(i) +").\n");
 //            }
 //        }
     }

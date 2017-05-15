@@ -17,11 +17,5 @@ import entities.Game;
 public interface Phase {
     public void change(Game game);
     
-    public void sendPlayerCards(Game game);
-    
-    public void sendTableCards(Game game);
-    
     public void bet(Game game);
-    
-    public void retire(Game game);
 }

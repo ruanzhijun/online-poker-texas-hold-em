@@ -21,25 +21,6 @@ public class Turn implements Phase {
     }
 
     @Override
-    public void sendPlayerCards(Game game) {
-//        Conexion.getID();
-//        Conexion.sendBooleano(false);
-    }
-
-    @Override
-    public void sendTableCards(Game game) {
-//        int id = Conexion.getID();
-//        if(!juego.getHABLADO().get(id)) {
-//            Conexion.sendBooleano(true);
-//            ArrayList<Carta> cartas = juego.getCartasComunes();
-//            Conexion.repartoCartas(cartas);
-//            juego.getHABLADO().set(id, true);
-//        } else Conexion.sendBooleano(false);
-//        
-//        if(!juego.getHABLADO().contains(false)) System.out.println("Comenzada ronda de Apuestas.");
-    }
-
-    @Override
     public void bet(Game game) {
 //        if(juego.getHABLADO().contains(false)) Conexion.sendBooleano(false); //Si todos no han hablado no se puede apostar.
 //        else {
@@ -54,28 +35,6 @@ public class Turn implements Phase {
 //        }
     }
 
-    @Override
-    public void retire(Game game) {
-//        String id = Integer.toString(Conexion.getID()+1);
-//        if(!juego.getJugando().contains(id)) { //El Jugador ya esta retirado.
-//            Conexion.sendBooleano(false);
-//            System.out.println("Un Jugador que ya estaba retirado se ha intentado retirar de nuevo.");
-//        }
-//        else {
-//            Conexion.sendBooleano(true);
-//            juego.getJugando().remove(id);
-//            juego.setActualPlayers(juego.getActualPlayers()-1);
-//            juego.getHABLADO().set(Integer.parseInt(id)-1, Boolean.TRUE);
-//            juego.getAPOSTADO().set(Integer.parseInt(id)-1, Boolean.TRUE);
-//            
-//            //Output para testing.
-//            System.out.println("Se ha retirado al jugador con ID: " +id +".\nResto de Jugadores en Juego: ");
-//            for (int i = 0; i < juego.getJugando().size(); i++) {
-//                System.out.println("(ID: " +juego.getJugando().get(i) +").\n");
-//            }
-//        }
-    }
-    
     @Override
     public String toString() {
         return "Turn";

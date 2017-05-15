@@ -46,12 +46,20 @@ public class Game {
      * Draws the private cards from the deck for every player still in game.
      * It adds them in the player's HashMap as entries [2] and [3] inside the AL.
      */
-    private void drawCards() {
+    private void drawPrivateCards() {
         for(Map.Entry<String, ArrayList> entry : ALLPLAYERS.entrySet()) {
             ArrayList list = entry.getValue();
             list.add(deck.getCard());
             list.add(deck.getCard());
         }
+    }
+    
+    /**
+     * Retrieves the specified cards and adds them into the table AL.
+     * @param number 
+     */
+    public void retrieveTableCards(int number) {
+        deck.retrieveTableCards(number);
     }
     
     /**
@@ -66,7 +74,7 @@ public class Game {
         deck = new Deck();
         System.out.println("Game #" +REFERENCE +" has started a new round. " +ROUNDPLAYERS.size() +"/" +totalPlayers +" players left.");
         // todo: reset player action AL. Chips to 0. Erase players jugada.
-        drawCards();
+        drawPrivateCards();
     }
     
     
@@ -164,11 +172,9 @@ public class Game {
     }
     
     /**
-     * Phase ended. Everyone has spoken. Set all booleans to true.
+     * Phase ended. Everyone has spoken. Set booleans of 'player may speak' to true.
      */
     public void resetTurns() {
-//        ROUNDPLAYERS = new LinkedHashMap<>();
-//        ROUNDPLAYERS.putAll(ALLPLAYERS);
         for(ArrayList al : ALLPLAYERS.values()) al.set(1, true);
     }
     

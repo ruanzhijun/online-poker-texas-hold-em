@@ -17,6 +17,7 @@ public class Flop implements Phase {
     public void change(Game game) {
         game.setPhase(this);
         game.resetTurns();
+        game.retrieveTableCards(3);
     }
 
     @Override
@@ -26,7 +27,9 @@ public class Flop implements Phase {
     
     @Override
     public int bet(Game game, String id, int amount) {
-        return Actions.bet(game, id, amount);
+        int pool = Actions.bet(game, id, amount);
+        if(Actions.isLastPlayer(game, id)) new Turn().change(game);        
+        return pool;
         
 //        if(juego.getHABLADO().contains(false)) Conexion.sendBooleano(false); //Si todos no han hablado no se puede apostar.
 //        else {

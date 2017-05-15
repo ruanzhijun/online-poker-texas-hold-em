@@ -7,7 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Card's deck composition and usage.
  * @author Mario Codes
- * @version 0.0.2 Creating methods so the game can draw cards from this deck.
+ * @version 0.0.3 Implemented method to retrieve table cards.
  */
 public class Deck {
     private ArrayList<Card> cards_table = new ArrayList<Card>();
@@ -102,6 +102,13 @@ public class Deck {
         return cards;
     }
     
+    /**
+     * Retrieves cards from the deck and adds them into the AL.
+     * @param number Number of cards to retrieve.
+     */
+    public void retrieveTableCards(int number) {
+        for (int i = 0; i < number; i++) cards_table.add(getCard());
+    }
     
     @Override
     public String toString() {

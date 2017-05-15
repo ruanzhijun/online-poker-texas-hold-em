@@ -14,6 +14,11 @@ import entities.Game;
 public class Turn implements Phase {
     @Override
     public void change(Game game) {
+        game.setPhase(this);
+        game.resetTurns();
+        game.retrieveTableCards(1);
+        System.out.println("TURN!");
+        
 //        juego.resetTurnos();
 //        juego.setFase(this);
 //        juego.extraerCartaComun();

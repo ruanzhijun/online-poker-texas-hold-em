@@ -17,5 +17,7 @@ import entities.Game;
 public interface Phase {
     public void change(Game game);
     
-    public void bet(Game game);
+    public boolean mayBet(Game game, String id);
+    
+    public int bet(Game game, String id, int amount);
 }

@@ -113,18 +113,27 @@ public class Games {
     public static boolean mayBet(String reference, String id) {
         if(GAMES.containsKey(reference)) {
             Game game = (Game) GAMES.get(reference);
-            return game.mayBet(id);
-        } 
+            return game.getPhase().mayBet(game, id);
+        }
         
         return false;
     }
     
+    
     public static int bet(String reference, String id, int amount) {
+        if(GAMES.containsKey(reference)) {
+            Game game = (Game) GAMES.get(reference);
+            int pool = game.getPhase().bet(game, id, amount);
+            return pool;
+        }
+        
+        /*
         if(mayBet(reference, id)) {
             Game game = (Game)GAMES.get(reference);
             int pool = game.bet(id, amount);
             return pool;
         }
+        */
         
         return -1;
     }

@@ -159,7 +159,7 @@ public class Game {
      * @param id ID of the player to check.
      * @return boolean. AND between bool his turn and bool did he already bet?
      */
-    boolean mayBet(String id) {
+    public boolean mayBet(String id) {
         return ((boolean) ROUNDPLAYERS.get(id).get(0) && (boolean) ROUNDPLAYERS.get(id).get(1));
     }
     
@@ -209,7 +209,7 @@ public class Game {
      * @param amount Int. Number of chips to bet.
      * @return Int. Total amount of the common pool after the bet was added.
      */
-    int bet(String id, int amount) {
+    public int bet(String id, int amount) {
         chips += amount;
         manageTurns(id);
         return chips;

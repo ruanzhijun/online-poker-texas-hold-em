@@ -135,6 +135,19 @@ public class Deck {
     }
     
     /**
+     * Checks the existent play and it's value between the private cards and the common ones found in this deck.
+     * @param privateCards Player own private cards.
+     * @return ArrayList. [0] = String. Name of the play. [1] Int. Value of the play.
+     */
+    public ArrayList checkPlay(ArrayList<Card> privateCards) {
+        ArrayList results = new ArrayList();
+        Play.checkPlay(privateCards, cards_table);
+        results.add(Play.play);
+        results.add(Play.value);
+        return results;
+    }
+    
+    /**
      * Private, inner static class to check what does a player have and assign it a value. Comparing those values we get the winner.
      * Checks it from high to low, when detects a play, returns it.
      * Done as inner class because it has no sense for it to exist without a deck.
@@ -452,7 +465,7 @@ public class Deck {
          * @param common Common cards to all the players.
          * @return Bool. True if there's three of a kind.
          */
-        private static boolean checkTrio(ArrayList<Card> own, ArrayList<Card> common) {
+        private static boolean checkThreeOfAKind(ArrayList<Card> own, ArrayList<Card> common) {
             ArrayList<Integer> values = getValues(own, common);
             boolean pairFound = false;
 
@@ -482,7 +495,7 @@ public class Deck {
          * @param common Common cards to all the players.
          * @return Bool. True if there're two pairs.
          */
-        private static boolean checkDoblePareja(ArrayList<Card> own, ArrayList<Card> common) {
+        private static boolean checkDoublePair(ArrayList<Card> own, ArrayList<Card> common) {
             ArrayList<Integer> values = getValues(own, common);
             boolean pairFound = false;
             int pairOne = 0;
@@ -524,7 +537,7 @@ public class Deck {
          * @param common Common cards to everyone.
          * @return Bool. True if there's a pair.
          */
-        private static boolean checkPareja(ArrayList<Card> own, ArrayList<Card> common) {
+        private static boolean checkPair(ArrayList<Card> own, ArrayList<Card> common) {
             ArrayList<Integer> valores = getValues(own, common);
 
             for (int i = 0; i < valores.size(); i++) {
@@ -595,25 +608,25 @@ public class Deck {
          * @param common Common cards to all the players.
          */
         private static void checkPlay(ArrayList<Card> own, ArrayList<Card> common) {
-            if(checkRoyalFlush(own, common)) Play.play = "Escalera Real"; // fixme: fix and translate all this.
+            if(checkRoyalFlush(own, common)) Play.play = "Royal Flush";
             else {
-                if(checkStraightFlush(own, common)) Play.play = "Escalera de Color";
+                if(checkStraightFlush(own, common)) Play.play = "Color Straight";
                 else {
-                    if(checkPoker(own, common)) Play.play = "Poker";
+                    if(checkPoker(own, common)) Play.play = "Four of a kind";
                     else {
-                        if(checkFull(own, common)) Play.play = "Full";
+                        if(checkFull(own, common)) Play.play = "Full House";
                         else {
                             if(checkColor(own, common)) Play.play = "Color";
                             else {
-                                if(checkStraight(own, common)) Play.play = "Escalera";
+                                if(checkStraight(own, common)) Play.play = "Straight";
                                 else {
-                                    if(checkTrio(own, common)) Play.play = "Trio";
+                                    if(checkThreeOfAKind(own, common)) Play.play = "Three of a Kind";
                                     else {
-                                        if(checkDoblePareja(own, common)) Play.play = "Doble Pareja";
+                                        if(checkDoublePair(own, common)) Play.play = "Doble Pair";
                                         else {
-                                            if(checkPareja(own, common)) Play.play = "Pareja";
+                                            if(checkPair(own, common)) Play.play = "Pair";
                                             else {
-                                                if(checkHighCard(own, common)) Play.play = "Carta Alta";
+                                                if(checkHighCard(own, common)) Play.play = "High Card";
                                             }
                                         }
                                     }

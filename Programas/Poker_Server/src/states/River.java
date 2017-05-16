@@ -32,7 +32,7 @@ public class River implements Phase {
             
             Runnable t1 = () -> { // Setted in a new thread so the last user gets the pool and after i waiting seconds, the server starts a new round.
                 try { 
-                    Thread.sleep(6000); // todo: set it as a variable asked on startup maybe.
+                    Thread.sleep(5000); // todo: set it as a variable asked on startup maybe.
                     new PreFlop().change(game); 
                 } catch(InterruptedException ex) { ex.printStackTrace(); }
             };

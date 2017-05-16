@@ -178,7 +178,7 @@ public class Games {
     public static ArrayList getWinner(String reference) {
         if(GAMES.containsKey(reference) && hasWinner(reference)) {
             Game game = (Game) GAMES.get(reference);
-            return game.getWinner();
+            return game.getWINNER();
         }
         
         return null;

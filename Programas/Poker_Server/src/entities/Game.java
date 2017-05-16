@@ -19,14 +19,14 @@ public class Game {
     
     private final String REFERENCE; // Own ID to handle multi-matches.
     private final LinkedHashMap<String, ArrayList> ALLPLAYERS = new LinkedHashMap<>(); /* A copy of every player in the game. A player will only get deleted from here when he has no more chips and cannot continue playing. */
-    private LinkedHashMap<String, ArrayList> ROUNDPLAYERS = new LinkedHashMap<>(); /* Used to know players who are in this round and didn't retire. Will copy the LHM 1 line above every new round.
+    private final LinkedHashMap<String, ArrayList> ROUNDPLAYERS = new LinkedHashMap<>(); /* Used to know players who are in this round and didn't retire. Will copy the LHM 1 line above every new round.
                                                                                         It also stores personal information about the player: 
                                                                                         [0] - boolean, player turn to speak?
                                                                                         [1] - boolean, can this player bet?
                                                                                         [2] & [3] - Card, private cards #1 and #2
                                                                                         [4] & [5] - String, play with all the cards; Int, value of this play. */
     
-    private ArrayList winner = new ArrayList(); /* Used to save the data of the winner to share it with the clients.
+    private final ArrayList WINNER = new ArrayList(); /* Used to save the data of the winner to share it with the clients.
                                                     [0] - String, ID of the player. 
                                                     [1] - String, Name of the play achieved. 
                                                     [2] - Integer, Score achieved. (score of the play + score of the cards to untie with similar plays). I don't send this one through the net. But need it here to compare scores and chose the winner.
@@ -69,6 +69,14 @@ public class Game {
         deck.retrieveTableCards(number);
     }
     
+    private void resets() {
+        ROUNDPLAYERS.clear();
+        ROUNDPLAYERS.putAll(ALLPLAYERS);
+        WINNER.clear();
+        deck = new Deck();
+        chips = 0;
+    }
+    
     /**
      * To be called by state machine -> PreFlop.
      * Gets everything ready to start a new fresh round.
@@ -76,9 +84,8 @@ public class Game {
      * Creates a new fresh deck.
      */
     public void newRound() {
-        ROUNDPLAYERS = new LinkedHashMap<>();
-        ROUNDPLAYERS.putAll(ALLPLAYERS);
-        deck = new Deck();
+        resets();
+        resetTurns();
         System.out.println("Game #" +REFERENCE +" has started a new round. " +ROUNDPLAYERS.size() +"/" +totalPlayers +" players left.");
         // todo: reset player action AL. Chips to 0. Erase players jugada.
         drawPrivateCards();
@@ -329,7 +336,7 @@ public class Game {
      */
     public void choseWinner() {
         checkAllPlays();
-        winner = comparePlays();
+        WINNER.addAll(comparePlays());
     }
     
     /**
@@ -337,7 +344,7 @@ public class Game {
      * @return Bool. True if winner's results are not empty.
      */
     public boolean hasWinner() {
-        return ((getWinner() != null) && (winner.size() > 0));
+        return ((getWINNER() != null) && (WINNER.size() > 0));
     }
     
     /**
@@ -374,7 +381,7 @@ public class Game {
     /**
      * @return the winner
      */
-    public ArrayList getWinner() {
-        return winner;
+    public ArrayList getWINNER() {
+        return WINNER;
     }
 }

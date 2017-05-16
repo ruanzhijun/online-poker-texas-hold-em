@@ -37,6 +37,14 @@ public class Check {
         }
     }
     
+    /**
+     * Checks if the player has the number of cards needed for the round.
+     * If not, obtains and assigns them.
+     * @param player Player to check.
+     * @param cards AL of cards to check.
+     * @param reference Reference of the game the player is in.
+     * @param number Number of cards it should have in this phase.
+     */
     private static void getTableCards(Player player, ArrayList<Card> cards, String reference, int number) {
         if(needsCards(cards, number)) {
             ArrayList<Card> obtained = Connection.getTableCards(reference);
@@ -44,6 +52,41 @@ public class Check {
             System.out.println("Table cards added.");
         }
     } 
+    
+    /**
+     * Checks if the ID of the winner matches with this player.
+     * @param id ID of the winner.
+     * @param player ID of this player.
+     * @return Bool. True if they do match.
+     */
+    private static boolean checkWinner(String id, Player player) {
+        return player.getID().matches(id);
+    }
+    
+    /**
+     * Checks if the AL is not empty.
+     * If the player is the winner, adds him the amount of chips won.
+     * @param winner AL with the info of the winner.
+     * @param player Player to check if it's the winner.
+     */
+    private static void addChips(ArrayList winner, Player player) {
+        if(winner.size() > 0) {
+            String idWinner = (String) winner.get(0);
+            if(checkWinner(idWinner, player)) player.addChips((int) winner.get(2));
+        }
+    }
+    
+    /**
+     * Obtains the winner of the game. 
+     * Obtains an AL from the server containing all the info needed.
+     * @param reference Reference of the game the player is playing at.
+     * @return AL with winner's info. [0] = Str. ID of the player. [1] = Str. Name of the play achieved. [2] = int. Number of chips won; It equals the total pool. 
+     */
+    public static ArrayList getWinner(String reference, Player player) {
+        ArrayList winner = Connection.getWinner(reference);
+        addChips(winner, player);
+        return winner;
+    }
     
     /**
      * Checks the phase of the game, depending which one is, tells which method has to be executed. Also how many cards there does need to be in it.
@@ -63,7 +106,7 @@ public class Check {
                 break;
             case "River":
                 getTableCards(player, player.getTableCards(), reference, 5);
-                player.getWinner(reference);
+                getWinner(reference, player); // fixme: asign or return the AL from getWinner();
                 break;
         }
     }

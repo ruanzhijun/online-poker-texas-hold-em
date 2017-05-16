@@ -34,27 +34,12 @@ public class Player {
         return pool;
     }
     
-    private boolean checkWinner(String id) {
-        return this.ID.matches(id);
-    }
-    
-    private void addChips(ArrayList winner) {
-        if(winner.size() > 0) {
-            String idWinner = (String) winner.get(0);
-            if(checkWinner(idWinner)) chips += (int) winner.get(2);
-        }
-    }
-    
     /**
-     * Obtains the winner of the game. 
-     * Obtains an AL from the server containing all the info needed.
-     * @param reference Reference of the game the player is playing at.
-     * @return AL with winner's info. [0] = Str. ID of the player. [1] = Str. Name of the play achieved. [2] = int. Number of chips won; It equals the total pool. 
+     * Adds the amount of chips to the ones owned by the player.
+     * @param amount Number of chips to add.
      */
-    public ArrayList getWinner(String reference) {
-        ArrayList winner = Connection.getWinner(reference);
-        addChips(winner);
-        return winner;
+    public void addChips(int amount) {
+        chips += amount;
     }
     
     /**

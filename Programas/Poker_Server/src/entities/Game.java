@@ -19,7 +19,7 @@ public class Game {
     
     private final String REFERENCE; // Own ID to handle multi-matches.
     private final LinkedHashMap<String, ArrayList> ALLPLAYERS = new LinkedHashMap<>(); /* A copy of every player in the game. A player will only get deleted from here when he has no more chips and cannot continue playing. */
-    private final LinkedHashMap<String, ArrayList> ROUNDPLAYERS = new LinkedHashMap<>(); /* Used to know players who are in this round and didn't retire. Will copy the LHM 1 line above every new round.
+    private LinkedHashMap<String, ArrayList> ROUNDPLAYERS = new LinkedHashMap<>(); /* Used to know players who are in this round and didn't retire. Will copy the LHM 1 line above every new round.
                                                                                         It also stores personal information about the player: 
                                                                                         [0] - boolean, player turn to speak?
                                                                                         [1] - boolean, can this player bet?
@@ -27,14 +27,12 @@ public class Game {
                                                                                         [4] & [5] - String, play with all the cards; Int, value of this play. */
     
     private final ArrayList WINNER = new ArrayList(); /* Used to save the data of the winner to share it with the clients.
-                                                    [0] - String, ID of the player. 
-                                                    [1] - String, Name of the play achieved. 
-                                                    [2] - Integer, Score achieved. (score of the play + score of the cards to untie with similar plays). I don't send this one through the net. But need it here to compare scores and chose the winner.
-                                                    [3] - Integer, number of chips won. */
+                                                            [0] - String, ID of the player. 
+                                                            [1] - String, Name of the play achieved. 
+                                                            [2] - Integer, Score achieved. (score of the play + score of the cards to untie with similar plays). I don't send this one through the net. But need it here to compare scores and chose the winner.
+                                                            [3] - Integer, number of chips won. */
     
-    private int totalPlayers = 0, joinedPlayers = 1; // Number of players setted by user, number of players joined until now. The game will start when the second equals the first.
-    private int playersTurn = 0; // Numeric index to access LinkedHashMap. The order to do it's action will be the order the players join in.
-    
+    private int totalPlayers = 0, joinedPlayers = 1; // Number of players setted by user, number of players joined until now. The game will start when the second equals the first.   
     private int chips = 0; // Chips betted in the actual round by all players. The winner gets it all.
 
     /**
@@ -54,7 +52,7 @@ public class Game {
      * It adds them in the player's HashMap as entries [2] and [3] inside the AL.
      */
     private void drawPrivateCards() {
-        for(Map.Entry<String, ArrayList> entry : ALLPLAYERS.entrySet()) {
+        for(Map.Entry<String, ArrayList> entry : ROUNDPLAYERS.entrySet()) {
             ArrayList list = entry.getValue();
             list.add(deck.getCard());
             list.add(deck.getCard());
@@ -69,9 +67,31 @@ public class Game {
         deck.retrieveTableCards(number);
     }
     
+    /**
+     * HACK. I should fix it if I find a damn 'easy' way to make a deep copy of a HashLinkedMap. All I've found until now didn't work or are shallow copies.
+     * Makes a snapshot of ALLPLAYERS into ROUNDPLAYERS. This way I take a record of which players are no longer into the game and which just did retire for this round.
+     * fixme: fix it! find how the hell to do a deep copy.
+     */
+    private void resetPlayersList() {
+        Iterator it = ALLPLAYERS.keySet().iterator();
+        while(it.hasNext()) {
+            String key = (String) it.next();
+            ArrayList value = ALLPLAYERS.get(key);
+            value.set(1, true);
+            if(value.size() >= 6) { // Removes the extra added values because it's a goddamn shallow copy.
+                value.remove(5);
+                value.remove(4);
+                value.remove(3);
+                value.remove(2);
+            }
+            ROUNDPLAYERS.put(key, value);
+        }
+    }
+    
     private void resets() {
         ROUNDPLAYERS.clear();
-        ROUNDPLAYERS.putAll(ALLPLAYERS);
+        resetPlayersList();
+        System.out.println(ROUNDPLAYERS);
         WINNER.clear();
         deck = new Deck();
         chips = 0;
@@ -110,8 +130,6 @@ public class Game {
      */
     private void start() {
         started = true;
-        ROUNDPLAYERS.putAll(ALLPLAYERS);
-        System.out.println("All players joined; Game #" +REFERENCE +" starting!.");
         new PreFlop().change(this);
     }
     

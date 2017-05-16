@@ -24,9 +24,9 @@ public class Connection {
     private static final int CREATE_GAME = 1; // First Menu, before the game starts.
     private static final int JOIN_GAME = 2;
     
-    private static final int BET = 6; // Second Menu, once the game's started.
-    private static final int GET_OWN_CARDS = 4;
+    private static final int GET_OWN_CARDS = 4; // Second Menu, once the game's started.
     private static final int GET_TABLE_CARDS = 5;
+    private static final int BET = 6;
     private static final int RETIRE = 7;
     private static final int GET_WINNER = 8;
     

@@ -28,6 +28,7 @@ public class Connection {
     private static final int GET_OWN_CARDS = 4;
     private static final int GET_TABLE_CARDS = 5;
     private static final int RETIRE = 7;
+    private static final int GET_WINNER = 8;
     
     private static Socket socket = null;
     
@@ -150,6 +151,14 @@ public class Connection {
         return null;
     }
     
+    /**
+     * Gets n number of cards from the server. Parses them, adds them in an AL<Card> and returns this AL.
+     * As I use this method in others which already do capture exceptions, I throw them instead of capture them again here.
+     * @param number Number of cards to be received.
+     * @return AL<Card>. Contains all the cards received. May be 3, 4 or 5.
+     * @throws IOException Network exception.
+     * @throws ClassNotFoundException Class exception throws when can't parse (Card) ois.readObject.
+     */
     private static ArrayList<Card> getCards(int number) throws IOException, ClassNotFoundException {
         ArrayList<Card> cards = new ArrayList<>();
         for (int i = 0; i < number; i++) cards.add((Card) ois.readObject());
@@ -186,6 +195,11 @@ public class Connection {
         return null;
     }
     
+    /**
+     * Gets the common cards which are the same for all the players.
+     * @param reference Reference of the game the player is playing at.
+     * @return AL<Card>. Contains n number of cards. It may be 3, 4 or 5. Depends on the phase the game is at.
+     */
     public static ArrayList<Card> getTableCards(String reference) {
         ArrayList<Card> cards = new ArrayList<>();
         
@@ -236,5 +250,36 @@ public class Connection {
         } catch(IOException ex) { ex.printStackTrace(); }
         
         return -1;
+    }
+    
+    /**
+     * Gets the winner of a match.
+     * It checks if the game exists and if the game has chosen a winner or there are plays to do yet.
+     * @param reference Reference of the game the player is playing in.
+     * @return AL. Contains the info of the winner. [0] = ID of the winner. [1] = Name of the play. [2] = number of chips won.
+     */
+    public static ArrayList getWinner(String reference) {
+        try {
+            ArrayList winner = new ArrayList();
+            
+            open();
+            oos.writeInt(GET_WINNER);
+            oos.writeUTF(reference);
+            oos.flush();
+            
+            boolean exists = ois.readBoolean();
+            if(exists) {
+                boolean hasWinner = ois.readBoolean();
+                if(hasWinner) {
+                    winner.add(ois.readUTF()); // ID of the winner.
+                    winner.add(ois.readUTF()); // Name of the play.
+                    winner.add(ois.readInt()); // Amount of chips to add if this player has won.
+                    
+                    return winner;
+                } else return null;
+            } else return null;
+        } catch(IOException ex) { ex.printStackTrace(); }
+        
+        return null;
     }
 }

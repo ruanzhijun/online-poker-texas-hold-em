@@ -1,13 +1,14 @@
 package poker_client.graphic;
 
 import entities.Player;
+import java.util.ArrayList;
 import network.Check;
 import network.Connection;
 
 /**
  * Client's MainMenu Window.
  * @author Mario Codes
- * @version 0.0.3 Phases completed but the last one. Check errors und so.
+ * @version 0.0.3.1 Adding checks and so to get the winner of a match.
  */
 public class MainMenu extends javax.swing.JFrame {
 
@@ -247,6 +248,9 @@ public class MainMenu extends javax.swing.JFrame {
                 
                 System.out.println("Chips of o: " +o.getChips());
                 System.out.println("Chips of a: " +a.getChips());
+                
+                ArrayList al = o.getWinner("SU");
+                System.out.println("AND THE WINNER IS: " +al.get(0) +", with: " +al.get(1) +", and has won: " +al.get(2) +" chips!");
             }
         });
     }

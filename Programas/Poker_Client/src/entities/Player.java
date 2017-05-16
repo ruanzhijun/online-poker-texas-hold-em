@@ -6,7 +6,7 @@ import network.Connection;
 /**
  * Representation of a player.
  * @author Mario Codes
- * @version 0.0.2 Added bets. Added common / private cards.
+ * @version 0.0.3 Added methods to check for the winner of a game.
  */
 public class Player {
     private Hand hand = new Hand();
@@ -32,6 +32,18 @@ public class Player {
         int pool = Connection.bet(this, reference, amount);
         if(pool > 0) chips -= amount;
         return pool;
+    }
+    
+    /**
+     * Obtains the winner of the game. todo: add here checks and so. Also i think it should repeat until it has obtained the winer.
+     * Obtains an AL from the server containing all the info needed.
+     * @param reference Reference of the game the player is playing at.
+     * @return AL with winner's info. [0] = Str. ID of the player. [1] = Str. Name of the play achieved. [2] = int. Number of chips won; It equals the total pool. 
+     */
+    public ArrayList getWinner(String reference) {
+        ArrayList winner = Connection.getWinner(reference);
+        // Here repeat if null until gets it. Also should add a check for game's phase.
+        return winner;
     }
     
     /**

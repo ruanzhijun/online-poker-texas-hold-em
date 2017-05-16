@@ -26,7 +26,11 @@ public class Game {
                                                                                         [2][3] - Card, private cards #1 and #2
                                                                                         [4][5] - String, play with all the cards; Int, value of this play. */
     
-    private ArrayList winner = new ArrayList();
+    private ArrayList winner = new ArrayList(); /* Used to save the data of the winner to share it with the clients.
+                                                    [0] - String, ID of the player. 
+                                                    [1] - String, Name of the play achieved. 
+                                                    [2] - Integer, Score achieved. (score of the play + score of the cards to untie with similar plays). */
+    
     private int totalPlayers = 0, joinedPlayers = 1; // Number of players setted by user, number of players joined until now. The game will start when the second equals the first.
     private int playersTurn = 0; // Numeric index to access LinkedHashMap. The order to do it's action will be the order the players join in.
     

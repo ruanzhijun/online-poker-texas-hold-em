@@ -27,7 +27,10 @@ public class River implements Phase {
     @Override
     public int bet(Game game, String id, int amount) {
         int pool = Actions.bet(game, id, amount);
-        if(Actions.isLastPlayer(game, id)) new River().change(game);        
+        if(Actions.isLastPlayer(game, id)) {
+            // new River().change(game); // fixme: set here the change of phase to a new round. Pre flop. Ought to reset everything.
+            game.getWinner();
+        }        
         return pool;
     }
     

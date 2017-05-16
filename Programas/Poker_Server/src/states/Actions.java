@@ -36,7 +36,6 @@ public class Actions {
      */
     public static int bet(Game game, String id, int amount) {
         int pool = game.bet(id, amount);
-        
         return pool;
     }
 }

@@ -137,7 +137,7 @@ public class Deck {
     /**
      * Checks the existent play and it's value between the private cards and the common ones found in this deck.
      * @param privateCards Player own private cards.
-     * @return ArrayList. [0] = String. Name of the play. [1] Int. Value of the play.
+     * @return ArrayList. [0] = String. Name of the play. [1] = Int. Value of the play.
      */
     public ArrayList checkPlay(ArrayList<Card> privateCards) {
         ArrayList results = new ArrayList();

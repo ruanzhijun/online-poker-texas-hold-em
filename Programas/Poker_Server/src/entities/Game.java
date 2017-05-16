@@ -26,6 +26,7 @@ public class Game {
                                                                                         [2][3] - Card, private cards #1 and #2
                                                                                         [4][5] - String, play with all the cards; Int, value of this play. */
     
+    private ArrayList winner = new ArrayList();
     private int totalPlayers = 0, joinedPlayers = 1; // Number of players setted by user, number of players joined until now. The game will start when the second equals the first.
     private int playersTurn = 0; // Numeric index to access LinkedHashMap. The order to do it's action will be the order the players join in.
     
@@ -110,6 +111,9 @@ public class Game {
         return !started && (joinedPlayers < totalPlayers);
     }
     
+    /**
+     * Sets the first turn to speak to the first player in the list of players.
+     */
     private void setFirstTurn() {
         String id = ROUNDPLAYERS.keySet().iterator().next();
         ROUNDPLAYERS.get(id).set(0, true);
@@ -186,6 +190,10 @@ public class Game {
         for(ArrayList al : ALLPLAYERS.values()) al.set(1, true);
     }
     
+    /**
+     * Returns the first key of the players currently in the round.
+     * @return First key of the list of players who didn't give up.
+     */
     private String getFirstKey() {
         return ROUNDPLAYERS.keySet().iterator().next();
     }
@@ -203,7 +211,7 @@ public class Game {
         }
         
         // Here it will only reach when last player has betted.
-        return getFirstKey(); // If it's the last, it will be overrided by the checking in the phase. Need a return that's a valid key tho.
+        return getFirstKey(); // If it's the last, it will be overrided by the checking in the phase. Need a return that's a valid key tho (Can't be null).
     }
     
     /**
@@ -247,6 +255,11 @@ public class Game {
         return false;
     }
     
+    /**
+     * Retrieves the private cards of a player and puts them into an ArrayList. It gets them from the private AL of the player (tossed as parameter).
+     * @param al Private player ArrayList where we can find their info.
+     * @return AL <Card>. Contains the 2 private cards of the player.
+     */
     private ArrayList<Card> getUserCards(ArrayList al) {
         ArrayList<Card> cards = new ArrayList<>();
         Card card1 = (Card) al.get(2);
@@ -259,12 +272,14 @@ public class Game {
     }
     
     /**
-     * Checks the plays for all the players in game. I leave it here. Continue it tomorrow.
+     * Iterates all the players that didn't retire in this round and adds them their play and score into their private AL with all their info.
+     * It will be used to compare all the scores and get a winner.
      */
     private void checkAllPlays() {
-        Iterator it = ROUNDPLAYERS.entrySet().iterator();
+        Iterator it = ROUNDPLAYERS.keySet().iterator();
         while(it.hasNext()) {
-            ArrayList user = (ArrayList) it.next();
+            String key = (String) it.next();
+            ArrayList user = ROUNDPLAYERS.get(key);
             ArrayList<Card> privateCards = getUserCards(user);
             ArrayList result = deck.checkPlay(privateCards);
             
@@ -273,9 +288,44 @@ public class Game {
         }
     }
     
-    public void getWinner() {
+    /**
+     * Compares the the plays of each player and gets the winner from there.
+     * It adds them in a new ArrayList.
+     * @return AL with the info of the winner. [0] = ID of the winner. [1] = Name of the play to show off. [2] = Score achieved (Score of the cards + value of the cards to untie).
+     */
+    private ArrayList comparePlays() {
+        ArrayList winner = new ArrayList();
+        Iterator it = ROUNDPLAYERS.keySet().iterator();
         
+        String firstKey = (String) it.next(); // First player will always be first. Result to compare to.
+        ArrayList tmp = ROUNDPLAYERS.get(firstKey); 
+        
+        winner.add(firstKey); // [0] = ID of the player.
+        winner.add(tmp.get(4)); // [1] = Name of the play.
+        winner.add(tmp.get(5)); // [2] = Score achieved. To compare vs this one. Higher wins.
+        
+        while(it.hasNext()) { // There will always be at least 1 player more.
+            String key = (String) it.next();
+            tmp = ROUNDPLAYERS.get(key);
+            if(((int) tmp.get(5)) > ((int) winner.get(2))) { // If score of tmp is > than previous score.
+                winner.clear();
+                winner.add(key);
+                winner.add(tmp.get(4));
+                winner.add(tmp.get(5));
+            }
+        }
+        
+        return winner;
     }
+    
+    /**
+     * Main method. Gets the plays of every player, compares it's cards and core and gets the winner from there.
+     */
+    public void getWinner() {
+        checkAllPlays();
+        winner = comparePlays();
+    }
+    
     
     /**
      * @return the isStarted
@@ -299,7 +349,7 @@ public class Game {
     }
 
     /**
-     * DO NOT USE THIS!!! Use Phase.change(); instead.
+     * DO NOT USE THIS!!! Use the implementation of Phase.change(); instead.
      * I do need it to make the change internally inside the phase.
      * Apart of this, DO NOT USE IT - NEVER - DIRECTLY!!
      * @param phase the phase to set

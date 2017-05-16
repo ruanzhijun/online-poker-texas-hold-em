@@ -156,6 +156,11 @@ public class Games {
         return -1;
     }
     
+    /**
+     * Check to see if there's a chosen winner in a game.
+     * @param reference Reference of the game to check.
+     * @return Bool. True if there's already a winner.
+     */
     public static boolean hasWinner(String reference) {
         if(GAMES.containsKey(reference)) {
             Game game = (Game) GAMES.get(reference);
@@ -165,6 +170,11 @@ public class Games {
         return false;
     }
     
+    /**
+     * Retrieves information about the winner.
+     * @param reference Reference of the game to get the winner from.
+     * @return AL. [0] = String. Winner ID. [1] = String. Winner play. [2] = Int. winner's number of chips.
+     */
     public static ArrayList getWinner(String reference) {
         if(GAMES.containsKey(reference) && hasWinner(reference)) {
             Game game = (Game) GAMES.get(reference);

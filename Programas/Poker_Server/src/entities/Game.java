@@ -327,11 +327,15 @@ public class Game {
     /**
      * Main method. Gets the plays of every player, compares it's cards and core and gets the winner from there.
      */
-    public void selectWinner() {
+    public void choseWinner() {
         checkAllPlays();
         winner = comparePlays();
     }
     
+    /**
+     * Check to see if there's already a winner of this round or not.
+     * @return Bool. True if winner's results are not empty.
+     */
     public boolean hasWinner() {
         return (getWinner() != null);
     }

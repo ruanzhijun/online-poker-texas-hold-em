@@ -167,6 +167,10 @@ public class Connection {
         } catch(IOException ex) { ex.printStackTrace(); }
     }
     
+    /**
+     * Sends the information about the winner to the client.
+     * @param winner AL containing all the info to be sent.
+     */
     public static void sendWinner(ArrayList winner) {
         try {
             oos.writeUTF((String) winner.get(0)); // ID of the winner.

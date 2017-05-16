@@ -113,6 +113,10 @@ public class Menu {
         }
     }
     
+    /**
+     * Sends information about the winner of a game.
+     * Checks if the games does exist and if this game has already chosen a winner.
+     */
     private static void getWinner() {
         String reference = Connection.getReference();
         boolean exists = Games.check(reference);

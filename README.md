@@ -1,7 +1,7 @@
 # Poker Texas Hold'em (Work In Progress)
 
 ## Network packages order
-The sending order is specified __from the point of view of a _Client_ to the _Server___. Most of them share a common structure and then do their specific part. Before doing all the send there're checks to see if the game the client is tryign to get info from, does exist.
+The sending order is specified __from the point of view of a _Client_ to the _Server___. Most of them share a common structure and then do their specific part. Before doing all the sending, there're checks to see if the game the client is trying to get info about, does exist.
 
 ### Mark Structure
 * Output / Input. Data type. Comment about what it is.
@@ -28,7 +28,7 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 * O. String. Game reference.
 * I. Bool. Does game exist?.
 * O. String. Player's ID.
-* I. String. Game phase (State machine).
+* I. String. Game's phase (State machine).
 * I. Bool. Is this player's turn?.
 
 
@@ -37,7 +37,7 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 * O. String. Game reference.
 * I. Bool. Does game exist?.
 * O. String. Player's ID.
-* I. Int. Number of cards to be received.
+* I. Int. Number of cards to be received. (They will always be 2, but I do re-use code from the way I do get the table cards and didn't feel like to hardcode it).
 * I. Card. Private player cards to be added.
 
 
@@ -65,5 +65,5 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 * I. Bool. Does game exist?.
 * I. Bool. Does the game already have a winner?.
 * I. String. Winner's ID.
-* I. String. Play the winner has won with.
+* I. String. Play the winner has won with (Name of it to display).
 * I. Int. Number of chips won. (Only added to the winner).

@@ -29,7 +29,8 @@ public class Game {
     private ArrayList winner = new ArrayList(); /* Used to save the data of the winner to share it with the clients.
                                                     [0] - String, ID of the player. 
                                                     [1] - String, Name of the play achieved. 
-                                                    [2] - Integer, Score achieved. (score of the play + score of the cards to untie with similar plays). */
+                                                    [2] - Integer, Score achieved. (score of the play + score of the cards to untie with similar plays). I don't send this one through the net. But need it here to compare scores and chose the winner.
+                                                    [3] - Integer, number of chips won. */
     
     private int totalPlayers = 0, joinedPlayers = 1; // Number of players setted by user, number of players joined until now. The game will start when the second equals the first.
     private int playersTurn = 0; // Numeric index to access LinkedHashMap. The order to do it's action will be the order the players join in.
@@ -319,17 +320,21 @@ public class Game {
             }
         }
         
+        winner.add(chips); // fixme: if this does work, delete the number of chips at the end or make so the winner cant get it twice.
         return winner;
     }
     
     /**
      * Main method. Gets the plays of every player, compares it's cards and core and gets the winner from there.
      */
-    public void getWinner() {
+    public void selectWinner() {
         checkAllPlays();
         winner = comparePlays();
     }
     
+    public boolean hasWinner() {
+        return (getWinner() != null);
+    }
     
     /**
      * @return the isStarted
@@ -360,5 +365,12 @@ public class Game {
      */
     public void setPhase(Phase phase) {
         this.phase = phase;
+    }
+
+    /**
+     * @return the winner
+     */
+    public ArrayList getWinner() {
+        return winner;
     }
 }

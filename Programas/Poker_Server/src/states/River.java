@@ -29,7 +29,7 @@ public class River implements Phase {
         int pool = Actions.bet(game, id, amount);
         if(Actions.isLastPlayer(game, id)) {
             // new River().change(game); // fixme: set here the change of phase to a new round. Pre flop. Ought to reset everything.
-            game.getWinner();
+            game.selectWinner();
         }        
         return pool;
     }

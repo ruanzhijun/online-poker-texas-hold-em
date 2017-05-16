@@ -155,4 +155,22 @@ public class Games {
         
         return -1;
     }
+    
+    public static boolean hasWinner(String reference) {
+        if(GAMES.containsKey(reference)) {
+            Game game = (Game) GAMES.get(reference);
+            return game.hasWinner();
+        }
+        
+        return false;
+    }
+    
+    public static ArrayList getWinner(String reference) {
+        if(GAMES.containsKey(reference) && hasWinner(reference)) {
+            Game game = (Game) GAMES.get(reference);
+            return game.getWinner();
+        }
+        
+        return null;
+    }
 }

@@ -21,6 +21,7 @@ public class Menu {
     private static final int GET_CARDS_COMMON = 5;
     private static final int GET_CARDS_PRIVATE = 4;
     private static final int RETIRE = 7;
+    private static final int GET_WINNER = 8;
     
     
     /**
@@ -112,6 +113,20 @@ public class Menu {
         }
     }
     
+    private static void getWinner() {
+        String reference = Connection.getReference();
+        boolean exists = Games.check(reference);
+        Connection.sendResult(exists);
+        if(exists) {
+            boolean hasWinner = Games.hasWinner(reference);
+            Connection.sendResult(hasWinner);
+            if(hasWinner) {
+                ArrayList winner = Games.getWinner(reference);
+                Connection.sendWinner(winner);
+            }
+        }
+    }
+    
     /**
      * Main Switch which derives everything where it needs to be.
      * Here the socket's connection has already been opened!.
@@ -139,7 +154,8 @@ public class Menu {
             case BET:
                 bet();
                 break;
-            case 7:
+            case GET_WINNER:
+                getWinner();
                 break;
             case -1:
                 System.out.println("Problem with the connection. Error output by main switch.");

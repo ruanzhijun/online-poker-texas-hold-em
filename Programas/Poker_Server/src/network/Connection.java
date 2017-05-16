@@ -166,4 +166,13 @@ public class Connection {
             oos.flush();
         } catch(IOException ex) { ex.printStackTrace(); }
     }
+    
+    public static void sendWinner(ArrayList winner) {
+        try {
+            oos.writeUTF((String) winner.get(0)); // ID of the winner.
+            oos.writeUTF((String) winner.get(1)); // Name of the play achieved.
+            oos.writeInt((int) winner.get(3)); // Chips won.
+            oos.flush();
+        } catch(IOException ex) { ex.printStackTrace(); }
+    }
 }

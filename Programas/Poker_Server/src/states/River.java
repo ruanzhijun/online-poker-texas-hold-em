@@ -28,8 +28,16 @@ public class River implements Phase {
     public int bet(Game game, String id, int amount) {
         int pool = Actions.bet(game, id, amount);
         if(Actions.isLastPlayer(game, id)) {
-            // new River().change(game); // fixme: set here the change of phase to a new round. Pre flop. Ought to reset everything.
             game.choseWinner();
+            
+            Runnable t1 = () -> { // Setted in a new thread so the last user gets the pool and after i waiting seconds, the server starts a new round.
+                try { 
+                    Thread.sleep(6000); // todo: set it as a variable asked on startup maybe.
+                    new PreFlop().change(game); 
+                } catch(InterruptedException ex) { ex.printStackTrace(); }
+            };
+            new Thread(t1).start();
+            
         }        
         return pool;
     }

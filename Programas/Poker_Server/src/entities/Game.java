@@ -23,8 +23,8 @@ public class Game {
                                                                                         It also stores personal information about the player: 
                                                                                         [0] - boolean, player turn to speak?
                                                                                         [1] - boolean, can this player bet?
-                                                                                        [2][3] - Card, private cards #1 and #2
-                                                                                        [4][5] - String, play with all the cards; Int, value of this play. */
+                                                                                        [2] & [3] - Card, private cards #1 and #2
+                                                                                        [4] & [5] - String, play with all the cards; Int, value of this play. */
     
     private ArrayList winner = new ArrayList(); /* Used to save the data of the winner to share it with the clients.
                                                     [0] - String, ID of the player. 
@@ -337,7 +337,7 @@ public class Game {
      * @return Bool. True if winner's results are not empty.
      */
     public boolean hasWinner() {
-        return (getWinner() != null);
+        return ((getWinner() != null) && (winner.size() > 0));
     }
     
     /**

@@ -1,7 +1,6 @@
 package poker_client.graphic;
 
 import entities.Player;
-import java.util.ArrayList;
 import network.Check;
 import network.Connection;
 
@@ -241,16 +240,23 @@ public class MainMenu extends javax.swing.JFrame {
                 System.out.println("");
                 
                 pool = o.bet("SU", 100);
+                
                 System.out.println("Pool after bet: " +pool);
                 pool = a.bet("SU", 100);
                 System.out.println("Pool after bet: " +pool);
                 System.out.println("");
                 
-                System.out.println("Chips of o: " +o.getChips());
-                System.out.println("Chips of a: " +a.getChips());
+                // o.getWinner("SU");
+                // a.getWinner("SU");
                 
-                ArrayList al = o.getWinner("SU");
-                System.out.println("AND THE WINNER IS: " +al.get(0) +", with: " +al.get(1) +", and has won: " +al.get(2) +" chips!");
+                Check.checks(o, "SU");
+                Check.checks(a, "SU");
+                
+                // System.out.println("AND THE WINNER IS: " +al.get(0) +", with: " +al.get(1) +", and has won: " +al.get(2) +" chips!");
+                System.out.println("");
+                
+                System.out.println("Chips of " +o.getID() +": " +o.getChips());
+                System.out.println("Chips of " +a.getID() +": " +a.getChips());
             }
         });
     }

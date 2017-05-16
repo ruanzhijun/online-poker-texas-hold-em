@@ -34,15 +34,26 @@ public class Player {
         return pool;
     }
     
+    private boolean checkWinner(String id) {
+        return this.ID.matches(id);
+    }
+    
+    private void addChips(ArrayList winner) {
+        if(winner.size() > 0) {
+            String idWinner = (String) winner.get(0);
+            if(checkWinner(idWinner)) chips += (int) winner.get(2);
+        }
+    }
+    
     /**
-     * Obtains the winner of the game. todo: add here checks and so. Also i think it should repeat until it has obtained the winer.
+     * Obtains the winner of the game. 
      * Obtains an AL from the server containing all the info needed.
      * @param reference Reference of the game the player is playing at.
      * @return AL with winner's info. [0] = Str. ID of the player. [1] = Str. Name of the play achieved. [2] = int. Number of chips won; It equals the total pool. 
      */
     public ArrayList getWinner(String reference) {
         ArrayList winner = Connection.getWinner(reference);
-        // Here repeat if null until gets it. Also should add a check for game's phase.
+        addChips(winner);
         return winner;
     }
     

@@ -46,11 +46,11 @@ public class Check {
     } 
     
     /**
-     * Checks the phase of the game, depending which one is, tells which method has to be executed and how many cards there does need to be in it.
+     * Checks the phase of the game, depending which one is, tells which method has to be executed. Also how many cards there does need to be in it.
      * @param player Player we're checking.
      * @param reference Reference of the game the player is in.
      */
-    private static void cards(Player player, String reference) {
+    private static void action(Player player, String reference) {
         switch(phase) {
             case "PreFlop":
                 getPrivateCards(player, player.getOwnCards(), reference);
@@ -63,6 +63,7 @@ public class Check {
                 break;
             case "River":
                 getTableCards(player, player.getTableCards(), reference, 5);
+                player.getWinner(reference);
                 break;
         }
     }
@@ -78,9 +79,9 @@ public class Check {
         if(data.size() > 0) {
             phase = (String) data.get(0);
             turn = (boolean) data.get(1);
-            System.out.println("Data updated: phase " +phase +", turn " +turn); // todo: delete when not needed.
+            System.out.println("Data updated: phase " +getPhase() +", turn " +turn); // todo: delete when not needed.
             
-            cards(player, reference);
+            action(player, reference);
         } else { System.out.println("The game #" +reference +" does not exist."); };
     }
 
@@ -89,5 +90,12 @@ public class Check {
      */
     public static boolean isTurn() {
         return turn;
+    }
+
+    /**
+     * @return the phase
+     */
+    public static String getPhase() {
+        return phase;
     }
 }

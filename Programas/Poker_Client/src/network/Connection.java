@@ -256,7 +256,7 @@ public class Connection {
      * Gets the winner of a match.
      * It checks if the game exists and if the game has chosen a winner or there are plays to do yet.
      * @param reference Reference of the game the player is playing in.
-     * @return AL. Contains the info of the winner. [0] = ID of the winner. [1] = Name of the play. [2] = number of chips won.
+     * @return AL. Contains the info of the winner. Null if game !exist or exception. Empty if the game has not a winner yet. Else [0] = ID of the winner. [1] = Name of the play. [2] = number of chips won.
      */
     public static ArrayList getWinner(String reference) {
         try {
@@ -276,7 +276,7 @@ public class Connection {
                     winner.add(ois.readInt()); // Amount of chips to add if this player has won.
                     
                     return winner;
-                } else return null;
+                } else return winner;
             } else return null;
         } catch(IOException ex) { ex.printStackTrace(); }
         

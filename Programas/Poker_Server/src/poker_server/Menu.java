@@ -102,12 +102,16 @@ public class Menu {
         boolean exist = Games.checkExist(reference);
         Connection.sendActionResults(exist);
         if(exist) {
-            boolean mayBet = Games.mayBet(reference, id);
-            Connection.sendActionResults(mayBet);
-            if(mayBet) {
-                int amount = Connection.getBet();
-                int chips = Games.bet(reference, id, amount);
-                Connection.sendChips(chips);
+            boolean isInGame = Games.isPlayerInGame(reference, id);
+            Connection.sendActionResults(isInGame);
+            if(isInGame) {
+                boolean mayBet = Games.mayBet(reference, id);
+                Connection.sendActionResults(mayBet);
+                if(mayBet) {
+                    int amount = Connection.getBet();
+                    int chips = Games.bet(reference, id, amount);
+                    Connection.sendChips(chips);
+                }
             }
         }
     }

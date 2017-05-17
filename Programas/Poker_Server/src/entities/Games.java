@@ -124,6 +124,15 @@ public class Games {
         return null;
     }
     
+    public static boolean isPlayerInGame(String reference, String id) {
+        if(GAMES.containsKey(reference)) {
+            Game game = (Game) GAMES.get(reference);
+            return game.isPlayerInGame(id);
+        }
+        
+        return false;
+    }
+    
     /**
      * Check if this player may bet right now. This means it's his turn and he didn't speak yet.
      * @param reference String. Reference of the game to check.

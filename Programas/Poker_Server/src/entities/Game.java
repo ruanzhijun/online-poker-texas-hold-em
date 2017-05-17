@@ -438,6 +438,10 @@ public class Game {
 //        
 //    }
     
+    boolean isPlayerInGame(String id) {
+        return ROUNDPLAYERS.containsKey(id);
+    }
+    
     public boolean isLastPlayerRetired() {
         return ROUNDPLAYERS.size() <= 1;
     }

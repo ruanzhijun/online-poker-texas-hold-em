@@ -197,7 +197,7 @@ public class Games {
     public static boolean retirePlayer(String reference, String ID) {
         if(GAMES.containsKey(reference)) {
             Game game = (Game) GAMES.get(reference);
-            return game.retirePlayer(ID);
+            return game.getPhase().retirePlayer(game, ID);
         }
         
         return false;

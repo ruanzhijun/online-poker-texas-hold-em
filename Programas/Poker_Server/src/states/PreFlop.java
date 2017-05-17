@@ -50,6 +50,13 @@ public class PreFlop implements Phase {
     }
 
     @Override
+    public boolean retirePlayer(Game game, String id) {
+        boolean retired = Actions.retirePlayer(game, id);
+        if(game.isLastPlayerRetired()) new Flop().change(game);
+        return retired;
+    }
+    
+    @Override
     public String toString() {
         return "PreFlop";
     }

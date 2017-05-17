@@ -24,7 +24,7 @@ public class Actions {
      * @return True if it was the last player to speak. Change Phase if so.
      */
     public static boolean isLastPlayer(Game game, String id) {
-        return game.isLastPlayer(id);
+        return game.isLastPlayerInOrder(id);
     }
     
     /**
@@ -37,5 +37,19 @@ public class Actions {
     public static int bet(Game game, String id, int amount) {
         int pool = game.addBet(id, amount);
         return pool;
+    }
+    
+    public static boolean retirePlayer(Game game, String id) {
+        return game.retirePlayer(id);
+    }
+    
+    public static void endRound(Game game) {
+        Runnable t1 = () -> { // Setted in a new thread so the last user gets the pool and after i waiting seconds, the server starts a new round.
+            try { 
+                Thread.sleep(5000); // todo: set it as a variable asked on startup maybe.
+                new PreFlop().change(game); 
+            } catch(InterruptedException ex) { ex.printStackTrace(); }
+        };
+        new Thread(t1).start();
     }
 }

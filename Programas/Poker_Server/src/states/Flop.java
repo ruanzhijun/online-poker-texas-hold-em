@@ -16,8 +16,11 @@ public class Flop implements Phase {
     @Override
     public void change(Game game) {
         game.setPhase(this);
-        game.resetPhaseTurns();
-        game.retrieveTableCards(3);
+        if(game.isLastPlayerRetired()) new Turn().change(game);
+        else {
+            game.resetPhaseTurns();
+            game.retrieveTableCards(3);
+        }
     }
 
     @Override
@@ -30,6 +33,13 @@ public class Flop implements Phase {
         int pool = Actions.bet(game, id, amount);
         if(Actions.isLastPlayer(game, id)) new Turn().change(game);        
         return pool;
+    }
+    
+    @Override
+    public boolean retirePlayer(Game game, String id) {
+        boolean retired = Actions.retirePlayer(game, id);
+        if(game.isLastPlayerRetired()) new Turn().change(game);
+        return retired;
     }
     
     @Override

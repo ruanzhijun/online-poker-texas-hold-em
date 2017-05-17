@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import states.Phase;
 import states.PreFlop;
+import states.River;
 
 /**
  * Encapsulates the logic of a game. Handles and stores everything needed.
@@ -214,13 +215,16 @@ public class Game {
     
     /**
      * Checks if the player may bet.
-     * That means: its his turn, and didn't bet yet.
+     * That means its his turn, and didn't bet yet.
      * @param id ID of the player to check.
      * @return boolean. AND between bool his turn and bool did he already bet?
      */
     public boolean mayPlayerBet(String id) {
-        System.out.println("Bets: " +id +", phase: " +phase +": " +ROUNDPLAYERS);
-        return ((boolean) ROUNDPLAYERS.get(id).get(0) && (boolean) ROUNDPLAYERS.get(id).get(1));
+        if(ROUNDPLAYERS.containsKey(id)) {
+            return ((boolean) ROUNDPLAYERS.get(id).get(0) && (boolean) ROUNDPLAYERS.get(id).get(1));
+        }
+        
+        return false;
     }
     
     /**
@@ -285,7 +289,7 @@ public class Game {
      * @param id String. ID to check.
      * @return boolean. True if it's the last player to talk.
      */
-    public boolean isLastPlayer(String id) {
+    public boolean isLastPlayerInOrder(String id) {
         Iterator it = ROUNDPLAYERS.keySet().iterator();
         while(it.hasNext()) {
             String tmp = (String) it.next();
@@ -404,13 +408,47 @@ public class Game {
         if(ROUNDPLAYERS.containsKey(next)) ROUNDPLAYERS.get(next).set(0, true);
     }
     
+//    private boolean isLastPlayerLeft() {
+//        return ROUNDPLAYERS.size() <= 1;
+//    }
+//    
+//    private void onePlayerLeft() {
+//        if(!phase.toString().matches("River")) {
+//            new River().change(this);
+//            String last = ROUNDPLAYERS.keySet().iterator().next();
+//            
+//            WINNER.clear();
+//            WINNER.add(last);
+//            WINNER.add("");
+//            WINNER.add(0);
+//            WINNER.add(chips);
+//            
+//            Runnable t1 = () -> { // Setted in a new thread so the last user gets the pool and after i waiting seconds, the server starts a new round.
+//                try { 
+//                    Thread.sleep(5000); // todo: set it as a variable asked on startup maybe.
+//                    new PreFlop().change(this); 
+//                } catch(InterruptedException ex) { ex.printStackTrace(); }
+//            };
+//            
+//            new Thread(t1).start();
+//        }
+//    }
+//    
+//    public void endRound() {
+//        
+//    }
+    
+    public boolean isLastPlayerRetired() {
+        return ROUNDPLAYERS.size() <= 1;
+    }
+    
     /**
      * Full action to retire a player from the game.
      * Checks if its this players turn right now, if it is, moves the turn to the next one in line.
      * @param id String. ID if the player who wants to retire.
      * @return boolean. True if the player was retired correctly.
      */
-    boolean retirePlayer(String id) {
+    public boolean retirePlayer(String id) {
         ArrayList value = ROUNDPLAYERS.get(id);
         if(isPlayersTurn(id)) moveTurnToNext(id);
         return ROUNDPLAYERS.remove(id, value);

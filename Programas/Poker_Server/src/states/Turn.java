@@ -15,8 +15,11 @@ public class Turn implements Phase {
     @Override
     public void change(Game game) {
         game.setPhase(this);
-        game.resetPhaseTurns();
-        game.retrieveTableCards(1);
+        if(game.isLastPlayerRetired()) new River().change(game);
+        else {
+            game.resetPhaseTurns();
+            game.retrieveTableCards(1);
+        }
     }
 
     @Override
@@ -31,6 +34,13 @@ public class Turn implements Phase {
         return pool;
     }
 
+    @Override
+    public boolean retirePlayer(Game game, String id) {
+        boolean retired = Actions.retirePlayer(game, id);
+        if(game.isLastPlayerRetired()) new River().change(game);
+        return retired;
+    }
+    
     @Override
     public String toString() {
         return "Turn";

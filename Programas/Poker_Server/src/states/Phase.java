@@ -20,4 +20,6 @@ public interface Phase {
     public boolean mayBet(Game game, String id);
     
     public int bet(Game game, String id, int amount);
+    
+    public boolean retirePlayer(Game game, String id);
 }

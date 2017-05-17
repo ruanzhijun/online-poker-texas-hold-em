@@ -154,8 +154,6 @@ public class Menu {
      */
     static void selector() {
         int option = Connection.getMenuOption();
-        System.out.println("New connection. Option " +option);
-        
         switch(option) {
             case INFORMATION:
                 information();

@@ -7,16 +7,15 @@ import network.Connection;
 
 /**
  * Static class to encapsulate menus and options selection.
- * It is also a monitor so threads do not collide.
+ * It is also a monitor so threads do not collide with sensible methods.
  * @author Mario Codes
- * @version 0.0.2 Setting side thread information.
+ * @version 0.0.3 Developed method to get the winner of the match.
  */
 public class Menu {
-    private static final int INFORMATION = 0;
-    private static final int CREATE_GAME = 1; // First Menu, before the game starts.
+    private static final int INFORMATION = 0; // First Menu, before the game starts.
+    private static final int CREATE_GAME = 1; 
     private static final int JOIN_GAME = 2;
     
-    /* ATENTION! Before doing any of these, I should check the game's status. */
     private static final int BET = 6; // Second Menu, once the game's started.
     private static final int GET_CARDS_COMMON = 5;
     private static final int GET_CARDS_PRIVATE = 4;
@@ -30,9 +29,9 @@ public class Menu {
      * Sends the result of the operation through the socket.
      */
     private synchronized static void createGame() {
-        ArrayList parameters = Connection.gameParemeters();
-        boolean result = Games.create(parameters);
-        Connection.sendResult(result);
+        ArrayList parameters = Connection.getGameParemeters();
+        boolean result = Games.createGame(parameters);
+        Connection.sendActionResults(result);
     }
     
     
@@ -41,10 +40,10 @@ public class Menu {
      * Does check if the game exists, adds a player to it and sends the result of the operation.
      */
     private static void joinGame() {
-        String reference = Connection.getReference();
-        String id = Connection.getID();
-        boolean result = Games.join(reference, id);
-        Connection.sendResult(result);
+        String reference = Connection.getGameReference();
+        String id = Connection.getPlayerID();
+        boolean result = Games.joinGame(reference, id);
+        Connection.sendActionResults(result);
     }
     
     /**
@@ -52,14 +51,14 @@ public class Menu {
      * With the games reference and players id, sends the games phase and if this player may speak or wait.
      */
     private synchronized static void information() {
-        String reference = Connection.getReference();
-        boolean exists = Games.check(reference);
-        Connection.sendResult(exists);
+        String reference = Connection.getGameReference();
+        boolean exists = Games.checkExist(reference);
+        Connection.sendActionResults(exists);
         if(exists) {
-            String id = Connection.getID();
+            String id = Connection.getPlayerID();
             String phase = Games.getPhase(reference);
-            boolean speaks = Games.speaks(reference, id);
-            Connection.sendInformation(phase, speaks);
+            boolean speaks = Games.speaksPlayer(reference, id);
+            Connection.sendThreadInformation(phase, speaks);
         }
     }
     
@@ -68,12 +67,12 @@ public class Menu {
      * Retrieves and sends the private user cards through the socket.
      */
     private static void private_cards() {
-        String reference = Connection.getReference();
-        boolean exist = Games.check(reference);
-        Connection.sendResult(exist);
+        String reference = Connection.getGameReference();
+        boolean exist = Games.checkExist(reference);
+        Connection.sendActionResults(exist);
         if(exist) {
-            String id = Connection.getID();
-            ArrayList<Card> cards = Games.privateCards(reference, id);
+            String id = Connection.getPlayerID();
+            ArrayList<Card> cards = Games.getPrivateCards(reference, id);
             Connection.sendCards(cards);
         }
     }
@@ -82,11 +81,11 @@ public class Menu {
      * Gets the common cards of the game and sends it to the user who requested it.
      */
     private static void commonCards() {
-        String reference = Connection.getReference();
-        boolean exists = Games.check(reference);
-        Connection.sendResult(exists);
+        String reference = Connection.getGameReference();
+        boolean exists = Games.checkExist(reference);
+        Connection.sendActionResults(exists);
         if(exists) {
-            ArrayList<Card> cards = Games.commonCards(reference);
+            ArrayList<Card> cards = Games.getCommonCards(reference);
             Connection.sendCards(cards);
         }
     }
@@ -98,13 +97,13 @@ public class Menu {
      * The order of execution is Menu -> Games -> Game Phase -> Game. The phase it's a filter.
      */
     private static void bet() {
-        String reference = Connection.getReference();
-        String id = Connection.getID();
-        boolean exist = Games.check(reference);
-        Connection.sendResult(exist);
+        String reference = Connection.getGameReference();
+        String id = Connection.getPlayerID();
+        boolean exist = Games.checkExist(reference);
+        Connection.sendActionResults(exist);
         if(exist) {
             boolean mayBet = Games.mayBet(reference, id);
-            Connection.sendResult(mayBet);
+            Connection.sendActionResults(mayBet);
             if(mayBet) {
                 int amount = Connection.getBet();
                 int chips = Games.bet(reference, id, amount);
@@ -118,12 +117,12 @@ public class Menu {
      * Checks if the games does exist and if this game has already chosen a winner.
      */
     private static void getWinner() {
-        String reference = Connection.getReference();
-        boolean exists = Games.check(reference);
-        Connection.sendResult(exists);
+        String reference = Connection.getGameReference();
+        boolean exists = Games.checkExist(reference);
+        Connection.sendActionResults(exists);
         if(exists) {
             boolean hasWinner = Games.hasWinner(reference);
-            Connection.sendResult(hasWinner);
+            Connection.sendActionResults(hasWinner);
             if(hasWinner) {
                 ArrayList winner = Games.getWinner(reference);
                 Connection.sendWinner(winner);
@@ -136,7 +135,7 @@ public class Menu {
      * Here the socket's connection has already been opened!.
      */
     static void selector() {
-        int option = Connection.menu();
+        int option = Connection.getMenuOption();
         System.out.println("New connection. Option " +option);
         
         switch(option) {

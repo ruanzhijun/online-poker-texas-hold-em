@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Class to manipulate the multiple games which can be executed simultaneously.
+ * Class to store and manipulate the multiple games which can be executed simultaneously.
  * @author Mario Codes
- * @version 0.0.2 Added first methods. Check if a game exists and create, it checks first if a game already exist.
+ * @version 0.0.3 Added methods to bet and get winner.
  */
 public class Games {
-    private static final HashMap GAMES = new <String, Game>HashMap();
+    private static final HashMap GAMES = new <String, Game>HashMap(); /* Place to store the multiple games. I must access here to retrieve them with their specific key. */
     
     /**
      * Checks if a game with the reference already exists.
      * @param reference Reference to check.
      * @return Boolean. True if a game with this reference already exists.
      */
-    public static boolean check(String reference) {
+    public static boolean checkExist(String reference) {
         return GAMES.containsKey(reference);
     }
     
@@ -27,14 +27,14 @@ public class Games {
      * @param totalPlayers int. Number of fixed players to know when to start the game.
      * @return Status of the operation. True if created correctly.
      */
-    public static boolean create(ArrayList parameters) {
+    public static boolean createGame(ArrayList parameters) {
         boolean result = false;
         
         String reference = (String) parameters.get(0);
         String id = (String) parameters.get(1);
         int totalPlayers = (int) parameters.get(2);
         
-        if(!check(reference)) {
+        if(!checkExist(reference)) {
             GAMES.put(reference, new Game(reference, id, totalPlayers));
             System.out.println(id +" has created the game #" +reference +". 1/" +totalPlayers +" player(s). " +GAMES.size() +" simultaneous games.");
             result = true;
@@ -44,7 +44,7 @@ public class Games {
     }
     
     // Send a signal to the clients so they disconnect themselves. Then stop and delete the game from HM.
-    public static void delete(String reference) {
+    public static void deleteGame(String reference) {
         throw new UnsupportedOperationException("To be done. Will need checks and a correct stop.");
     }
     
@@ -53,12 +53,12 @@ public class Games {
      * @param reference String. Reference of the game we want to join.
      * @return Boolean. Result of the operation. False if game does not exist.
      */
-    public static boolean join(String reference, String id) {
+    public static boolean joinGame(String reference, String id) {
         boolean result = false;
         
-        if(check(reference)) {
+        if(checkExist(reference)) {
             Game game = (Game) GAMES.get(reference);
-            result = game.joinPlayer(id);
+            result = game.joinNewPlayer(id);
         } else System.out.println("Join rejected. There's no game #" +reference);
         
         return result;
@@ -67,6 +67,7 @@ public class Games {
     
     /**
      * Gets the phase from the game with the specified reference.
+     * Used by the secondary thread.
      * @param reference Games reference we want to obtain it's phase from.
      * @return String. Phase this game is currently at.
      */
@@ -85,10 +86,10 @@ public class Games {
      * @param id ID of the player to check.
      * @return Boolean. True if he speaks. False if not such game or does not speak.
      */
-    public static boolean speaks(String reference, String id) {
+    public static boolean speaksPlayer(String reference, String id) {
         if(GAMES.containsKey(reference)) {
             Game game = (Game) GAMES.get(reference);
-            return game.speaks(id);
+            return game.speaksPlayer(id);
         }
         
         return false;
@@ -100,7 +101,7 @@ public class Games {
      * @param id Unique ID to know from which player get its cards.
      * @return AL<Card>. Private player cards.
      */
-    public static ArrayList<Card> privateCards(String reference, String id) {
+    public static ArrayList<Card> getPrivateCards(String reference, String id) {
         if(GAMES.containsKey(reference)) {
             Game game = (Game) GAMES.get(reference);
             return game.getPlayerCards(id);
@@ -111,10 +112,10 @@ public class Games {
     
     /**
      * Checks if the game exists. Gets the common cards for all the players.
-     * @param reference
-     * @return 
+     * @param reference Reference of the game where the player is playing in.
+     * @return AL<Card>. Common player cards.
      */
-    public static ArrayList<Card> commonCards(String reference) {
+    public static ArrayList<Card> getCommonCards(String reference) {
         if(GAMES.containsKey(reference)) {
             Game game = (Game) GAMES.get(reference);
             return game.getTableCards();

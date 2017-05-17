@@ -11,8 +11,8 @@ import java.util.concurrent.ThreadLocalRandom;
  * @version 0.0.3 Implemented method to retrieve table cards.
  */
 public class Deck {
-    private ArrayList<Card> cards_table = new ArrayList<Card>();
-    private ArrayList<Card> deck = new ArrayList<Card>(52);
+    private final ArrayList<Card> CARDS_TABLE = new ArrayList<>();
+    private final ArrayList<Card> DECK = new ArrayList<>(52);
     
     /**
      * Default constructor. Gets everything ready.
@@ -27,12 +27,12 @@ public class Deck {
      */
     private void iniSuits(String suit) {
         for (int i = 0; i < 9; i++)
-            deck.add(new Card(Integer.toString(i+1), suit));
+            DECK.add(new Card(Integer.toString(i+1), suit));
         
-        deck.add(new Card("J", suit));
-        deck.add(new Card("Q", suit));
-        deck.add(new Card("K", suit));
-        deck.add(new Card("A", suit));
+        DECK.add(new Card("J", suit));
+        DECK.add(new Card("Q", suit));
+        DECK.add(new Card("K", suit));
+        DECK.add(new Card("A", suit));
     }
     
     /**
@@ -66,28 +66,15 @@ public class Deck {
      */
     private void prepareDeck() {
         iniDeck();
-        shuffle(deck);
+        shuffle(DECK);
     }
-    
-    
-    /**
-     * As stated by the rules, burns the required number of cards.
-     * @param cards Int. Number of cards to burn from the deck.
-     * todo: check if used, if not delete.
-     */
-    private void burn(int cards) {
-        for (int i = 0; i < cards; i++) {
-            deck.remove(0);
-        }
-    }
-    
     
     /**
      * Obtains one card from the deck.
      * @return Card removed from the deck.
      */
     public Card getCard() {
-        return deck.remove(0);
+        return DECK.remove(0);
     }
     
     
@@ -98,7 +85,7 @@ public class Deck {
      */
     public ArrayList<Card> getCards(int number) {
         ArrayList<Card> cards = new ArrayList<>();
-        for (int i = 0; i < number; i++) cards.add(deck.remove(0));
+        for (int i = 0; i < number; i++) cards.add(DECK.remove(0));
         
         return cards;
     }
@@ -108,7 +95,7 @@ public class Deck {
      * @param number Number of cards to retrieve.
      */
     public void retrieveTableCards(int number) {
-        for (int i = 0; i < number; i++) getCards_table().add(getCard());
+        for (int i = 0; i < number; i++) getCARDS_TABLE().add(getCard());
     }
     
     @Override
@@ -116,7 +103,7 @@ public class Deck {
         StringBuilder sb = new StringBuilder();
         
         int i = 1;
-        for(Card carta: deck) {
+        for(Card carta: DECK) {
             sb.append('#');
             sb.append(i++);
             sb.append(" ");
@@ -130,8 +117,8 @@ public class Deck {
     /**
      * @return the cards_table
      */
-    public ArrayList<Card> getCards_table() {
-        return cards_table;
+    public ArrayList<Card> getCARDS_TABLE() {
+        return CARDS_TABLE;
     }
     
     /**
@@ -141,17 +128,17 @@ public class Deck {
      */
     public ArrayList checkPlay(ArrayList<Card> privateCards) {
         ArrayList results = new ArrayList();
-        Play.checkPlay(privateCards, cards_table);
+        Play.checkPlay(privateCards, CARDS_TABLE);
         results.add(Play.play);
         results.add(Play.value);
         return results;
     }
     
     /**
-     * Private, inner static class to check what does a player have and assign it a value. Comparing those values we get the winner.
+     * Private, inner static class to check which play does a player have and assign it a value. Comparing those values we get the winner.
      * Checks it from high to low, when detects a play, returns it.
      * Done as inner class because it has no sense for it to exist without a deck.
-     * It's a big class, I know. I've tried to re-use all the code possible but could not find any solution. It works perfectly tho so I'm not going to change anything. 
+     * It's a big class, I know. I've tried to re-use all the code possible but could not find any fast solution. It works perfectly tho so I'm not going to change anything. 
      */
     private static class Play {    
         static int value;

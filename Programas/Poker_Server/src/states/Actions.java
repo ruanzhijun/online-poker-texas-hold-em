@@ -14,7 +14,7 @@ public class Actions {
      * @return Boolean. True if the player may bet.
      */
     public static boolean mayBet(Game game, String id) { 
-        return game.mayBet(id);
+        return game.mayPlayerBet(id);
     }
     
     /**
@@ -35,7 +35,7 @@ public class Actions {
      * @return Int. Total chips of the common pool.
      */
     public static int bet(Game game, String id, int amount) {
-        int pool = game.bet(id, amount);
+        int pool = game.addBet(id, amount);
         return pool;
     }
 }

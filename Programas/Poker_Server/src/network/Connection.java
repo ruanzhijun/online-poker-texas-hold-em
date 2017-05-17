@@ -11,8 +11,9 @@ import java.util.ArrayList;
 
 /**
  * Everything related to the Server's connection and network.
+ * Before touching anything here, read the doc and then read it again. Inside the documentation it's stated the order in which the packages need be so Client and Server are coordinated.
  * @author Mario Codes
- * @version 0.0.2 First methods. Open and close the connection.
+ * @version 0.0.3 Developed methods to obtain the winner through the thread.
  */
 public class Connection {
     private static Socket socket = null;
@@ -40,7 +41,7 @@ public class Connection {
     
     /**
      * Closes a connection if is opened.
-     * ATENTION! Shouldn't really use it until close the server. The Client should disconnect.
+     * ATENTION! Shouldn't really use it until close the whole server. The Client is the one who should disconnect.
      */
     public static void close() {
         try {
@@ -58,7 +59,7 @@ public class Connection {
      * Gets the menu option desired by the client.
      * @return Int. Option to be used in the menu. -1 error.
      */
-    public static int menu() {
+    public static int getMenuOption() {
         try {
             return ois.readInt();
         } catch (IOException ex) { ex.printStackTrace(); }
@@ -70,7 +71,7 @@ public class Connection {
      * Gets from the client the parameters needed to start a new game. (ID and number of players).
      * @return AL. Contains [0] Ref of the new game; [1] Total number of players in the game.
      */
-    public static ArrayList gameParemeters() {
+    public static ArrayList getGameParemeters() {
         ArrayList parameters = new ArrayList();
         
         try {
@@ -87,7 +88,7 @@ public class Connection {
      * Gets the ID of a player.
      * @return String. ID of the player.
      */
-    public static String getID() {
+    public static String getPlayerID() {
         try {
             return ois.readUTF();
         } catch(IOException ex) { ex.printStackTrace(); }
@@ -100,7 +101,7 @@ public class Connection {
      * Gets the reference of a game.
      * @return String. Reference of the game.
      */
-    public static String getReference() {
+    public static String getGameReference() {
         try {
             return ois.readUTF();
         } catch(IOException ex) { ex.printStackTrace(); }
@@ -113,15 +114,20 @@ public class Connection {
      * Sends the result of an operation through the socket. Generic method.
      * @param result boolean. Result of the operation we want to inform the user.
      */
-    public static void sendResult(boolean result) {
+    public static void sendActionResults(boolean result) {
         try {
             oos.writeBoolean(result);
             oos.flush();
         } catch(IOException ex) { ex.printStackTrace(); }
     }
     
-    
-    public static void sendInformation(String phase, boolean speaks) {
+    /**
+     * Sends the info the secondary thread needs to update the client status regularly.
+     * That is the phase the game is currently at and a bool. which states if the player may or may not bet now.
+     * @param phase Phase the game is currently at.
+     * @param speaks Does this player speak now?
+     */
+    public static void sendThreadInformation(String phase, boolean speaks) {
         try {
             oos.writeUTF(phase);
             oos.writeBoolean(speaks);

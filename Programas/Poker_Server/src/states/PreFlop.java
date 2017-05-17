@@ -21,7 +21,7 @@ public class PreFlop implements Phase {
     @Override
     public void change(Game game) {
         game.setPhase(this);
-        game.newRound();
+        game.startNewRound();
     }
     
     /**

@@ -8,18 +8,18 @@ import states.Phase;
 import states.PreFlop;
 
 /**
- * Encapsulates the logic of a game. Handles everything so it's playable.
+ * Encapsulates the logic of a game. Handles and stores everything needed.
  * @author Mario Codes
- * @version 0.0.2.3 Doing so the game flows and does its actions. Cards for every player are obtained from deck.
+ * @version 0.0.3 Lists and turns reseted correctly to start a new round.
  */
 public class Game {
-    private Phase phase = null; // State machine. Read interface's code.
-    private boolean started = false;
-    private Deck deck;
+    private Phase phase = null; // State machine. Read interface's Phase code.
+    private boolean started = false; // Used so other players can't join a game that's currently going on.
+    private Deck deck; // Deck with all it's cards. A new one will be created for every round.
     
-    private final String REFERENCE; // Own ID to handle multi-matches.
-    private final LinkedHashMap<String, ArrayList> ALLPLAYERS = new LinkedHashMap<>(); /* A copy of every player in the game. A player will only get deleted from here when he has no more chips and cannot continue playing. */
-    private LinkedHashMap<String, ArrayList> ROUNDPLAYERS = new LinkedHashMap<>(); /* Used to know players who are in this round and didn't retire. Will copy the LHM 1 line above every new round.
+    private final String REFERENCE; // Own ID of this game to handle multi-matches.
+    private final LinkedHashMap<String, ArrayList> ALLPLAYERS = new LinkedHashMap<>(); /* A copy of every player in the game. A player will only get deleted from here when he has no more chips and cannot continue playing. Also when he disconnects. */
+    private LinkedHashMap<String, ArrayList> ROUNDPLAYERS = new LinkedHashMap<>(); /* Used to know players who is in this round and didn't retire. I copy the keys from the Linked Map 1 line above every new round. Don't make a copy because it can be a bit tricky btw shallow / deep copies.
                                                                                         It also stores personal information about the player: 
                                                                                         [0] - boolean, player turn to speak?
                                                                                         [1] - boolean, can this player bet?
@@ -35,6 +35,7 @@ public class Game {
     private int totalPlayers = 0, joinedPlayers = 1; // Number of players setted by user, number of players joined until now. The game will start when the second equals the first.   
     private int chips = 0; // Chips betted in the actual round by all players. The winner gets it all.
 
+    
     /**
      * Default constructor. Assigns the ID to the game.
      * @param reference Unique ID so other players can join it.
@@ -48,10 +49,10 @@ public class Game {
     
     
     /**
-     * Draws the private cards from the deck for every player still in game.
+     * Obtains the private cards from the deck for every player still in game.
      * It adds them in the player's HashMap as entries [2] and [3] inside the AL.
      */
-    private void drawPrivateCards() {
+    private void retrievePrivateCards() {
         for(Map.Entry<String, ArrayList> entry : ROUNDPLAYERS.entrySet()) {
             ArrayList list = entry.getValue();
             list.add(deck.getCard());
@@ -61,16 +62,17 @@ public class Game {
     
     /**
      * Retrieves the specified cards and adds them into the table AL.
-     * @param number 
+     * @param number Number of cards to retrieve. It changes depending the phase.
      */
     public void retrieveTableCards(int number) {
         deck.retrieveTableCards(number);
     }
     
     /**
-     * HACK. I should fix it if I find a damn 'easy' way to make a deep copy of a HashLinkedMap. All I've found until now didn't work or are shallow copies.
-     * Makes a snapshot of ALLPLAYERS into ROUNDPLAYERS. This way I take a record of which players are no longer into the game and which just did retire for this round.
-     * fixme: fix it! find how the hell to do a deep copy.
+     * Makes a 'snapshot' of ALLPLAYERS into ROUNDPLAYERS.
+     * Iterates ALLPLAYERS to get the key, creates a completely new AL and adds into them the booleans to manage turns.
+     * The first player is done apart because needs to speak first, the rest is automated.
+     * DON'T try to change it and make a copy of one LinkedMap into another. Tried that and had a lot of troubles with shallow copies; They were linked and referencing entries.
      */
     private void resetPlayersList() {
         Iterator it = ALLPLAYERS.keySet().iterator();
@@ -89,44 +91,31 @@ public class Game {
             value.add(true);
             ROUNDPLAYERS.put(key, value);
         }
-
-        /*
-        while(it.hasNext()) { // Rest of players.
-            key = (String) it.next();
-            value = ALLPLAYERS.get(key);
-            value.set(1, true);
-            if(value.size() >= 6) { // Removes the extra added values because it's a goddamn shallow copy.
-                value.remove(5);
-                value.remove(4);
-                value.remove(3);
-                value.remove(2);
-            }
-            ROUNDPLAYERS.put(key, value);
-        }
-        */
     }
     
-    private void resets() {
+    /**
+     * Resets everything that needs to be reseted for a new round.
+     * That is: ROUNDPLAYER values; WINNER AL; new Deck; Pool of chips.
+     */
+    private void resetRoundValues() {
         ROUNDPLAYERS.clear();
         resetPlayersList();
-        System.out.println(ROUNDPLAYERS);
         WINNER.clear();
         deck = new Deck();
         chips = 0;
     }
     
     /**
-     * To be called by state machine -> PreFlop.
+     * Method to be called by state machine -> PreFlop.
      * Gets everything ready to start a new fresh round.
-     * Erases and copies all the players to a new round Map.
+     * Erases and 'copies' all the players to a new round Map.
      * Creates a new fresh deck.
      */
-    public void newRound() {
-        resets();
-        resetTurns();
+    public void startNewRound() {
+        resetRoundValues();
+        resetPhaseTurns();
         System.out.println("Game #" +REFERENCE +" has started a new round. " +ROUNDPLAYERS.size() +"/" +totalPlayers +" players left.");
-        // todo: reset player action AL. Chips to 0. Erase players jugada.
-        drawPrivateCards();
+        retrievePrivateCards();
     }
     
     
@@ -146,7 +135,7 @@ public class Game {
      * Starts the game when all the players have joined.
      * Makes a copy of all the players in the game to the local round Map.
      */
-    private void start() {
+    private void startGame() {
         started = true;
         new PreFlop().change(this);
     }
@@ -155,7 +144,7 @@ public class Game {
      * Checks whether users can still join to this game.
      * @return Boolean. True if the game has not started and still room left.
      */
-    private boolean joinable() {
+    private boolean isJoinable() {
         return !started && (joinedPlayers < totalPlayers);
     }
     
@@ -172,12 +161,12 @@ public class Game {
      * Sets +1 to the number of current players, starts the game if all the players did join. Adds the player to global Map.
      * Makes a copy of the Map with all the players to the local round Map.
      */
-    boolean joinPlayer(String id) {
-        if(joinable()) {
+    boolean joinNewPlayer(String id) {
+        if(isJoinable()) {
             System.out.println(id +" joined game #" +REFERENCE +"; " +(++joinedPlayers) +"/" +totalPlayers +" players.");
             if(joinedPlayers >= totalPlayers) { // Already do ++ in msg 1 line up.
                 addPlayerToList(id);
-                start();
+                startGame();
                 setFirstTurn();
             } else addPlayerToList(id);
             
@@ -193,7 +182,7 @@ public class Game {
      * @param id ID of the user to check the turn.
      * @return Boolean. True if the player may speak.
      */
-    boolean speaks(String id) {
+    boolean speaksPlayer(String id) {
         return (boolean) ROUNDPLAYERS.get(id).get(0);
     }
     
@@ -218,7 +207,7 @@ public class Game {
      * @return AL<Card> with all the common cards.
      */
     ArrayList<Card> getTableCards() {
-        return deck.getCards_table();
+        return deck.getCARDS_TABLE();
     }
     
     /**
@@ -227,7 +216,7 @@ public class Game {
      * @param id ID of the player to check.
      * @return boolean. AND between bool his turn and bool did he already bet?
      */
-    public boolean mayBet(String id) {
+    public boolean mayPlayerBet(String id) {
         System.out.println("Bets: " +id +", phase: " +phase +": " +ROUNDPLAYERS);
         return ((boolean) ROUNDPLAYERS.get(id).get(0) && (boolean) ROUNDPLAYERS.get(id).get(1));
     }
@@ -235,7 +224,7 @@ public class Game {
     /**
      * Phase ended. Everyone has spoken. Set booleans of 'player may speak' to true.
      */
-    public void resetTurns() {
+    public void resetPhaseTurns() {
         for(ArrayList al : ROUNDPLAYERS.values()) al.set(1, true);
     }
     
@@ -252,7 +241,7 @@ public class Game {
      * @param id String. ID of the player who has betted.
      * @return String. ID of the next player in line.
      */
-    private String nextID(String id) {
+    private String getNextID(String id) {
         Iterator it = ROUNDPLAYERS.keySet().iterator();
         while(it.hasNext()) {
             String tmp = (String) it.next();
@@ -269,10 +258,10 @@ public class Game {
      * [1] = can this player bet?
      * @param id String. ID of the player who has betted.
      */
-    private void manageTurns(String id) {
+    private void managesTurns(String id) {
         ROUNDPLAYERS.get(id).set(0, false);
         ROUNDPLAYERS.get(id).set(1, false);
-        String next = nextID(id);
+        String next = getNextID(id);
         ROUNDPLAYERS.get(next).set(0, true);
     }
     
@@ -283,9 +272,9 @@ public class Game {
      * @param amount Int. Number of chips to bet.
      * @return Int. Total amount of the common pool after the bet was added.
      */
-    public int bet(String id, int amount) {
+    public int addBet(String id, int amount) {
         chips += amount;
-        manageTurns(id);
+        managesTurns(id);
         return chips;
     }
     

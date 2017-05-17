@@ -175,6 +175,22 @@ public class MainMenu extends javax.swing.JFrame {
         Check.checks(o, "SU");
         Check.checks(a, "SU");
         System.out.println("");
+
+        pool = o.bet("SU", 100);
+        System.out.println("Pool after bet: " +pool);
+        pool = a.bet("SU", 100);
+        System.out.println("Pool after bet: " +pool);
+        Check.checks(o, "SU");
+        Check.checks(a, "SU");
+        System.out.println("");
+
+        pool = o.bet("SU", 100);
+        System.out.println("Pool after bet: " +pool);
+        pool = a.bet("SU", 100);
+        System.out.println("Pool after bet: " +pool);
+        Check.checks(o, "SU");
+        Check.checks(a, "SU");
+        System.out.println("");
         
         
         System.out.println("");
@@ -183,22 +199,6 @@ public class MainMenu extends javax.swing.JFrame {
         System.out.println("");
         
         
-        pool = o.bet("SU", 100);
-        System.out.println("Pool after bet: " +pool);
-        pool = a.bet("SU", 100);
-        System.out.println("Pool after bet: " +pool);
-        Check.checks(o, "SU");
-        Check.checks(a, "SU");
-        System.out.println("");
-
-        pool = o.bet("SU", 100);
-        System.out.println("Pool after bet: " +pool);
-        pool = a.bet("SU", 100);
-        System.out.println("Pool after bet: " +pool);
-        Check.checks(o, "SU");
-        Check.checks(a, "SU");
-        System.out.println("");
-
         pool = o.bet("SU", 100);
         System.out.println("Pool after bet: " +pool);
         pool = a.bet("SU", 100);
@@ -257,13 +257,13 @@ public class MainMenu extends javax.swing.JFrame {
                 
                 round(o, a);
                 
-//                try {
-//                    Thread.sleep(6000);
-//                } catch(InterruptedException ex) { ex.printStackTrace(); }
-//                
-//                // New Round.
-//                System.out.println("New Round!");
-//                 round(o, a);
+                try {
+                    Thread.sleep(6000);
+                } catch(InterruptedException ex) { ex.printStackTrace(); }
+                
+                // New Round.
+                System.out.println("New Round!");
+                 round(o, a);
             }
         });
     }

@@ -10,8 +10,8 @@ import java.util.ArrayList;
  * @author Mario Codes
  */
 public class Check {
-    private static String phase = "";
-    private static boolean turn = false;
+    private static String phase = ""; // Phase the game is currently at. Will get updated by the thread.
+    private static boolean turn = false, getChips = true; // Is this player turn?; Did this player won and already got the chips?
     
     /**
      * Check to see if the player does need its cards or he has them already.
@@ -65,6 +65,7 @@ public class Check {
     
     /**
      * Checks if the AL is not empty.
+     * Checks if the player won and already added the chips.
      * If the player is the winner, adds him the amount of chips won.
      * @param winner AL with the info of the winner.
      * @param player Player to check if it's the winner.
@@ -72,7 +73,10 @@ public class Check {
     private static void addChips(ArrayList winner, Player player) {
         if(winner.size() > 0) {
             String idWinner = (String) winner.get(0);
-            if(checkWinner(idWinner, player)) player.addChips((int) winner.get(2));
+            if(checkWinner(idWinner, player) && getChips) {
+                player.addChips((int) winner.get(2));
+                getChips = false;
+            }
         }
     }
     
@@ -99,6 +103,7 @@ public class Check {
         switch(phase) {
             case "PreFlop":
                 getPrivateCards(player, player.getOwnCards(), reference);
+                getChips = true;
                 break;
             case "Flop":
                 getTableCards(player, player.getTableCards(), reference, 3);

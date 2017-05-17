@@ -174,45 +174,36 @@ public class MainMenu extends javax.swing.JFrame {
         System.out.println("Pool after bet: " +pool);
         Check.checks(o, "SU");
         Check.checks(a, "SU");
-        System.out.println("Private: " +o.getOwnCards());
-        System.out.println("Private: " +a.getOwnCards());
-        System.out.println("Table: " +o.getTableCards());
-        System.out.println("Table: " +a.getTableCards());
         System.out.println("");
-
-        pool = o.bet("SU", 100);
-        System.out.println("Pool after bet: " +pool);
-        pool = a.bet("SU", 100);
-        System.out.println("Pool after bet: " +pool);
-        Check.checks(o, "SU");
-        Check.checks(a, "SU");
-        System.out.println("Common: " +o.getTableCards());
-        System.out.println("Common: " +a.getTableCards());
-        System.out.println("");
-
-        pool = o.bet("SU", 100);
-        System.out.println("Pool after bet: " +pool);
-        pool = a.bet("SU", 100);
-        System.out.println("Pool after bet: " +pool);
-        Check.checks(o, "SU");
-        Check.checks(a, "SU");
-        System.out.println("Common: " +o.getTableCards());
-        System.out.println("Common: " +a.getTableCards());
-        System.out.println("");
-
+        
+        
         System.out.println("");
         System.out.println("Player retired");
         o.retire("SU");
         System.out.println("");
         
+        
+        pool = o.bet("SU", 100);
+        System.out.println("Pool after bet: " +pool);
+        pool = a.bet("SU", 100);
+        System.out.println("Pool after bet: " +pool);
+        Check.checks(o, "SU");
+        Check.checks(a, "SU");
+        System.out.println("");
+
+        pool = o.bet("SU", 100);
+        System.out.println("Pool after bet: " +pool);
+        pool = a.bet("SU", 100);
+        System.out.println("Pool after bet: " +pool);
+        Check.checks(o, "SU");
+        Check.checks(a, "SU");
+        System.out.println("");
+
         pool = o.bet("SU", 100);
         System.out.println("Pool after bet: " +pool);
         pool = a.bet("SU", 100);
         System.out.println("Pool after bet: " +pool);
         System.out.println("");
-
-        // o.getWinner("SU");
-        // a.getWinner("SU");
 
         Check.checks(o, "SU");
         Check.checks(a, "SU");
@@ -266,13 +257,13 @@ public class MainMenu extends javax.swing.JFrame {
                 
                 round(o, a);
                 
-                try {
-                    Thread.sleep(6000);
-                } catch(InterruptedException ex) { ex.printStackTrace(); }
-                
-                // New Round.
-                System.out.println("New Round!");
-                 round(o, a);
+//                try {
+//                    Thread.sleep(6000);
+//                } catch(InterruptedException ex) { ex.printStackTrace(); }
+//                
+//                // New Round.
+//                System.out.println("New Round!");
+//                 round(o, a);
             }
         });
     }

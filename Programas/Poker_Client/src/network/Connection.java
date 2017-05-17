@@ -226,7 +226,7 @@ public class Connection {
      * @param player Player to bet.
      * @param reference Reference of the game the player is in.
      * @param amount Amount of chips to bet.
-     * @return Integer. Amount of chips in common pool. -1 exception or game does not exist. -2 player may not bet.
+     * @return Integer. Amount of chips in common pool. Error return see doc.
      */
     public static int bet(Player player, String reference, int amount) {
         try {
@@ -238,14 +238,17 @@ public class Connection {
             
             boolean exists = ois.readBoolean();
             if(exists) {
-                boolean mayBet = ois.readBoolean();
-                if(mayBet) {
-                    oos.writeInt(amount);
-                    oos.flush();
-                    
-                    int chips = ois.readInt();
-                    return chips;
-                } else return -3;
+                boolean isInGame = ois.readBoolean();
+                if(isInGame) {
+                    boolean mayBet = ois.readBoolean();
+                    if(mayBet) {
+                        oos.writeInt(amount);
+                        oos.flush();
+
+                        int chips = ois.readInt();
+                        return chips;
+                    } else return -3;
+                } else return -4;
             } else return -2;
         } catch(IOException ex) { ex.printStackTrace(); }
         

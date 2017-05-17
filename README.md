@@ -16,6 +16,8 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 * O. Int. Total number of players.
 * I. Bool. Result of the action.
 
+#### Returns
+* Bool. Status of the operation
 
 ### Join Game
 * O. Int. Menu option.
@@ -23,6 +25,8 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 * O. String. Player's ID.
 * I. Bool. Result of the action.
 
+#### Returns
+* Bool. Status of the operation
 
 ### Information Secondary Thread
 * O. Int. Menu option.
@@ -32,6 +36,8 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 * I. String. Game's phase (State machine).
 * I. Bool. Is this player's turn?.
 
+#### Returns
+* ArrayList. [0] Str. Current Phase; [1] Bool. Does player speak now?.
 
 ### Get private player cards
 * O. Int. Menu option.
@@ -41,6 +47,8 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 * I. Int. Number of cards to be received. (They will always be 2, but I do re-use code from the way I do get the table cards and didn't feel like to hardcode it).
 * I. Card. Private player cards to be added.
 
+#### Returns
+* ArrayList<Card>. [0] Card #1; [1] Card #2.
 
 ### Get common table cards
 * O. Int. Menu option.
@@ -59,6 +67,11 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 * O. Int. Number of chips to bet.
 * I. Int. Number of chips the winner gets. (Common pool).
 
+#### Error Return Options
+* -1. IOException. Follow the error.
+* -2. This game does not exist. Should never be reachable, but better check for it anyway.
+* -3. Player may not bet right now. It's not his turn.
+* -4. Player did already retire and cannot bet until new round.
 
 ### Check Winner
 * O. Int. Menu option.

@@ -6,7 +6,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import states.Phase;
 import states.PreFlop;
-import states.River;
 
 /**
  * Encapsulates the logic of a game. Handles and stores everything needed.
@@ -407,42 +406,12 @@ public class Game {
         String next = getNextID(id);
         if(ROUNDPLAYERS.containsKey(next)) ROUNDPLAYERS.get(next).set(0, true);
     }
-    
-//    private boolean isLastPlayerLeft() {
-//        return ROUNDPLAYERS.size() <= 1;
-//    }
-//    
-//    private void onePlayerLeft() {
-//        if(!phase.toString().matches("River")) {
-//            new River().change(this);
-//            String last = ROUNDPLAYERS.keySet().iterator().next();
-//            
-//            WINNER.clear();
-//            WINNER.add(last);
-//            WINNER.add("");
-//            WINNER.add(0);
-//            WINNER.add(chips);
-//            
-//            Runnable t1 = () -> { // Setted in a new thread so the last user gets the pool and after i waiting seconds, the server starts a new round.
-//                try { 
-//                    Thread.sleep(5000); // todo: set it as a variable asked on startup maybe.
-//                    new PreFlop().change(this); 
-//                } catch(InterruptedException ex) { ex.printStackTrace(); }
-//            };
-//            
-//            new Thread(t1).start();
-//        }
-//    }
-//    
-//    public void endRound() {
-//        
-//    }
-    
+
     boolean isPlayerInGame(String id) {
         return ROUNDPLAYERS.containsKey(id);
     }
     
-    public boolean isLastPlayerRetired() {
+    public boolean isLastPlayerLeft() {
         return ROUNDPLAYERS.size() <= 1;
     }
     
@@ -457,7 +426,6 @@ public class Game {
         if(isPlayersTurn(id)) moveTurnToNext(id);
         return ROUNDPLAYERS.remove(id, value);
     }
-    
     
     /**
      * @return the isStarted

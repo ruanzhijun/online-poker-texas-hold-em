@@ -14,8 +14,9 @@ import entities.Game;
 public class Turn implements Phase {
     @Override
     public void change(Game game) {
+        System.out.println("Turn");
         game.setPhase(this);
-        if(game.isLastPlayerRetired()) new River().change(game);
+        if(game.isLastPlayerLeft()) new River().change(game);
         else {
             game.resetPhaseTurns();
             game.retrieveTableCards(1);
@@ -30,14 +31,14 @@ public class Turn implements Phase {
     @Override
     public int bet(Game game, String id, int amount) {
         int pool = Actions.bet(game, id, amount);
-        if(Actions.isLastPlayer(game, id)) new River().change(game);        
+        if(Actions.isLastPlayerInOrder(game, id)) new River().change(game);        
         return pool;
     }
 
     @Override
     public boolean retirePlayer(Game game, String id) {
         boolean retired = Actions.retirePlayer(game, id);
-        if(game.isLastPlayerRetired()) new River().change(game);
+        if(game.isLastPlayerLeft()) new River().change(game);
         return retired;
     }
     

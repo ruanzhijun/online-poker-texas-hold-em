@@ -20,6 +20,8 @@ public class PreFlop implements Phase {
      */
     @Override
     public void change(Game game) {
+        System.out.println("");
+        System.out.println("PreFlop");
         game.setPhase(this);
         game.startNewRound();
     }
@@ -45,14 +47,14 @@ public class PreFlop implements Phase {
     @Override
     public int bet(Game game, String id, int amount) {
         int pool = Actions.bet(game, id, amount);
-        if(Actions.isLastPlayer(game, id)) new Flop().change(game);        
+        if(Actions.isLastPlayerInOrder(game, id)) new Flop().change(game);        
         return pool;
     }
 
     @Override
     public boolean retirePlayer(Game game, String id) {
         boolean retired = Actions.retirePlayer(game, id);
-        if(game.isLastPlayerRetired()) new Flop().change(game);
+        if(game.isLastPlayerLeft()) new Flop().change(game);
         return retired;
     }
     

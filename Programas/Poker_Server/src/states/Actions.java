@@ -23,8 +23,12 @@ public class Actions {
      * @param id ID of the player to check.
      * @return True if it was the last player to speak. Change Phase if so.
      */
-    public static boolean isLastPlayer(Game game, String id) {
+    public static boolean isLastPlayerInOrder(Game game, String id) {
         return game.isLastPlayerInOrder(id);
+    }
+    
+    public static boolean isOnlyPlayerLeft(Game game) {
+        return game.isLastPlayerLeft();
     }
     
     /**

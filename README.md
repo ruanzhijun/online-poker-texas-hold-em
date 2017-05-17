@@ -38,6 +38,9 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 
 #### Returns
 * ArrayList. [0] Str. Current Phase; [1] Bool. Does player speak now?.
+##### Error
+* Null. IOException.
+
 
 ### Get private player cards
 * O. Int. Menu option.
@@ -48,7 +51,9 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 * I. Card. Private player cards to be added.
 
 #### Returns
-* ArrayList<Card>. [0] Card #1; [1] Card #2.
+* ArrayList. [0] Card #1; [1] Card #2.
+##### Error
+* Null. IOException.
 
 ### Get common table cards
 * O. Int. Menu option.
@@ -57,6 +62,10 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 * I. Int. Number of cards to be received.
 * I. Card. Private player cards to be added.
 
+#### Returns
+* ArrayList. [n] Card #n.
+##### Error
+* Null. IOException.
 
 ### Bet
 * O. Int. Menu option.
@@ -67,8 +76,10 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 * O. Int. Number of chips to bet.
 * I. Int. Number of chips the winner gets. (Common pool).
 
-#### Error Return Options
-* -1. IOException. Follow the error.
+#### Returns
+* Int. Number of chips at the moment in common pool.
+##### Error
+* -1. IOException.
 * -2. This game does not exist. Should never be reachable, but better check for it anyway.
 * -3. Player may not bet right now. It's not his turn.
 * -4. Player did already retire and cannot bet until new round.
@@ -81,3 +92,8 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 * I. String. Winner's ID.
 * I. String. Play the winner has won with (Name of it to display).
 * I. Int. Number of chips won. (Only added to the winner).
+
+#### Returns
+* ArrayList. [0] Str. ID of the Winner; [1] Str. Name of the winning play; [2] Int. Ammount of chips won by the winner.
+##### Error
+* Null. IOException or game does not exist.

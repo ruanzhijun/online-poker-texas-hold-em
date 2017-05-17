@@ -72,6 +72,7 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 * O. String. Game reference.
 * O. String. Player's ID.
 * I. Bool. Does game exist?.
+* I. Bool. Is this player still in game? (Did not retire).
 * I. Bool. May the player bet now?.
 * O. Int. Number of chips to bet.
 * I. Int. Number of chips the winner gets. (Common pool).

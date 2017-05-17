@@ -74,9 +74,26 @@ public class Game {
      */
     private void resetPlayersList() {
         Iterator it = ALLPLAYERS.keySet().iterator();
+        String key = "";
+        ArrayList value = new ArrayList();
+        
+        if(it.hasNext()) key = (String) it.next(); // First player. It must have the 'turn' boolean to true.
+        value.add(true);
+        value.add(true);
+        ROUNDPLAYERS.put(key, value);
+        
         while(it.hasNext()) {
-            String key = (String) it.next();
-            ArrayList value = ALLPLAYERS.get(key);
+            key = (String) it.next();
+            value = new ArrayList();
+            value.add(false);
+            value.add(true);
+            ROUNDPLAYERS.put(key, value);
+        }
+
+        /*
+        while(it.hasNext()) { // Rest of players.
+            key = (String) it.next();
+            value = ALLPLAYERS.get(key);
             value.set(1, true);
             if(value.size() >= 6) { // Removes the extra added values because it's a goddamn shallow copy.
                 value.remove(5);
@@ -86,6 +103,7 @@ public class Game {
             }
             ROUNDPLAYERS.put(key, value);
         }
+        */
     }
     
     private void resets() {
@@ -210,6 +228,7 @@ public class Game {
      * @return boolean. AND between bool his turn and bool did he already bet?
      */
     public boolean mayBet(String id) {
+        System.out.println("Bets: " +id +", phase: " +phase +": " +ROUNDPLAYERS);
         return ((boolean) ROUNDPLAYERS.get(id).get(0) && (boolean) ROUNDPLAYERS.get(id).get(1));
     }
     
@@ -217,7 +236,7 @@ public class Game {
      * Phase ended. Everyone has spoken. Set booleans of 'player may speak' to true.
      */
     public void resetTurns() {
-        for(ArrayList al : ALLPLAYERS.values()) al.set(1, true);
+        for(ArrayList al : ROUNDPLAYERS.values()) al.set(1, true);
     }
     
     /**

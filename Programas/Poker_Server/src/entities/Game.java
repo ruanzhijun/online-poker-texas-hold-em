@@ -176,14 +176,16 @@ public class Game {
             return false;
         }
     }
-    
+
     /**
-     * Check if it's this user's turn to speak.
-     * @param id ID of the user to check the turn.
-     * @return Boolean. True if the player may speak.
+     * Checks if this player is still in game.
+     * If he is, does check if its his turn to speak.
+     * @param id ID of the player to check.
+     * @return Boolean. Does this player speak?
      */
     boolean speaksPlayer(String id) {
-        return (boolean) ROUNDPLAYERS.get(id).get(0);
+        if(ROUNDPLAYERS.containsKey(id)) return (boolean) ROUNDPLAYERS.get(id).get(0);
+        else return false;
     }
     
     
@@ -373,13 +375,47 @@ public class Game {
         return ((getWINNER() != null) && (WINNER.size() > 0));
     }
     
+    /**
+     * Checks if the player is still playing this round.
+     * @param id ID of the player to check.
+     * @return Boolean. Is this player still playing?
+     */
     boolean checkPlayerPlaying(String id) {
         return ROUNDPLAYERS.containsKey(id);
     }
     
-    boolean retirePlayer(String id) {
-        return ROUNDPLAYERS.remove(id, new ArrayList<>());
+    /**
+     * Checks if is this players turn right now. Will need it to pass the turn to the next one in line.
+     * @param id ID of the player to check.
+     * @return Boolean. True if is this players turn to speak.
+     */
+    private boolean isPlayersTurn(String id) {
+        if(ROUNDPLAYERS.containsKey(id)) return (boolean) ROUNDPLAYERS.get(id).get(0);
+        return false;
     }
+    
+    /**
+     * Sets the turn to the next player in line.
+     * If I'm retiring a player who is speaking right now, I need to set the turn to the next one.
+     * @param id ID of the player to check.
+     */
+    private void moveTurnToNext(String id) {
+        String next = getNextID(id);
+        if(ROUNDPLAYERS.containsKey(next)) ROUNDPLAYERS.get(next).set(0, true);
+    }
+    
+    /**
+     * Full action to retire a player from the game.
+     * Checks if its this players turn right now, if it is, moves the turn to the next one in line.
+     * @param id String. ID if the player who wants to retire.
+     * @return boolean. True if the player was retired correctly.
+     */
+    boolean retirePlayer(String id) {
+        ArrayList value = ROUNDPLAYERS.get(id);
+        if(isPlayersTurn(id)) moveTurnToNext(id);
+        return ROUNDPLAYERS.remove(id, value);
+    }
+    
     
     /**
      * @return the isStarted

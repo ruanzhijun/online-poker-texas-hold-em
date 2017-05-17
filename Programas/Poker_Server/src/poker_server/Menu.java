@@ -130,6 +130,9 @@ public class Menu {
         }
     }
     
+    /**
+     * Sends information about the action of retiring a player from the game.
+     */
     private static void retirePlayer() {
         String reference = Connection.getGameReference();
         String id = Connection.getPlayerID();

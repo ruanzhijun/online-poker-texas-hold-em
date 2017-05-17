@@ -12,6 +12,7 @@ public class Player {
     private Hand hand = new Hand();
     private int chips = 1000;
     private final String ID;
+    private boolean playing = true;
     
     /**
      * Default Constructor.
@@ -29,9 +30,17 @@ public class Player {
      * @return Int. Number of chips in the common pool after the bet has been added.
      */
     public int bet(String reference, int amount) {
-        int pool = Connection.bet(this, reference, amount);
-        if(pool > 0) chips -= amount;
-        return pool;
+        if(isPlaying()) {
+            int pool = Connection.bet(this, reference, amount);
+            if(pool > 0) chips -= amount;
+            return pool;
+        } else return -3;
+    }
+    
+    public boolean retire(String reference) {
+        boolean result = !Connection.retire(reference, ID);
+        setPlaying(result);
+        return result;
     }
     
     /**
@@ -93,5 +102,19 @@ public class Player {
      */
     public int getChips() {
         return chips;
+    }
+
+    /**
+     * @return the playing
+     */
+    public boolean isPlaying() {
+        return playing;
+    }
+
+    /**
+     * @param playing the playing to set
+     */
+    public void setPlaying(boolean playing) {
+        this.playing = playing;
     }
 }

@@ -200,6 +200,11 @@ public class MainMenu extends javax.swing.JFrame {
         System.out.println("Common: " +a.getTableCards());
         System.out.println("");
 
+        System.out.println("");
+        System.out.println("Player retired");
+        o.retire("SU");
+        System.out.println("");
+        
         pool = o.bet("SU", 100);
         System.out.println("Pool after bet: " +pool);
         pool = a.bet("SU", 100);
@@ -267,8 +272,7 @@ public class MainMenu extends javax.swing.JFrame {
                 
                 // New Round.
                 System.out.println("New Round!");
-
-                round(o, a);
+                 round(o, a);
             }
         });
     }

@@ -79,12 +79,14 @@ public class Check {
     /**
      * Obtains the winner of the game. 
      * Obtains an AL from the server containing all the info needed.
+     * Also resets the boolean of a player playing to true.
      * @param reference Reference of the game the player is playing at.
      * @return AL with winner's info. [0] = Str. ID of the player. [1] = Str. Name of the play achieved. [2] = int. Number of chips won; It equals the total pool. 
      */
     public static ArrayList getWinner(String reference, Player player) {
         ArrayList winner = Connection.getWinner(reference);
         addChips(winner, player);
+        player.setPlaying(true);
         return winner;
     }
     

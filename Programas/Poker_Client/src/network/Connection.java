@@ -282,4 +282,25 @@ public class Connection {
         
         return null;
     }
+    
+    public static boolean retire(String reference, String id) {
+        try {
+            open();
+            oos.writeInt(RETIRE);
+            oos.writeUTF(reference);
+            oos.writeUTF(id);
+            oos.flush();
+            
+            boolean exists = ois.readBoolean();
+            if(exists) {
+                boolean playing = ois.readBoolean();
+                if(playing) {
+                    boolean retired = ois.readBoolean();
+                    return retired;
+                }
+            }
+        } catch(IOException ex) { ex.printStackTrace(); }
+        
+        return false;
+    }
 }

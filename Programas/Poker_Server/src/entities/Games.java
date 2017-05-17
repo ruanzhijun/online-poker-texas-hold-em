@@ -184,4 +184,22 @@ public class Games {
         
         return null;
     }
+    
+    public static boolean checkPlayerPlaying(String reference, String ID) {
+        if(GAMES.containsKey(reference)) {
+            Game game = (Game) GAMES.get(reference);
+            return game.checkPlayerPlaying(ID);
+        }
+        
+        return false;
+    }
+    
+    public static boolean retirePlayer(String reference, String ID) {
+        if(GAMES.containsKey(reference)) {
+            Game game = (Game) GAMES.get(reference);
+            return game.retirePlayer(ID);
+        }
+        
+        return false;
+    }
 }

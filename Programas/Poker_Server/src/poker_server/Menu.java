@@ -130,6 +130,21 @@ public class Menu {
         }
     }
     
+    private static void retirePlayer() {
+        String reference = Connection.getGameReference();
+        String id = Connection.getPlayerID();
+        boolean exists = Games.checkExist(reference);
+        Connection.sendActionResults(exists);
+        if(exists) {
+            boolean isPlaying = Games.checkPlayerPlaying(reference, id);
+            Connection.sendActionResults(isPlaying);
+            if(isPlaying) {
+                boolean playerRetired = Games.retirePlayer(reference, id);
+                Connection.sendActionResults(playerRetired);
+            }
+        }
+    }
+    
     /**
      * Main Switch which derives everything where it needs to be.
      * Here the socket's connection has already been opened!.
@@ -156,6 +171,9 @@ public class Menu {
                 break;
             case BET:
                 bet();
+                break;
+            case RETIRE:
+                retirePlayer();
                 break;
             case GET_WINNER:
                 getWinner();

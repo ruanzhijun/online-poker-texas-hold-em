@@ -373,6 +373,14 @@ public class Game {
         return ((getWINNER() != null) && (WINNER.size() > 0));
     }
     
+    boolean checkPlayerPlaying(String id) {
+        return ROUNDPLAYERS.containsKey(id);
+    }
+    
+    boolean retirePlayer(String id) {
+        return ROUNDPLAYERS.remove(id, new ArrayList<>());
+    }
+    
     /**
      * @return the isStarted
      */

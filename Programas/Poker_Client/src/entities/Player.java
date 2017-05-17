@@ -34,7 +34,7 @@ public class Player {
             int pool = Connection.bet(this, reference, amount);
             if(pool > 0) chips -= amount;
             return pool;
-        } else return -3;
+        } else return -4;
     }
     
     public boolean retire(String reference) {

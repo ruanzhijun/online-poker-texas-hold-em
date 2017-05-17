@@ -245,8 +245,8 @@ public class Connection {
                     
                     int chips = ois.readInt();
                     return chips;
-                } else return -2;
-            } else return -1;
+                } else return -3;
+            } else return -2;
         } catch(IOException ex) { ex.printStackTrace(); }
         
         return -1;

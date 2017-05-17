@@ -131,6 +131,7 @@ public class Deck {
         Play.checkPlay(privateCards, CARDS_TABLE);
         results.add(Play.play);
         results.add(Play.value);
+        System.out.println("Value: " +Play.value);
         return results;
     }
     
@@ -625,7 +626,7 @@ public class Deck {
                     }
                 }
             }
-            value = getScore(play);
+            value += getScore(play);
         }
         
         /**

@@ -163,6 +163,62 @@ public class MainMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItemOpenWebActionPerformed
 
+    private static void round(Player o, Player a) {
+        Check.checks(o, "SU");
+        Check.checks(a, "SU");
+
+        System.out.println("");
+        int pool = o.bet("SU", 100);
+        System.out.println("Pool after bet: " +pool);
+        pool = a.bet("SU", 100);
+        System.out.println("Pool after bet: " +pool);
+        Check.checks(o, "SU");
+        Check.checks(a, "SU");
+        System.out.println("Private: " +o.getOwnCards());
+        System.out.println("Private: " +a.getOwnCards());
+        System.out.println("Table: " +o.getTableCards());
+        System.out.println("Table: " +a.getTableCards());
+        System.out.println("");
+
+        pool = o.bet("SU", 100);
+        System.out.println("Pool after bet: " +pool);
+        pool = a.bet("SU", 100);
+        System.out.println("Pool after bet: " +pool);
+        Check.checks(o, "SU");
+        Check.checks(a, "SU");
+        System.out.println("Common: " +o.getTableCards());
+        System.out.println("Common: " +a.getTableCards());
+        System.out.println("");
+
+        pool = o.bet("SU", 100);
+        System.out.println("Pool after bet: " +pool);
+        pool = a.bet("SU", 100);
+        System.out.println("Pool after bet: " +pool);
+        Check.checks(o, "SU");
+        Check.checks(a, "SU");
+        System.out.println("Common: " +o.getTableCards());
+        System.out.println("Common: " +a.getTableCards());
+        System.out.println("");
+
+        pool = o.bet("SU", 100);
+        System.out.println("Pool after bet: " +pool);
+        pool = a.bet("SU", 100);
+        System.out.println("Pool after bet: " +pool);
+        System.out.println("");
+
+        // o.getWinner("SU");
+        // a.getWinner("SU");
+
+        Check.checks(o, "SU");
+        Check.checks(a, "SU");
+
+        // System.out.println("AND THE WINNER IS: " +al.get(0) +", with: " +al.get(1) +", and has won: " +al.get(2) +" chips!");
+        System.out.println("");
+        System.out.println("Chips of " +o.getID() +": " +o.getChips());
+        System.out.println("Chips of " +a.getID() +": " +a.getChips());
+        System.out.println("");
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -203,60 +259,16 @@ public class MainMenu extends javax.swing.JFrame {
                 Connection.createGame("SU", o.getID(),  2);
                 Connection.joinGame("SU", a.getID());
                 
-                Check.checks(o, "SU");
-                Check.checks(a, "SU");
+                round(o, a);
+                
+                try {
+                    Thread.sleep(6000);
+                } catch(InterruptedException ex) { ex.printStackTrace(); }
+                
+                // New Round.
+                System.out.println("New Round!");
 
-                System.out.println("");
-                int pool = o.bet("SU", 100);
-                System.out.println("Pool after bet: " +pool);
-                pool = a.bet("SU", 100);
-                System.out.println("Pool after bet: " +pool);
-                Check.checks(o, "SU");
-                Check.checks(a, "SU");
-                System.out.println("Private: " +o.getOwnCards());
-                System.out.println("Private: " +a.getOwnCards());
-                System.out.println("Table: " +o.getTableCards());
-                System.out.println("Table: " +a.getTableCards());
-                System.out.println("");
-                
-                pool = o.bet("SU", 100);
-                System.out.println("Pool after bet: " +pool);
-                pool = a.bet("SU", 100);
-                System.out.println("Pool after bet: " +pool);
-                Check.checks(o, "SU");
-                Check.checks(a, "SU");
-                System.out.println("Common: " +o.getTableCards());
-                System.out.println("Common: " +a.getTableCards());
-                System.out.println("");
-                
-                pool = o.bet("SU", 100);
-                System.out.println("Pool after bet: " +pool);
-                pool = a.bet("SU", 100);
-                System.out.println("Pool after bet: " +pool);
-                Check.checks(o, "SU");
-                Check.checks(a, "SU");
-                System.out.println("Common: " +o.getTableCards());
-                System.out.println("Common: " +a.getTableCards());
-                System.out.println("");
-                
-                pool = o.bet("SU", 100);
-                
-                System.out.println("Pool after bet: " +pool);
-                pool = a.bet("SU", 100);
-                System.out.println("Pool after bet: " +pool);
-                System.out.println("");
-                
-                // o.getWinner("SU");
-                // a.getWinner("SU");
-                
-                Check.checks(o, "SU");
-                Check.checks(a, "SU");
-                
-                // System.out.println("AND THE WINNER IS: " +al.get(0) +", with: " +al.get(1) +", and has won: " +al.get(2) +" chips!");
-                System.out.println("");
-                
-                System.out.println("Chips of " +o.getID() +": " +o.getChips());
-                System.out.println("Chips of " +a.getID() +": " +a.getChips());
+                round(o, a);
             }
         });
     }

@@ -20,8 +20,6 @@ public class PreFlop implements Phase {
      */
     @Override
     public void change(Game game) {
-        System.out.println("");
-        System.out.println("PreFlop");
         game.setPhase(this);
         game.startNewRound();
     }

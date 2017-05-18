@@ -14,7 +14,6 @@ import entities.Game;
 public class Turn implements Phase {
     @Override
     public void change(Game game) {
-        System.out.println("Turn");
         game.setPhase(this);
         if(game.isLastPlayerLeft()) new River().change(game);
         else {

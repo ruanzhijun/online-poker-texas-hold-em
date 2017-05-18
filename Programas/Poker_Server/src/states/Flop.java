@@ -14,7 +14,6 @@ import entities.Game;
 public class Flop implements Phase {
     @Override
     public void change(Game game) {
-        System.out.println("Flop");
         game.setPhase(this);
         if(game.isLastPlayerLeft()) new Turn().change(game);
         else {

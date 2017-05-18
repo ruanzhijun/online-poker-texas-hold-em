@@ -14,8 +14,6 @@ import entities.Game;
 public class River implements Phase {
     @Override
     public void change(Game game) {
-        System.out.println("River");
-        System.out.println("");
         game.setPhase(this);
         if(game.isLastPlayerLeft()) Actions.endRound(game);
         else {
@@ -42,7 +40,10 @@ public class River implements Phase {
     @Override
     public boolean retirePlayer(Game game, String id) {
         boolean retired = Actions.retirePlayer(game, id);
-        if(game.isLastPlayerLeft()) Actions.endRound(game);
+        if(game.isLastPlayerLeft()) {
+            game.choseWinner();
+            Actions.endRound(game);
+        }
         return retired;
     }
     

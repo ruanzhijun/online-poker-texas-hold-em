@@ -406,7 +406,7 @@ public class Game {
      * @param id String. ID if the player who wants to retire.
      * @return boolean. True if the player was retired correctly.
      */
-    public boolean retirePlayer(String id) {
+    public boolean retirePlayerFromRound(String id) {
         ROUNDPLAYERS.get(id).set(0, false); 
         ROUNDPLAYERS.get(id).set(1, false); /* Don't remove. I don't know why, even when it's going to be deleted anyway if I don't put
                                                 this here, and set the values to false, it causes a bug where the game it's being changed twice
@@ -415,6 +415,15 @@ public class Game {
         ArrayList value = ROUNDPLAYERS.get(id);
         if(isPlayersTurn(id)) moveTurnToNext(id);
         return ROUNDPLAYERS.remove(id, value);
+    }
+    
+    boolean retirePlayerFromGame(String id) {
+        retirePlayerFromRound(id);
+        
+        ALLPLAYERS.get(id).set(0, false);
+        ALLPLAYERS.get(id).set(1, false);
+        ArrayList value = ALLPLAYERS.get(id);
+        return ALLPLAYERS.remove(id, value);
     }
     
     /**

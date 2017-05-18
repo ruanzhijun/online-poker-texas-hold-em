@@ -44,7 +44,7 @@ public class Actions {
     }
     
     public static boolean retirePlayer(Game game, String id) {
-        return game.retirePlayer(id);
+        return game.retirePlayerFromRound(id);
     }
     
     public static void endRound(Game game) {

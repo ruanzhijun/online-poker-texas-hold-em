@@ -198,9 +198,15 @@ public class Games {
      * @param ID personal ID of the player to retire.
      * @return Result of the operation. True if he was correctly retired and is no longer playing.
      */
-    public static boolean retirePlayer(String reference, String ID) {
+    public static boolean retirePlayerFromRound(String reference, String ID) {
         Game game = getGame(reference);
-        if(game != null) return game.getPhase().retirePlayer(game, ID);
+        if(game != null) return game.getPhase().retirePlayerFromRound(game, ID);
+        else return false;
+    }
+    
+    public static boolean retirePlayerFromGame(String reference, String ID) {
+        Game game = getGame(reference);
+        if(game != null) return game.retirePlayerFromGame(ID);
         else return false;
     }
 }

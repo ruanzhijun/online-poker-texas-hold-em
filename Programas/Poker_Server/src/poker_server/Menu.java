@@ -125,6 +125,7 @@ public class Menu {
      */
     private static void sendWinner() {
         String reference = Connection.getReference();
+        String id = Connection.getID();
         boolean exists = Games.checkGameExists(reference);
         Connection.sendResult(exists);
         if(exists) {
@@ -133,6 +134,12 @@ public class Menu {
             if(hasWinner) {
                 ArrayList winner = Games.getWinner(reference);
                 Connection.sendWinner(winner);
+                boolean retirePlayer = Connection.getRetire();
+                boolean retired = false;
+                if(retirePlayer) {
+                    retired = Games.retirePlayerFromGame(reference, id);
+                    Connection.sendResult(retired);
+                }
             }
         }
     }
@@ -149,7 +156,7 @@ public class Menu {
             boolean isPlaying = Games.isPlayerInRound(reference, id);
             Connection.sendResult(isPlaying);
             if(isPlaying) {
-                boolean playerRetired = Games.retirePlayer(reference, id);
+                boolean playerRetired = Games.retirePlayerFromRound(reference, id);
                 Connection.sendResult(playerRetired);
             }
         }

@@ -21,5 +21,5 @@ public interface Phase {
     
     public int doBet(Game game, String id, int amount);
     
-    public boolean retirePlayer(Game game, String id);
+    public boolean retirePlayerFromRound(Game game, String id);
 }

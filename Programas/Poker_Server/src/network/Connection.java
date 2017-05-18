@@ -181,4 +181,12 @@ public class Connection {
             oos.flush();
         } catch(IOException ex) { ex.printStackTrace(); }
     }
+    
+    public static boolean getRetire() {
+        try {
+            return ois.readBoolean();
+        } catch(IOException ex) { ex.printStackTrace(); }
+        
+        return false;
+    }
 }

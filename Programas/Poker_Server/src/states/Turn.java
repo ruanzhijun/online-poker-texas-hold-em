@@ -35,7 +35,7 @@ public class Turn implements Phase {
     }
 
     @Override
-    public boolean retirePlayer(Game game, String id) {
+    public boolean retirePlayerFromRound(Game game, String id) {
         boolean retired = Actions.retirePlayer(game, id);
         if(game.isLastPlayerLeft()) new River().change(game);
         return retired;

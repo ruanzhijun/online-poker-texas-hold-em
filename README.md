@@ -7,6 +7,7 @@
 
 ### Server
 * Add the way to delete a game when it's done.
+* Retire a player when the round ends and he has no longer chips.
 
 ## Future Planned Improvements
 * Auto delete a game when there're no players left.

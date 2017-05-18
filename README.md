@@ -4,12 +4,14 @@
 
 ### Client
 * Add GUI. Images and all that.
+* Set the close of all opened connections in a Shutdown Hook when closed the whole client.
 
 ### Server
-
+* Set the port so it's asked by default when starting the server.
 
 ## Future Planned Improvements
 * Set a timer for a player's action.
+* Adjust the timers. Right now there's a 5000 ms delay when ending a round until it starts the next one.
 
 ## Network packages order
 Here are documented all the actions, which do use the network, and as so need to be synchronized between _Client_ and _Server_.

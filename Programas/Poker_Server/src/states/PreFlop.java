@@ -31,7 +31,7 @@ public class PreFlop implements Phase {
      * @return Boolean. May the player bet?
      */
     @Override
-    public boolean mayBet(Game game, String id) {
+    public boolean checkMayPlayerBet(Game game, String id) {
         return Actions.mayBet(game, id);
     }
     
@@ -43,7 +43,7 @@ public class PreFlop implements Phase {
      * @return Int. Total amount of chips after the bet.
      */
     @Override
-    public int bet(Game game, String id, int amount) {
+    public int doBet(Game game, String id, int amount) {
         int pool = Actions.bet(game, id, amount);
         if(Actions.isLastPlayerInOrder(game, id)) new Flop().change(game);        
         return pool;

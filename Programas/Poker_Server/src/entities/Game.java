@@ -192,7 +192,7 @@ public class Game {
      * @param id ID of the player we want to retrieve it's cards.
      * @return AL<Card> with it's 2 cards.
      */
-    ArrayList<Card> getPlayerCards(String id) {
+    ArrayList<Card> getPrivateCards(String id) {
         if(ROUNDPLAYERS.containsKey(id)) {
             ArrayList<Card> cards = new ArrayList<>();
             cards.add((Card) ROUNDPLAYERS.get(id).get(2));
@@ -206,7 +206,7 @@ public class Game {
      * Gets the common cards for all the players.
      * @return AL<Card> with all the common cards.
      */
-    ArrayList<Card> getTableCards() {
+    ArrayList<Card> getCommonCards() {
         return deck.getCARDS_TABLE();
     }
     
@@ -373,17 +373,8 @@ public class Game {
      * Check to see if there's already a winner of this round or not.
      * @return Bool. True if winner's results are not empty.
      */
-    public boolean hasWinner() {
+    public boolean hasGameAWinner() {
         return ((getWINNER() != null) && (WINNER.size() > 0));
-    }
-    
-    /**
-     * Checks if the player is still playing this round.
-     * @param id ID of the player to check.
-     * @return Boolean. Is this player still playing?
-     */
-    boolean checkPlayerPlaying(String id) {
-        return ROUNDPLAYERS.containsKey(id);
     }
     
     /**

@@ -17,9 +17,9 @@ import entities.Game;
 public interface Phase {
     public void change(Game game);
     
-    public boolean mayBet(Game game, String id);
+    public boolean checkMayPlayerBet(Game game, String id);
     
-    public int bet(Game game, String id, int amount);
+    public int doBet(Game game, String id, int amount);
     
     public boolean retirePlayer(Game game, String id);
 }

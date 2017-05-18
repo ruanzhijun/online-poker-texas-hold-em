@@ -23,12 +23,12 @@ public class River implements Phase {
     }
 
     @Override
-    public boolean mayBet(Game game, String id) {
+    public boolean checkMayPlayerBet(Game game, String id) {
         return Actions.mayBet(game, id);
     }
     
     @Override
-    public int bet(Game game, String id, int amount) {
+    public int doBet(Game game, String id, int amount) {
         int pool = Actions.bet(game, id, amount);
         if(Actions.isLastPlayerInOrder(game, id)) {
             game.choseWinner();

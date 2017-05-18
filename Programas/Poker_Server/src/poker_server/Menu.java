@@ -28,7 +28,7 @@ public class Menu {
      */
     private synchronized static void sendInformation() {
         String reference = Connection.getReference();
-        boolean exists = Games.gameExists(reference);
+        boolean exists = Games.checkGameExists(reference);
         Connection.sendResult(exists);
         if(exists) {
             String id = Connection.getID();
@@ -67,7 +67,7 @@ public class Menu {
      */
     private static void sendPrivateCards() {
         String reference = Connection.getReference();
-        boolean exist = Games.gameExists(reference);
+        boolean exist = Games.checkGameExists(reference);
         Connection.sendResult(exist);
         if(exist) {
             String id = Connection.getID();
@@ -81,7 +81,7 @@ public class Menu {
      */
     private static void sendCommonCards() {
         String reference = Connection.getReference();
-        boolean exists = Games.gameExists(reference);
+        boolean exists = Games.checkGameExists(reference);
         Connection.sendResult(exists);
         if(exists) {
             ArrayList<Card> cards = Games.getCommonCards(reference);
@@ -98,20 +98,20 @@ public class Menu {
     private static void doBet() {
         String reference = Connection.getReference();
         String id = Connection.getID();
-        boolean exist = Games.gameExists(reference);
+        boolean exist = Games.checkGameExists(reference);
         Connection.sendResult(exist);
         if(exist) {
             boolean isInGame = Games.isPlayerInRound(reference, id);
             Connection.sendResult(isInGame);
             if(isInGame) {
-                boolean morePlayersLeft = Games.isMorePlayersLeft(reference);
+                boolean morePlayersLeft = Games.checkMorePlayersLeft(reference);
                 Connection.sendResult(morePlayersLeft);
                 if(morePlayersLeft) {
-                    boolean mayBet = Games.mayBet(reference, id);
+                    boolean mayBet = Games.checkMayPlayerBet(reference, id);
                     Connection.sendResult(mayBet);
                     if(mayBet) {
                         int amount = Connection.getBet();
-                        int chips = Games.bet(reference, id, amount);
+                        int chips = Games.doBet(reference, id, amount);
                         Connection.sendChips(chips);
                     }
                 }
@@ -125,10 +125,10 @@ public class Menu {
      */
     private static void sendWinner() {
         String reference = Connection.getReference();
-        boolean exists = Games.gameExists(reference);
+        boolean exists = Games.checkGameExists(reference);
         Connection.sendResult(exists);
         if(exists) {
-            boolean hasWinner = Games.hasWinner(reference);
+            boolean hasWinner = Games.hasGameAWinner(reference);
             Connection.sendResult(hasWinner);
             if(hasWinner) {
                 ArrayList winner = Games.getWinner(reference);
@@ -143,10 +143,10 @@ public class Menu {
     private static void retirePlayer() {
         String reference = Connection.getReference();
         String id = Connection.getID();
-        boolean exists = Games.gameExists(reference);
+        boolean exists = Games.checkGameExists(reference);
         Connection.sendResult(exists);
         if(exists) {
-            boolean isPlaying = Games.checkPlayerPlaying(reference, id);
+            boolean isPlaying = Games.isPlayerInRound(reference, id);
             Connection.sendResult(isPlaying);
             if(isPlaying) {
                 boolean playerRetired = Games.retirePlayer(reference, id);

@@ -16,7 +16,7 @@ public class Games {
      * @param reference Reference to check.
      * @return Boolean. True if a game with this reference already exists.
      */
-    public static boolean gameExists(String reference) {
+    public static boolean checkGameExists(String reference) {
         return GAMES.containsKey(reference);
     }
     
@@ -27,7 +27,7 @@ public class Games {
      * @return Game if it does exist, null otherwise.
      */
     private static Game getGame(String reference) {
-        if(gameExists(reference)) return (Game) GAMES.get(reference);
+        if(checkGameExists(reference)) return (Game) GAMES.get(reference);
         else return null;
     }
     
@@ -74,19 +74,6 @@ public class Games {
         return result;
     }
     
-    
-    /**
-     * Gets the phase from the game with the specified reference.
-     * Used by the secondary thread.
-     * @param reference Games reference we want to obtain it's phase from.
-     * @return String. Phase this game is currently at.
-     */
-    public static String getPhase(String reference) {
-        Game game = getGame(reference);
-        if(game != null) return game.getPhase().toString();
-        else return null;
-    }
-    
     /**
      * Checks inside the game specified, the user ID to see if it's this user's turn to speak.
      * @param reference Reference of the game we want to check.
@@ -97,29 +84,6 @@ public class Games {
         Game game = getGame(reference);
         if(game != null) return game.isPlayersTurn(id);
         else return false;
-    }
-    
-    /**
-     * Checks the game with x reference and retrieves the user with id i private cards.
-     * @param reference Reference of the game the player is playing on.
-     * @param id Unique ID to know from which player get its cards.
-     * @return AL<Card>. Private player cards.
-     */
-    public static ArrayList<Card> getPrivateCards(String reference, String id) {
-        Game game = getGame(reference);
-        if(game != null) return game.getPlayerCards(id);
-        else return null;
-    }
-    
-    /**
-     * Checks if the game exists. Gets the common cards for all the players.
-     * @param reference Reference of the game where the player is playing in.
-     * @return AL<Card>. Common player cards.
-     */
-    public static ArrayList<Card> getCommonCards(String reference) {
-        Game game = getGame(reference);
-        if(game != null) return game.getTableCards();
-        else return null;
     }
     
     /**
@@ -140,10 +104,67 @@ public class Games {
      * @param id String. ID of the player who tries to speak.
      * @return Boolean. States if the player may bet or not.
      */
-    public static boolean mayBet(String reference, String id) {
+    public static boolean checkMayPlayerBet(String reference, String id) {
         Game game = getGame(reference);
-        if(game != null) return game.getPhase().mayBet(game, id);
+        if(game != null) return game.getPhase().checkMayPlayerBet(game, id);
         else return false;
+    }
+    
+    /**
+     * Check to see if there's a chosen winner in a game.
+     * @param reference Reference of the game to check.
+     * @return Bool. True if there's already a winner.
+     */
+    public static boolean hasGameAWinner(String reference) {
+        Game game = getGame(reference);
+        if(game != null) return game.hasGameAWinner();
+        else return false;
+    }
+    
+    /**
+     * Check to see if there are more players playing the current round or this one is the only left.
+     * @param reference Reference of the game to check.
+     * @return True if there are more players left.
+     */
+    public static boolean checkMorePlayersLeft(String reference) {
+        Game game = getGame(reference);
+        if(game != null) return !game.isLastPlayerLeft();
+        else return false;
+    }
+    
+    /**
+     * Gets the phase from the game with the specified reference.
+     * Used by the secondary thread.
+     * @param reference Games reference we want to obtain it's phase from.
+     * @return String. Phase this game is currently at.
+     */
+    public static String getPhase(String reference) {
+        Game game = getGame(reference);
+        if(game != null) return game.getPhase().toString();
+        else return null;
+    }
+    
+    /**
+     * Checks the game with x reference and retrieves the user with id i private cards.
+     * @param reference Reference of the game the player is playing on.
+     * @param id Unique ID to know from which player get its cards.
+     * @return AL<Card>. Private player cards.
+     */
+    public static ArrayList<Card> getPrivateCards(String reference, String id) {
+        Game game = getGame(reference);
+        if(game != null) return game.getPrivateCards(id);
+        else return null;
+    }
+    
+    /**
+     * Checks if the game exists. Gets the common cards for all the players.
+     * @param reference Reference of the game where the player is playing in.
+     * @return AL<Card>. Common player cards.
+     */
+    public static ArrayList<Card> getCommonCards(String reference) {
+        Game game = getGame(reference);
+        if(game != null) return game.getCommonCards();
+        else return null;
     }
     
     /**
@@ -154,21 +175,10 @@ public class Games {
      * @param amount Amount of chips to bet.
      * @return Int. Total amount of the pool until now (after the bet has been added). -1 if the game does not exist.
      */
-    public static int bet(String reference, String id, int amount) {
+    public static int doBet(String reference, String id, int amount) {
         Game game = getGame(reference);
-        if(game != null) return game.getPhase().bet(game, id, amount);
+        if(game != null) return game.getPhase().doBet(game, id, amount);
         else return -1;
-    }
-    
-    /**
-     * Check to see if there's a chosen winner in a game.
-     * @param reference Reference of the game to check.
-     * @return Bool. True if there's already a winner.
-     */
-    public static boolean hasWinner(String reference) {
-        Game game = getGame(reference);
-        if(game != null) return game.hasWinner();
-        else return false;
     }
     
     /**
@@ -178,25 +188,19 @@ public class Games {
      */
     public static ArrayList getWinner(String reference) {
         Game game = getGame(reference);
-        if(game != null && hasWinner(reference)) return game.getWINNER();
+        if(game != null && hasGameAWinner(reference)) return game.getWINNER();
         return null;
     }
     
-    public static boolean checkPlayerPlaying(String reference, String ID) {
-        Game game = getGame(reference);
-        if(game != null) return game.checkPlayerPlaying(ID);
-        else return false;
-    }
-    
+    /**
+     * Action to retire correctly a player from the game.
+     * @param reference Reference of the game to check.
+     * @param ID personal ID of the player to retire.
+     * @return Result of the operation. True if he was correctly retired and is no longer playing.
+     */
     public static boolean retirePlayer(String reference, String ID) {
         Game game = getGame(reference);
         if(game != null) return game.getPhase().retirePlayer(game, ID);
-        else return false;
-    }
-    
-    public static boolean isMorePlayersLeft(String reference) {
-        Game game = getGame(reference);
-        if(game != null) return !game.isLastPlayerLeft();
         else return false;
     }
 }

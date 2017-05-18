@@ -205,6 +205,8 @@ public class MainMenu extends javax.swing.JFrame {
         System.out.println("Pool after bet: " +pool);
         System.out.println("");
 
+        o.setChips(0);
+        
         Check.checks(o, "SU");
         Check.checks(a, "SU");
 

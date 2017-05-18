@@ -407,14 +407,16 @@ public class Game {
      * @return boolean. True if the player was retired correctly.
      */
     public boolean retirePlayerFromRound(String id) {
-        ROUNDPLAYERS.get(id).set(0, false); 
-        ROUNDPLAYERS.get(id).set(1, false); /* Don't remove. I don't know why, even when it's going to be deleted anyway if I don't put
-                                                this here, and set the values to false, it causes a bug where the game it's being changed twice
-                                                of state into PreFlop. This solves it. */
-        
-        ArrayList value = ROUNDPLAYERS.get(id);
-        if(isPlayersTurn(id)) moveTurnToNext(id);
-        return ROUNDPLAYERS.remove(id, value);
+        if(ROUNDPLAYERS.containsKey(id)) {
+            ROUNDPLAYERS.get(id).set(0, false); 
+            ROUNDPLAYERS.get(id).set(1, false); /* Don't remove. I don't know why, even when it's going to be deleted anyway if I don't put
+                                                    this here, and set the values to false, it causes a bug where the game it's being changed twice
+                                                    of state into PreFlop. This solves it. */
+
+            ArrayList value = ROUNDPLAYERS.get(id);
+            if(isPlayersTurn(id)) moveTurnToNext(id);
+            return ROUNDPLAYERS.remove(id, value);
+        } else return false;
     }
     
     boolean retirePlayerFromGame(String id) {

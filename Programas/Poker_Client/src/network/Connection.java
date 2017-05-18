@@ -315,11 +315,8 @@ public class Connection {
         try {
             boolean retired = false;
             
-//            open();
             oos.writeBoolean(retire);
             oos.flush();
-            
-            System.out.println("Retire: " +retire);
             if(retire) retired = ois.readBoolean();
             
             return retired;

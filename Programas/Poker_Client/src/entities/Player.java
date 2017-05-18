@@ -117,4 +117,11 @@ public class Player {
     public void setPlaying(boolean playing) {
         this.playing = playing;
     }
+
+    /**
+     * @param chips the chips to set
+     */
+    public void setChips(int chips) {
+        this.chips = chips;
+    }
 }

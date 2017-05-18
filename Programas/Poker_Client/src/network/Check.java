@@ -92,7 +92,6 @@ public class Check {
         addChips(winner, player);
         player.setPlaying(true);
         boolean retired = retirePlayer(player);
-        System.out.println("Player " +player.getID() +" has been retired from game: " +retired);
         return winner;
     }
     

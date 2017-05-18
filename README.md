@@ -110,7 +110,6 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 * I. Int. Number of chips won. (Only added to the winner).
 * O. Bool. Can this player still play? (Has chips left).
 * I. Bool. If not. Was this player retired correctly?.
-* I. Bool. Are you the last player in game?.
 
 #### Returns
 * ArrayList. [0] Str. ID of the Winner; [1] Str. Name of the winning play; [2] Int. Ammount of chips won by the winner.

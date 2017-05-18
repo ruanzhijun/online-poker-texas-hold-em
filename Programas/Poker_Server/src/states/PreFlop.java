@@ -21,7 +21,8 @@ public class PreFlop implements Phase {
     @Override
     public void change(Game game) {
         game.setPhase(this);
-        game.startNewRound();
+        if(!game.isEnded()) game.startNewRound();
+        else System.out.println("Game with reference #" +game.getREFERENCE() +" has ended");
     }
     
     /**

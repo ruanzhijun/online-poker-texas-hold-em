@@ -50,6 +50,7 @@ public class Actions {
     public static void endRound(Game game) {
         Runnable t1 = () -> { // Setted in a new thread so the last user gets the pool and after i waiting seconds, the server starts a new round.
             try { 
+                if(isOnlyPlayerLeft(game)) game.setEnded(true);
                 Thread.sleep(5000); // todo: set it as a variable asked on startup maybe.
                 new PreFlop().change(game); 
             } catch(InterruptedException ex) { ex.printStackTrace(); }

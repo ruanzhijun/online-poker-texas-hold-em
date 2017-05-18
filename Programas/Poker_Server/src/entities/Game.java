@@ -15,6 +15,7 @@ import states.PreFlop;
 public class Game {
     private Phase phase = null; // State machine. Read interface's Phase code.
     private boolean started = false; // Used so other players can't join a game that's currently going on.
+    private boolean ended = false;
     private Deck deck; // Deck with all it's cards. A new one will be created for every round.
     
     private final String REFERENCE; // Own ID of this game to handle multi-matches.
@@ -464,5 +465,26 @@ public class Game {
      */
     public ArrayList getWINNER() {
         return WINNER;
+    }
+
+    /**
+     * @param ended the ended to set
+     */
+    public void setEnded(boolean ended) {
+        this.ended = ended;
+    }
+
+    /**
+     * @return the ended
+     */
+    public boolean isEnded() {
+        return ended;
+    }
+
+    /**
+     * @return the REFERENCE
+     */
+    public String getREFERENCE() {
+        return REFERENCE;
     }
 }

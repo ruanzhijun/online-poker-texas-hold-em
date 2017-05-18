@@ -3,15 +3,15 @@
 ## TO-DOs
 
 ### Client
-* Add checks so bets cannot be negatives.
+* Add GUI. Images and all that.
+* Set the close of all opened connections in a Shutdown Hook when closed the whole client.
 
 ### Server
-* Add the way to delete a game when it's done.
-* Retire a player when the round ends and he has no longer chips.
+* Set the port so it's asked by default when starting the server.
 
 ## Future Planned Improvements
-* Auto delete a game when there're no players left.
 * Set a timer for a player's action.
+* Adjust the timers. Right now there's a 5000 ms delay when ending a round until it starts the next one.
 
 ## Network packages order
 Here are documented all the actions, which do use the network, and as so need to be synchronized between _Client_ and _Server_.
@@ -115,3 +115,16 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 * ArrayList. [0] Str. ID of the Winner; [1] Str. Name of the winning play; [2] Int. Ammount of chips won by the winner.
 ##### Error
 * Null. IOException or game does not exist.
+
+
+## Versions
+
+###### 0.2.2 Added checks and a way so the game gets stopped and deleted automatically when there's only 1 player left in game.
+###### 0.2.1 Phases fully implemented, now the game flows smooth from the first, to the last one.  
+###### 0.2   Created and implemented State Machine Pattern. Structure of the several Phases in poker. Changes behaviour of actions.
+###### 0.1.1 Designing the basic structure of the network. Designing communications and package order. 
+###### 0.1   Added the code representation of a cards and a deck. Also methods to manipulate them.
+###### 0.0.1 Initial status. Made a repostitory for the project. Looking which code of old projects can I re-use.
+
+
+

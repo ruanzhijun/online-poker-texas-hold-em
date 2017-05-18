@@ -30,11 +30,13 @@ public class Player {
      * @return Int. Number of chips in the common pool after the bet has been added.
      */
     public int bet(String reference, int amount) {
-        if(isPlaying()) {
-            int pool = Connection.bet(this, reference, amount);
-            if(pool > 0) chips -= amount;
-            return pool;
-        } else return -4;
+        if(amount >= 0) {
+            if(isPlaying()) {
+                int pool = Connection.bet(this, reference, amount);
+                if(pool > 0) chips -= amount;
+                return pool;
+            } else return -4;
+        } else return -6;
     }
     
     public boolean retire(String reference) {

@@ -259,13 +259,13 @@ public class MainMenu extends javax.swing.JFrame {
                 
                 round(o, a);
                 
-//                try {
-//                    Thread.sleep(6000);
-//                } catch(InterruptedException ex) { ex.printStackTrace(); }
-//                
-//                // New Round.
-//                System.out.println("New Round!");
-//                round(o, a);
+                try {
+                    Thread.sleep(6000);
+                } catch(InterruptedException ex) { ex.printStackTrace(); }
+                
+                // New Round.
+                System.out.println("New Round!");
+                round(o, a);
             }
         });
     }

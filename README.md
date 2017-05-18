@@ -119,7 +119,8 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 
 ## Versions
 
-#### __0.2.2__ Added checks and a way so the game gets stopped and deleted automatically when there's only 1 player left in game.
+#### 0.2.2 
+Added checks and a way so the game gets stopped and deleted automatically when there's only 1 player left in game.
 #### __0.2.1__ Phases fully implemented, now the game flows smooth from the first, to the last one.  
 #### __0.2__   Created and implemented State Machine Pattern. Structure of the several Phases in poker. Changes behaviour of actions.
 #### __0.1.1__ Designing the basic structure of the network. Designing communications and package order. 

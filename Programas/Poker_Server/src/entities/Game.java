@@ -271,13 +271,14 @@ public class Game {
     
     /**
      * A player bets in this game, adds the amount of chips.
+     * Checks the amount to add is positive.
      * Advances 1 turn or resets them if was the last player.
      * @param id String. ID of the player who's betting. Used to advance the turn to the next one.
      * @param amount Int. Number of chips to bet.
      * @return Int. Total amount of the common pool after the bet was added.
      */
     public int addBet(String id, int amount) {
-        chips += amount;
+        if(amount >= 0) chips += amount;
         managesTurns(id);
         return chips;
     }

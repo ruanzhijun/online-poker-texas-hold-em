@@ -88,10 +88,18 @@ public class Check {
      * @return AL with winner's info. [0] = Str. ID of the player. [1] = Str. Name of the play achieved. [2] = int. Number of chips won; It equals the total pool. 
      */
     public static ArrayList getWinner(String reference, Player player) {
-        ArrayList winner = Connection.getWinner(reference);
+        ArrayList winner = Connection.getWinner(reference, player.getID());
         addChips(winner, player);
         player.setPlaying(true);
+        boolean retired = retirePlayer(player);
+        System.out.println("Player " +player.getID() +" has been retired from game: " +retired);
         return winner;
+    }
+    
+    private static boolean retirePlayer(Player player) {
+        boolean retire = player.getChips() <= 0;
+        boolean retired = Connection.retireFromGame(retire);
+        return retired;
     }
     
     /**

@@ -264,13 +264,14 @@ public class Connection {
      * @param reference Reference of the game the player is playing in.
      * @return AL. Contains the info of the winner. Null if game !exist or exception. Empty if the game has not a winner yet. Else [0] = ID of the winner. [1] = Name of the play. [2] = number of chips won.
      */
-    public static ArrayList getWinner(String reference) {
+    public static ArrayList getWinner(String reference, String id) {
         try {
             ArrayList winner = new ArrayList();
             
             open();
             oos.writeInt(GET_WINNER);
             oos.writeUTF(reference);
+            oos.writeUTF(id);
             oos.flush();
             
             boolean exists = ois.readBoolean();
@@ -305,6 +306,23 @@ public class Connection {
                     return retired;
                 }
             }
+        } catch(IOException ex) { ex.printStackTrace(); }
+        
+        return false;
+    }
+    
+    public static boolean retireFromGame(boolean retire) {
+        try {
+            boolean retired = false;
+            
+//            open();
+            oos.writeBoolean(retire);
+            oos.flush();
+            
+            System.out.println("Retire: " +retire);
+            if(retire) retired = ois.readBoolean();
+            
+            return retired;
         } catch(IOException ex) { ex.printStackTrace(); }
         
         return false;

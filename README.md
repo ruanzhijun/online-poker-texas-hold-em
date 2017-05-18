@@ -102,11 +102,15 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 ### Check Winner
 * O. Int. Menu option.
 * O. String. Game reference.
+* O. String. Game ID.
 * I. Bool. Does game exist?.
 * I. Bool. Does the game already have a winner?.
 * I. String. Winner's ID.
 * I. String. Play the winner has won with (Name of it to display).
 * I. Int. Number of chips won. (Only added to the winner).
+* O. Bool. Can this player still play? (Has chips left).
+* I. Bool. If not. Was this player retired correctly?.
+* I. Bool. Are you the last player in game?.
 
 #### Returns
 * ArrayList. [0] Str. ID of the Winner; [1] Str. Name of the winning play; [2] Int. Ammount of chips won by the winner.

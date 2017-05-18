@@ -16,8 +16,13 @@ public class Games {
      * @param reference Reference to check.
      * @return Boolean. True if a game with this reference already exists.
      */
-    public static boolean checkExist(String reference) {
+    public static boolean gameExists(String reference) {
         return GAMES.containsKey(reference);
+    }
+    
+    private static Game getGame(String reference) {
+        if(gameExists(reference)) return (Game) GAMES.get(reference);
+        else return null;
     }
     
     /**
@@ -34,7 +39,7 @@ public class Games {
         String id = (String) parameters.get(1);
         int totalPlayers = (int) parameters.get(2);
         
-        if(!checkExist(reference)) {
+        if(!gameExists(reference)) {
             GAMES.put(reference, new Game(reference, id, totalPlayers));
             System.out.println(id +" has created the game #" +reference +". 1/" +totalPlayers +" player(s). " +GAMES.size() +" simultaneous games.");
             result = true;
@@ -56,7 +61,7 @@ public class Games {
     public static boolean joinGame(String reference, String id) {
         boolean result = false;
         
-        if(checkExist(reference)) {
+        if(gameExists(reference)) {
             Game game = (Game) GAMES.get(reference);
             result = game.joinNewPlayer(id);
         } else System.out.println("Join rejected. There's no game #" +reference);
@@ -72,12 +77,9 @@ public class Games {
      * @return String. Phase this game is currently at.
      */
     public static String getPhase(String reference) {
-        if(GAMES.containsKey(reference)) {
-            Game game = (Game) GAMES.get(reference);
-            return game.getPhase().toString();
-        }
-        
-        return null;
+        Game game = getGame(reference);
+        if(game != null) return game.getPhase().toString();
+        else return null;
     }
     
     /**
@@ -86,10 +88,10 @@ public class Games {
      * @param id ID of the player to check.
      * @return Boolean. True if he speaks. False if not such game or does not speak.
      */
-    public static boolean speaksPlayer(String reference, String id) {
+    public static boolean isPlayersTurn(String reference, String id) {
         if(GAMES.containsKey(reference)) {
             Game game = (Game) GAMES.get(reference);
-            return game.speaksPlayer(id);
+            return game.isPlayersTurn(id);
         }
         
         return false;
@@ -124,10 +126,16 @@ public class Games {
         return null;
     }
     
-    public static boolean isPlayerInGame(String reference, String id) {
+    /**
+     * Checks if this player is still playing in this round.
+     * @param reference Reference of the game to check.
+     * @param id ID of the player to check.
+     * @return Boolean. True if this player is still playing this current round.
+     */
+    public static boolean isPlayerInRound(String reference, String id) {
         if(GAMES.containsKey(reference)) {
             Game game = (Game) GAMES.get(reference);
-            return game.isPlayerInGame(id);
+            return game.isPlayerInRound(id);
         }
         
         return false;
@@ -207,6 +215,15 @@ public class Games {
         if(GAMES.containsKey(reference)) {
             Game game = (Game) GAMES.get(reference);
             return game.getPhase().retirePlayer(game, ID);
+        }
+        
+        return false;
+    }
+    
+    public static boolean isMorePlayersLeft(String reference) {
+        if(GAMES.containsKey(reference)) {
+            Game game = (Game) GAMES.get(reference);
+            return !game.isLastPlayerLeft();
         }
         
         return false;

@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * Everything related to the Server's connection and network.
  * Before touching anything here, read the doc and then read it again. Inside the documentation it's stated the order in which the packages need be so Client and Server are coordinated.
  * @author Mario Codes
- * @version 0.0.3 Developed methods to obtain the winner through the thread.
+ * @version 0.0.3.1 Developed methods to obtain the winner through the thread. Refactorized methods so it's easier to understand.
  */
 public class Connection {
     private static Socket socket = null;
@@ -57,7 +57,7 @@ public class Connection {
     
     /**
      * Gets the menu option desired by the client.
-     * @return Int. Option to be used in the menu. -1 error.
+     * @return Option to be used in the menu. -1 error.
      */
     public static int getMenuOption() {
         try {
@@ -69,7 +69,7 @@ public class Connection {
     
     /**
      * Gets from the client the parameters needed to start a new game. (ID and number of players).
-     * @return AL. Contains [0] Ref of the new game; [1] Total number of players in the game.
+     * @return Contains [0] Ref of the new game; [1] Total number of players in the game.
      */
     public static ArrayList getGameParemeters() {
         ArrayList parameters = new ArrayList();
@@ -83,25 +83,23 @@ public class Connection {
         return parameters;
     }
     
-    
     /**
      * Gets the ID of a player.
      * @return String. ID of the player.
      */
-    public static String getPlayerID() {
+    public static String getID() {
         try {
             return ois.readUTF();
         } catch(IOException ex) { ex.printStackTrace(); }
         
         return null;
     }
-    
     
     /**
      * Gets the reference of a game.
      * @return String. Reference of the game.
      */
-    public static String getGameReference() {
+    public static String getReference() {
         try {
             return ois.readUTF();
         } catch(IOException ex) { ex.printStackTrace(); }
@@ -109,12 +107,23 @@ public class Connection {
         return null;
     }
     
+    /**
+     * Gets the amount of chips to bet.
+     * @return Amount of chips to bet.
+     */
+    public static int getBet() {
+        try {
+            return ois.readInt();
+        } catch(IOException ex) { ex.printStackTrace(); }
+        
+        return -1;
+    }
     
     /**
      * Sends the result of an operation through the socket. Generic method.
      * @param result boolean. Result of the operation we want to inform the user.
      */
-    public static void sendActionResults(boolean result) {
+    public static void sendResult(boolean result) {
         try {
             oos.writeBoolean(result);
             oos.flush();
@@ -135,7 +144,6 @@ public class Connection {
         } catch(IOException ex) { ex.printStackTrace(); }
     }
     
-    
     /**
      * Sends the cards through the socket. Dynamic number of cards.
      * Integer. Number of cards to be sent.
@@ -148,18 +156,6 @@ public class Connection {
             for (int i = 0; i < cards.size(); i++) oos.writeObject(cards.get(i));
             oos.flush();
         }catch(IOException ex) { ex.printStackTrace(); }
-    }
-    
-    /**
-     * Gets the amount of chips to bet.
-     * @return Amount of chips to bet.
-     */
-    public static int getBet() {
-        try {
-            return ois.readInt();
-        } catch(IOException ex) { ex.printStackTrace(); }
-        
-        return -1;
     }
     
     /**

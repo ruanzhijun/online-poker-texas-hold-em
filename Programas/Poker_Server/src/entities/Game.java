@@ -178,16 +178,14 @@ public class Game {
     }
 
     /**
-     * Checks if this player is still in game.
-     * If he is, does check if its his turn to speak.
+     * Checks if is this players turn right now. Will need it to pass the turn to the next one in line.
      * @param id ID of the player to check.
-     * @return Boolean. Does this player speak?
+     * @return Boolean. True if is this players turn to speak.
      */
-    boolean speaksPlayer(String id) {
+    boolean isPlayersTurn(String id) {
         if(ROUNDPLAYERS.containsKey(id)) return (boolean) ROUNDPLAYERS.get(id).get(0);
-        else return false;
+        return false;
     }
-    
     
     /**
      * Gets the assigned player private cards. To be used from Games.
@@ -389,16 +387,6 @@ public class Game {
     }
     
     /**
-     * Checks if is this players turn right now. Will need it to pass the turn to the next one in line.
-     * @param id ID of the player to check.
-     * @return Boolean. True if is this players turn to speak.
-     */
-    private boolean isPlayersTurn(String id) {
-        if(ROUNDPLAYERS.containsKey(id)) return (boolean) ROUNDPLAYERS.get(id).get(0);
-        return false;
-    }
-    
-    /**
      * Sets the turn to the next player in line.
      * If I'm retiring a player who is speaking right now, I need to set the turn to the next one.
      * @param id ID of the player to check.
@@ -408,7 +396,12 @@ public class Game {
         if(ROUNDPLAYERS.containsKey(next)) ROUNDPLAYERS.get(next).set(0, true);
     }
 
-    boolean isPlayerInGame(String id) {
+    /**
+     * Checks if the player is still playing the round.
+     * @param id player's ID to check if he's still playing.
+     * @return True if the player is still in the list of players playing this current round.
+     */
+    boolean isPlayerInRound(String id) {
         return ROUNDPLAYERS.containsKey(id);
     }
     

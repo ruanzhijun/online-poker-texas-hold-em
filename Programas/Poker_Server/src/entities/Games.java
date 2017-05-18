@@ -20,6 +20,12 @@ public class Games {
         return GAMES.containsKey(reference);
     }
     
+    /**
+     * Checks if the game with the specified reference exists.
+     * If it does, returns it.
+     * @param reference Reference of the game to check.
+     * @return Game if it does exist, null otherwise.
+     */
     private static Game getGame(String reference) {
         if(gameExists(reference)) return (Game) GAMES.get(reference);
         else return null;
@@ -39,7 +45,7 @@ public class Games {
         String id = (String) parameters.get(1);
         int totalPlayers = (int) parameters.get(2);
         
-        if(!gameExists(reference)) {
+        if(getGame(reference) == null) {
             GAMES.put(reference, new Game(reference, id, totalPlayers));
             System.out.println(id +" has created the game #" +reference +". 1/" +totalPlayers +" player(s). " +GAMES.size() +" simultaneous games.");
             result = true;
@@ -48,7 +54,7 @@ public class Games {
         return result;
     }
     
-    // Send a signal to the clients so they disconnect themselves. Then stop and delete the game from HM.
+    // todo: develop it. Send a signal to the clients so they disconnect themselves. Then stop and delete the game from HM.
     public static void deleteGame(String reference) {
         throw new UnsupportedOperationException("To be done. Will need checks and a correct stop.");
     }
@@ -61,10 +67,9 @@ public class Games {
     public static boolean joinGame(String reference, String id) {
         boolean result = false;
         
-        if(gameExists(reference)) {
-            Game game = (Game) GAMES.get(reference);
-            result = game.joinNewPlayer(id);
-        } else System.out.println("Join rejected. There's no game #" +reference);
+        Game game = getGame(reference);
+        if(game != null) result = game.joinNewPlayer(id);
+        else System.out.println("Join rejected. There's no game #" +reference);
         
         return result;
     }
@@ -89,12 +94,9 @@ public class Games {
      * @return Boolean. True if he speaks. False if not such game or does not speak.
      */
     public static boolean isPlayersTurn(String reference, String id) {
-        if(GAMES.containsKey(reference)) {
-            Game game = (Game) GAMES.get(reference);
-            return game.isPlayersTurn(id);
-        }
-        
-        return false;
+        Game game = getGame(reference);
+        if(game != null) return game.isPlayersTurn(id);
+        else return false;
     }
     
     /**
@@ -104,12 +106,9 @@ public class Games {
      * @return AL<Card>. Private player cards.
      */
     public static ArrayList<Card> getPrivateCards(String reference, String id) {
-        if(GAMES.containsKey(reference)) {
-            Game game = (Game) GAMES.get(reference);
-            return game.getPlayerCards(id);
-        }
-        
-        return null;
+        Game game = getGame(reference);
+        if(game != null) return game.getPlayerCards(id);
+        else return null;
     }
     
     /**
@@ -118,12 +117,9 @@ public class Games {
      * @return AL<Card>. Common player cards.
      */
     public static ArrayList<Card> getCommonCards(String reference) {
-        if(GAMES.containsKey(reference)) {
-            Game game = (Game) GAMES.get(reference);
-            return game.getTableCards();
-        }
-        
-        return null;
+        Game game = getGame(reference);
+        if(game != null) return game.getTableCards();
+        else return null;
     }
     
     /**
@@ -133,12 +129,9 @@ public class Games {
      * @return Boolean. True if this player is still playing this current round.
      */
     public static boolean isPlayerInRound(String reference, String id) {
-        if(GAMES.containsKey(reference)) {
-            Game game = (Game) GAMES.get(reference);
-            return game.isPlayerInRound(id);
-        }
-        
-        return false;
+        Game game = getGame(reference);
+        if(game != null) return game.isPlayerInRound(id);
+        else return false;
     }
     
     /**
@@ -148,12 +141,9 @@ public class Games {
      * @return Boolean. States if the player may bet or not.
      */
     public static boolean mayBet(String reference, String id) {
-        if(GAMES.containsKey(reference)) {
-            Game game = (Game) GAMES.get(reference);
-            return game.getPhase().mayBet(game, id);
-        }
-        
-        return false;
+        Game game = getGame(reference);
+        if(game != null) return game.getPhase().mayBet(game, id);
+        else return false;
     }
     
     /**
@@ -165,13 +155,9 @@ public class Games {
      * @return Int. Total amount of the pool until now (after the bet has been added). -1 if the game does not exist.
      */
     public static int bet(String reference, String id, int amount) {
-        if(GAMES.containsKey(reference)) {
-            Game game = (Game) GAMES.get(reference);
-            int pool = game.getPhase().bet(game, id, amount);
-            return pool;
-        }
-        
-        return -1;
+        Game game = getGame(reference);
+        if(game != null) return game.getPhase().bet(game, id, amount);
+        else return -1;
     }
     
     /**
@@ -180,12 +166,9 @@ public class Games {
      * @return Bool. True if there's already a winner.
      */
     public static boolean hasWinner(String reference) {
-        if(GAMES.containsKey(reference)) {
-            Game game = (Game) GAMES.get(reference);
-            return game.hasWinner();
-        }
-        
-        return false;
+        Game game = getGame(reference);
+        if(game != null) return game.hasWinner();
+        else return false;
     }
     
     /**
@@ -194,38 +177,26 @@ public class Games {
      * @return AL. [0] = String. Winner ID. [1] = String. Winner play. [2] = Int. winner's number of chips.
      */
     public static ArrayList getWinner(String reference) {
-        if(GAMES.containsKey(reference) && hasWinner(reference)) {
-            Game game = (Game) GAMES.get(reference);
-            return game.getWINNER();
-        }
-        
+        Game game = getGame(reference);
+        if(game != null && hasWinner(reference)) return game.getWINNER();
         return null;
     }
     
     public static boolean checkPlayerPlaying(String reference, String ID) {
-        if(GAMES.containsKey(reference)) {
-            Game game = (Game) GAMES.get(reference);
-            return game.checkPlayerPlaying(ID);
-        }
-        
-        return false;
+        Game game = getGame(reference);
+        if(game != null) return game.checkPlayerPlaying(ID);
+        else return false;
     }
     
     public static boolean retirePlayer(String reference, String ID) {
-        if(GAMES.containsKey(reference)) {
-            Game game = (Game) GAMES.get(reference);
-            return game.getPhase().retirePlayer(game, ID);
-        }
-        
-        return false;
+        Game game = getGame(reference);
+        if(game != null) return game.getPhase().retirePlayer(game, ID);
+        else return false;
     }
     
     public static boolean isMorePlayersLeft(String reference) {
-        if(GAMES.containsKey(reference)) {
-            Game game = (Game) GAMES.get(reference);
-            return !game.isLastPlayerLeft();
-        }
-        
-        return false;
+        Game game = getGame(reference);
+        if(game != null) return !game.isLastPlayerLeft();
+        else return false;
     }
 }

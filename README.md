@@ -91,6 +91,7 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 * -2. This game does not exist. Should never be reachable, but better check for it anyway.
 * -3. Player may not bet right now. It's not his turn.
 * -4. Player did already retire and cannot bet until new round.
+* -5. All the players but this did retire. The game is setting itself to the last phase and assigning a winner. Cannot bet now.
 
 ### Check Winner
 * O. Int. Menu option.

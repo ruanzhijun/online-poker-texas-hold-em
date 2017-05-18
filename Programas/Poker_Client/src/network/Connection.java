@@ -240,14 +240,17 @@ public class Connection {
             if(exists) {
                 boolean isInGame = ois.readBoolean();
                 if(isInGame) {
-                    boolean mayBet = ois.readBoolean();
-                    if(mayBet) {
-                        oos.writeInt(amount);
-                        oos.flush();
+                    boolean morePlayersLeft = ois.readBoolean();
+                    if(morePlayersLeft) {
+                        boolean mayBet = ois.readBoolean();
+                        if(mayBet) {
+                            oos.writeInt(amount);
+                            oos.flush();
 
-                        int chips = ois.readInt();
-                        return chips;
-                    } else return -3;
+                            int chips = ois.readInt();
+                            return chips;
+                        } else return -3;
+                    } else return -5;
                 } else return -4;
             } else return -2;
         } catch(IOException ex) { ex.printStackTrace(); }

@@ -15,7 +15,7 @@ public class River implements Phase {
     @Override
     public void change(Game game) {
         game.setPhase(this);
-        if(game.isLastPlayerLeft()) Actions.endRound(game);
+        if(game.isLastPlayerInRound()) Actions.endRound(game);
         else {
             game.resetPhaseTurns();
             game.retrieveTableCards(1); 
@@ -40,7 +40,7 @@ public class River implements Phase {
     @Override
     public boolean retirePlayerFromRound(Game game, String id) {
         boolean retired = Actions.retirePlayer(game, id);
-        if(game.isLastPlayerLeft()) {
+        if(game.isLastPlayerInRound()) {
             game.choseWinner();
             Actions.endRound(game);
         }

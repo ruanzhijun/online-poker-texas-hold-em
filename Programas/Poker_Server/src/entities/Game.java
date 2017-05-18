@@ -96,7 +96,7 @@ public class Game {
     
     /**
      * Resets everything that needs to be reseted for a new round.
-     * That is: ROUNDPLAYER values; WINNER AL; new Deck; Pool of chips.
+     * That is ROUNDPLAYER values; WINNER AL; new Deck; Pool of chips.
      */
     private void resetRoundValues() {
         ROUNDPLAYERS.clear();
@@ -219,7 +219,6 @@ public class Game {
      */
     public boolean mayPlayerBet(String id) {
         if(ROUNDPLAYERS.containsKey(id)) {
-            // System.out.println("Player: " +id +" may bet: " +((boolean) ROUNDPLAYERS.get(id).get(0) && (boolean) ROUNDPLAYERS.get(id).get(1))); // todo: debug. delete me.
             return ((boolean) ROUNDPLAYERS.get(id).get(0) && (boolean) ROUNDPLAYERS.get(id).get(1));
         }
         
@@ -397,14 +396,18 @@ public class Game {
         return ROUNDPLAYERS.containsKey(id);
     }
     
-    public boolean isLastPlayerLeft() {
+    /**
+     * Check. Is this the last player in this round?
+     * @return True if this is the last player left on this round.
+     */
+    public boolean isLastPlayerInRound() {
         return ROUNDPLAYERS.size() <= 1;
     }
     
     /**
      * Full action to retire a player from the game.
      * Checks if its this players turn right now, if it is, moves the turn to the next one in line.
-     * @param id String. ID if the player who wants to retire.
+     * @param id String. ID of the player who wants to retire.
      * @return boolean. True if the player was retired correctly.
      */
     public boolean retirePlayerFromRound(String id) {
@@ -420,6 +423,11 @@ public class Game {
         } else return false;
     }
     
+    /**
+     * Retires this player completely from the game.
+     * @param id ID of the player to delete from the game.
+     * @return Result of the operation. Was this player retired?
+     */
     boolean retirePlayerFromGame(String id) {
         retirePlayerFromRound(id);
         

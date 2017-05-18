@@ -15,7 +15,7 @@ public class Turn implements Phase {
     @Override
     public void change(Game game) {
         game.setPhase(this);
-        if(game.isLastPlayerLeft()) new River().change(game);
+        if(game.isLastPlayerInRound()) new River().change(game);
         else {
             game.resetPhaseTurns();
             game.retrieveTableCards(1);
@@ -37,7 +37,7 @@ public class Turn implements Phase {
     @Override
     public boolean retirePlayerFromRound(Game game, String id) {
         boolean retired = Actions.retirePlayer(game, id);
-        if(game.isLastPlayerLeft()) new River().change(game);
+        if(game.isLastPlayerInRound()) new River().change(game);
         return retired;
     }
     

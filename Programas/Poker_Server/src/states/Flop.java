@@ -15,7 +15,7 @@ public class Flop implements Phase {
     @Override
     public void change(Game game) {
         game.setPhase(this);
-        if(game.isLastPlayerLeft()) new Turn().change(game);
+        if(game.isLastPlayerInRound()) new Turn().change(game);
         else {
             game.resetPhaseTurns();
             game.retrieveTableCards(3);
@@ -37,7 +37,7 @@ public class Flop implements Phase {
     @Override
     public boolean retirePlayerFromRound(Game game, String id) {
         boolean retired = Actions.retirePlayer(game, id);
-        if(game.isLastPlayerLeft()) new Turn().change(game);
+        if(game.isLastPlayerInRound()) new Turn().change(game);
         return retired;
     }
     

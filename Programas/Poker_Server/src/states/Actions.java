@@ -28,7 +28,7 @@ public class Actions {
     }
     
     public static boolean isOnlyPlayerLeft(Game game) {
-        return game.isLastPlayerLeft();
+        return game.isLastPlayerInRound();
     }
     
     /**

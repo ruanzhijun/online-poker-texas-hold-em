@@ -6,6 +6,7 @@
 package states;
 
 import entities.Game;
+import entities.Games;
 
 /**
  * PreFlop. Initial phase.
@@ -14,35 +15,21 @@ import entities.Game;
  */
 public class PreFlop implements Phase {
     
-    /**
-     * To be called when the game starts, and after a round has ended.
-     * @param game Game we're operating with.
-     */
     @Override
     public void change(Game game) {
         game.setPhase(this);
         if(!game.isEnded()) game.startNewRound();
-        else System.out.println("Game with reference #" +game.getREFERENCE() +" has ended");
+        else {
+            System.out.println("Game with reference #" +game.getREFERENCE() +" has ended");
+            Games.deleteGame(game.getREFERENCE());
+        }
     }
     
-    /**
-     * Checks if the player may or may not bet right now.
-     * @param game Game we're checking.
-     * @param id ID of the player to check.
-     * @return Boolean. May the player bet?
-     */
     @Override
     public boolean checkMayPlayerBet(Game game, String id) {
         return Actions.mayBet(game, id);
     }
     
-    /**
-     * Does the bet action. Here it's already been checked if the player may do it.
-     * @param game Game we're checking.
-     * @param id ID of the player who is betting.
-     * @param amount Amount of chips to bet.
-     * @return Int. Total amount of chips after the bet.
-     */
     @Override
     public int doBet(Game game, String id, int amount) {
         int pool = Actions.bet(game, id, amount);
@@ -53,7 +40,7 @@ public class PreFlop implements Phase {
     @Override
     public boolean retirePlayerFromRound(Game game, String id) {
         boolean retired = Actions.retirePlayer(game, id);
-        if(game.isLastPlayerLeft()) new Flop().change(game);
+        if(game.isLastPlayerInRound()) new Flop().change(game);
         return retired;
     }
     

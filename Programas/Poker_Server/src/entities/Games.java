@@ -54,9 +54,16 @@ public class Games {
         return result;
     }
     
-    // todo: develop it. Send a signal to the clients so they disconnect themselves. Then stop and delete the game from HM.
+    /**
+     * Erases the game from the common pool of games (HashLinkMap).
+     * Checks if it exist before trying to delete it.
+     * @param reference Reference of the game to delete.
+     */
     public static void deleteGame(String reference) {
-        throw new UnsupportedOperationException("To be done. Will need checks and a correct stop.");
+        if(GAMES.containsKey(reference)) {
+            GAMES.remove(reference);
+            System.out.println("Game with reference #" +reference +" has been deleted");
+        }
     }
     
     /**
@@ -128,7 +135,7 @@ public class Games {
      */
     public static boolean checkMorePlayersLeft(String reference) {
         Game game = getGame(reference);
-        if(game != null) return !game.isLastPlayerLeft();
+        if(game != null) return !game.isLastPlayerInRound();
         else return false;
     }
     
@@ -193,10 +200,10 @@ public class Games {
     }
     
     /**
-     * Action to retire correctly a player from the game.
+     * Action to retire correctly a player from the current round.
      * @param reference Reference of the game to check.
      * @param ID personal ID of the player to retire.
-     * @return Result of the operation. True if he was correctly retired and is no longer playing.
+     * @return Result of the operation. True if he was correctly retired and is no longer in this round.
      */
     public static boolean retirePlayerFromRound(String reference, String ID) {
         Game game = getGame(reference);
@@ -204,6 +211,12 @@ public class Games {
         else return false;
     }
     
+    /**
+     * Retires a player from the game entirely. To be done when he has no longer chips.
+     * @param reference Reference of the game to get.
+     * @param ID ID of the player to retire.
+     * @return Result of the operation. Was this player retired?
+     */
     public static boolean retirePlayerFromGame(String reference, String ID) {
         Game game = getGame(reference);
         if(game != null) return game.retirePlayerFromGame(ID);

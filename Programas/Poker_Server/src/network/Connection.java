@@ -182,6 +182,10 @@ public class Connection {
         } catch(IOException ex) { ex.printStackTrace(); }
     }
     
+    /**
+     * Gets the boolean to know if a player has to be retired.
+     * @return Retire this player? (If he has no chips left)
+     */
     public static boolean getRetire() {
         try {
             return ois.readBoolean();

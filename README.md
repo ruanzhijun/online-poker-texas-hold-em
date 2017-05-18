@@ -98,7 +98,7 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 * -3. Player may not bet right now. It's not his turn.
 * -4. Player did already retire and cannot bet until new round.
 * -5. All the players but this did retire. The game is setting itself to the last phase and assigning a winner. Cannot bet now.
-
+* -6. Negative bet amount. Bets may only be positive.
 ### Check Winner
 * O. Int. Menu option.
 * O. String. Game reference.

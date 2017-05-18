@@ -1,11 +1,16 @@
 # Poker Texas Hold'em (Work In Progress)
 
-## Todos
+## TO-DOs
 
 ### Client
 * Add checks so bets cannot be negatives.
 
 ### Server
+* Add the way to delete a game when it's done.
+
+## Future Planned Improvements
+* Auto delete a game when there're no players left.
+* Set a timer for a player's action.
 
 ## Network packages order
 Here are documented all the actions, which do use the network, and as so need to be synchronized between _Client_ and _Server_.

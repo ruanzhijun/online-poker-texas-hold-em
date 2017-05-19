@@ -4,7 +4,6 @@ Little personal project because I love playing card games with my family and fou
 ## TO-DOs
 ### Client
 * Add GUI. Images and all that.
-* Set the close of all opened connections in a Shutdown Hook when closed the whole client.
 
 ### Server
 * Set the port so it's asked by default when starting the server.

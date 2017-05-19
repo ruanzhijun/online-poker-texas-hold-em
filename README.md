@@ -150,3 +150,6 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 * __0.1.1__ Designing the basic structure of the network. Designing communications and package order. 
 * __0.1__   Added the code representation of a cards and a deck. Also methods to manipulate them.
 * __0.0.1__ Initial status. Made a repostitory for the project. Looking which code of old projects can I re-use.
+
+## Footnote
+If by any miracle you do stumble across this project and find bugs, have suggestions or any idea in general I'm open to emails or notes here.

@@ -14,6 +14,8 @@
 * Adjust the timers. Right now there's a 5000 ms delay when ending a round until it starts the next one so the secondary thread has time to get the info several times.
 
 ## Network
+### Information
+It's fully sinchronized between _Client_ and _Server_ following the order here stated. The _Server_ plays a passive role addressing the incoming connections. The _Client_ it's the one who opens them and closes them as needed; It also has a Network Shutdown Thread which will be executed on exit to close all the possible remaining loose connections.
 
 ### Package order
 Here are documented all the actions, which do use the network, and as so need to be synchronized between _Client_ and _Server_.

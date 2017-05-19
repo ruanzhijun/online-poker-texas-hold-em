@@ -16,6 +16,8 @@ Little personal project because I love playing card games with my family and fou
 * Set a timer for a player's action so it cannot take him longer than i seconds. If he does, retire or bet 0.
 * Port it to Android(?). Should not be really difficult as almost everything's been done in Java.
 
+## Known Bugs
+
 # Documentation
 ## State Machine
 ### Information

@@ -16,6 +16,7 @@ Little personal project because I love playing card games with my family and fou
 * Set a timer for a player's action so it cannot take him longer than i seconds. If he does, retire or bet 0.
 * Port it to Android(?). Should not be really difficult as almost everything's been done in Java.
 
+# Documentation
 ## State Machine
 ### Information
 The _Server_ does implement a state machine which changes the behaviour of the game, depending on which phase it is currently at. The _trigger_ to change between phases are _Bet_ and _Retire_ actions. When the last player has betted, it changes the game to the next phase and calls the method to restart the checks for every player still in this round. When a player retires, it checks if now, after the retirement, there's only one player in this round. If there is, it jumps from phase to phase until _River_ where it assigns the last player standing as winner, gives him the winnings and starts a new round.

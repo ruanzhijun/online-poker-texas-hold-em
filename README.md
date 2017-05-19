@@ -146,13 +146,14 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 
 ## Versions
 
-* __0.2.3__ Added a way to retire players from the current round without them being deleted from the game. They'll be able to get back at the start of the next round while they have chips left.
+* __0.2.3__ Added a way to retire players from the current round without them being deleted from the game. They'll be able to get back at the start of the next round while they have chips left. The game just jumps them as if they weren't there.
 * __0.2.2__ Added checks and a way so the game gets stopped and deleted automatically when there's only 1 player left in game.
 * __0.2.1__ Phases fully implemented, now the game flows smooth from the first, to the last one.  
-* __0.2__   Created and implemented State Machine Pattern. Structure of the several Phases in poker. Changes behaviour of actions.
-* __0.1.1__ Designing the basic structure of the network. Designing communications and package order. 
-* __0.1__   Added the code representation of a cards and a deck. Also methods to manipulate them.
-* __0.0.1__ Initial status. Made a repostitory for the project. Looking which code of old projects can I re-use.
+* __0.2__   Created and implemented State Machine Pattern. It will be the structure of the several Phases in poker. Changes behaviour of actions depending on the phase it's currently at.
+* __0.1.2__ Implemented and tested them to be sure they work as intended. Full Card objects sent through the network.
+* __0.1.1__ Designing the basic structure of the network. Designing communications and package order.
+* __0.1__   Started! Added the code representation of cards and a deck. Also methods to manipulate them.
+* __0.0.1__ Initial status. Made a repostitory for the project. Looking which code of old projects can I re-use. Created really basic _Client_ and _Server_ interconnection.
 
 ## Footnote
 If by any miracle you do stumble across this project and find bugs, have suggestions or any idea in general I'm open to emails or notes here.

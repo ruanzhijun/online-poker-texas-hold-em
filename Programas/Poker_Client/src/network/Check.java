@@ -120,7 +120,7 @@ public class Check {
                 break;
             case "River":
                 getTableCards(player, player.getTableCards(), reference, 5);
-                getWinner(reference, player); // fixme: asign or return the AL from getWinner();
+                getWinner(reference, player); // todo: asign or return the AL from getWinner();
                 break;
         }
     }
@@ -136,7 +136,6 @@ public class Check {
         if(data.size() > 0) {
             phase = (String) data.get(0);
             turn = (boolean) data.get(1);
-            System.out.println("Data updated: phase " +getPhase() +", turn " +turn); // todo: delete when not needed.
             
             action(player, reference);
         } else { System.out.println("The game #" +reference +" does not exist."); };

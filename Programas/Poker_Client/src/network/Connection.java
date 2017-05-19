@@ -31,7 +31,6 @@ public class Connection {
     private static final int GET_WINNER = 8;
     
     private static Socket socket = null;
-    
     private static InputStream in = null;
     private static OutputStream out = null;
     private static ObjectOutputStream oos = null;
@@ -48,15 +47,16 @@ public class Connection {
             out = socket.getOutputStream();
             ois = new ObjectInputStream(in);
             oos = new ObjectOutputStream(out);
+            
+//            Runtime.getRuntime().addShutdownHook(new NetShutdownHook());
         } catch(IOException ex) { ex.printStackTrace(); }
     }
     
     /**
      * Closes the oppened (and only oppened) data streams and socket.
      * The client is the one who should end the communication.
-     * todo: think about setting this in a shutdown hook.
      */
-    private static void close() {
+    static void close() {
         try {
             if(ois != null) ois.close();
             if(oos != null) oos.close();
@@ -141,10 +141,9 @@ public class Connection {
                 
                 inf.add(ois.readUTF()); //Current Phase.
                 inf.add(ois.readBoolean()); // Players turn (ID).
-
-                return inf;
             }
-           
+
+            close();
             return inf;
         } catch(IOException ex) { ex.printStackTrace(); }
         
@@ -187,9 +186,10 @@ public class Connection {
                 
                 int number = ois.readInt();
                 cards = getCards(number);
-
-                return cards;
             }
+            
+            close();
+            return cards;
         } catch(IOException|ClassNotFoundException ex) { ex.printStackTrace(); }
         
         return null;
@@ -213,9 +213,10 @@ public class Connection {
             if(exists) {
                 int number = ois.readInt();
                 cards = getCards(number);
-                
-                return cards;
             }
+            
+            close();
+            return cards;
         } catch(IOException|ClassNotFoundException ex) { ex.printStackTrace(); }
         
         return null;
@@ -226,10 +227,12 @@ public class Connection {
      * @param player Player to bet.
      * @param reference Reference of the game the player is in.
      * @param amount Amount of chips to bet.
-     * @return Integer. Amount of chips in common pool. Error return see doc.
+     * @return Amount of chips in common pool. Error return see doc.
      */
     public static int bet(Player player, String reference, int amount) {
         try {
+            int result = 0;
+            
             open();
             oos.writeInt(BET);
             oos.writeUTF(reference);
@@ -248,13 +251,17 @@ public class Connection {
                             oos.flush();
 
                             int chips = ois.readInt();
-                            return chips;
-                        } else return -3;
-                    } else return -5;
-                } else return -4;
-            } else return -2;
+                            result = chips;
+                        } else result = -3;
+                    } else result = -5;
+                } else result = -4;
+            } else result = -2;
+            
+            close();
+            return result;
         } catch(IOException ex) { ex.printStackTrace(); }
         
+        close();
         return -1;
     }
     

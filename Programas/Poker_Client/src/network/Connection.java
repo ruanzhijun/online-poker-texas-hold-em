@@ -288,13 +288,12 @@ public class Connection {
                     winner.add(ois.readUTF()); // ID of the winner.
                     winner.add(ois.readUTF()); // Name of the play.
                     winner.add(ois.readInt()); // Amount of chips to add if this player has won.
-                    
-                    return winner;
-                } else return winner;
-            } else return null;
+                }
+                return winner;
+            }
         } catch(IOException ex) { ex.printStackTrace(); }
         
-        return null;
+        return null; // Will also reach here when !exists.
     }
     
     public static boolean retire(String reference, String id) {

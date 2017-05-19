@@ -18,6 +18,10 @@ Little personal project because I love playing card games with my family and fou
 ## Known Bugs
 
 # Documentation
+This project differentiates between _Client_ and _Server_ and inside _Client_ it follows _MVC_ architecture. The heavy logic processing of the game is done by the _Server_, the _Client_ just has a serie of checks to know which info it has to currently retrieve.  
+
+About this, the _Client_ launches an information secondary thread when the game is started. This thread takes care of doing a ping to the server every _i_ seconds and gets info such as the current phase or the player's turn. It is also in charge of getting the winner's info and to communicate when to definitely retire a player from the game.
+
 ## State Machine
 ### Information
 The _Server_ does implement a state machine which changes the behaviour of the game, depending on which phase it is currently at. The _trigger_ to change between phases are _Bet_ and _Retire_ actions from a client. When the last player has betted, it changes the game to the next phase and calls the method to restart the checks for every player still in this round. When a player retires, it checks if now, after the retirement, there's only one player in this round. If there is, it jumps from phase to phase until _River_ where it assigns the last player standing as winner, gives him the winnings and starts a new round.

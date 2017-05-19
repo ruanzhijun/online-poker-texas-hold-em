@@ -48,8 +48,6 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 #### Mark Structure
 * Output / Input. Data type. Definition.
 
-### Actions
-
 #### Create Game
 * O. Int. Menu option.
 * O. String. Game reference.

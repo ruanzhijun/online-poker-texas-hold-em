@@ -4,7 +4,6 @@ Little personal project because I love playing card games with my family and fou
 ## TO-DOs
 ### Client
 * Add GUI. Images and all that.
-* Set the close of all opened connections in a Shutdown Hook when closed the whole client.
 
 ### Server
 * Set the port so it's asked by default when starting the server.
@@ -19,9 +18,13 @@ Little personal project because I love playing card games with my family and fou
 ## Known Bugs
 
 # Documentation
+This project differentiates between _Client_ and _Server_ and inside _Client_ it follows _MVC_ architecture. The heavy logic processing of the game is done by the _Server_, the _Client_ just has a serie of checks to know which info it has to currently retrieve.  
+
+About this, the _Client_ launches an information secondary thread when the game is started. This thread takes care of doing a ping to the server every _i_ seconds and gets info such as the current phase or the player's turn. It is also in charge of getting the winner's info and to communicate when to definitely retire a player from the game.
+
 ## State Machine
 ### Information
-The _Server_ does implement a state machine which changes the behaviour of the game, depending on which phase it is currently at. The _trigger_ to change between phases are _Bet_ and _Retire_ actions. When the last player has betted, it changes the game to the next phase and calls the method to restart the checks for every player still in this round. When a player retires, it checks if now, after the retirement, there's only one player in this round. If there is, it jumps from phase to phase until _River_ where it assigns the last player standing as winner, gives him the winnings and starts a new round.
+The _Server_ does implement a state machine which changes the behaviour of the game, depending on which phase it is currently at. The _trigger_ to change between phases are _Bet_ and _Retire_ actions from a client. When the last player has betted, it changes the game to the next phase and calls the method to restart the checks for every player still in this round. When a player retires, it checks if now, after the retirement, there's only one player in this round. If there is, it jumps from phase to phase until _River_ where it assigns the last player standing as winner, gives him the winnings and starts a new round.
 
 Every player may retire from a round whenever he wants; Being only out for the current round and getting back at the start of the next one, as long as he has chips left. The game will not take into account retired players for the current round and jumps them.  
 
@@ -43,9 +46,7 @@ Here are documented all the actions, which do use the network, and as so need to
 The sending order is specified __from the point of view of a _Client_ to the _Server___. Most of them share a common structure and then do their specific part. Before doing all the sending, there're checks to see if the game the client is trying to get info about, does exist.
 
 #### Mark Structure
-* Output / Input. Data type. Comment about what it is.
-
-### Actions
+* Output / Input. Data type. Definition.
 
 #### Create Game
 * O. Int. Menu option.
@@ -145,13 +146,14 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 
 ## Versions
 
-* __0.2.3__ Added a way to retire players from the current round without them being deleted from the game. They'll be able to get back at the start of the next round while they have chips left.
+* __0.2.3__ Added a way to retire players from the current round without them being deleted from the game. They'll be able to get back at the start of the next round while they have chips left. The game just jumps them as if they weren't there.
 * __0.2.2__ Added checks and a way so the game gets stopped and deleted automatically when there's only 1 player left in game.
 * __0.2.1__ Phases fully implemented, now the game flows smooth from the first, to the last one.  
-* __0.2__   Created and implemented State Machine Pattern. Structure of the several Phases in poker. Changes behaviour of actions.
-* __0.1.1__ Designing the basic structure of the network. Designing communications and package order. 
-* __0.1__   Added the code representation of a cards and a deck. Also methods to manipulate them.
-* __0.0.1__ Initial status. Made a repostitory for the project. Looking which code of old projects can I re-use.
+* __0.2__   Created and implemented State Machine Pattern. It will be the structure of the several Phases in poker. Changes behaviour of actions depending on the phase it's currently at.
+* __0.1.2__ Implemented and tested them to be sure they work as intended. Full Card objects sent through the network.
+* __0.1.1__ Designing the basic structure of the network. Designing communications and package order.
+* __0.1__   Started! Added the code representation of cards and a deck. Also methods to manipulate them.
+* __0.0.1__ Initial status. Made a repostitory for the project. Looking which code of old projects can I re-use. Created really basic _Client_ and _Server_ interconnection.
 
 ## Footnote
 If by any miracle you do stumble across this project and find bugs, have suggestions or any idea in general I'm open to emails or notes here.

@@ -43,7 +43,7 @@ Here are documented all the actions, which do use the network, and as so need to
 The sending order is specified __from the point of view of a _Client_ to the _Server___. Most of them share a common structure and then do their specific part. Before doing all the sending, there're checks to see if the game the client is trying to get info about, does exist.
 
 #### Mark Structure
-* Output / Input. Data type. Comment about what it is.
+* Output / Input. Data type. Definition.
 
 ### Actions
 

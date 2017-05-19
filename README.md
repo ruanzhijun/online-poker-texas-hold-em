@@ -1,7 +1,7 @@
 # Poker Texas Hold'em (Work In Progress)
+Little personal project because I love playing card games with my family and found it a good way to practice java, networking, multithreading and Client-Server structure.
 
 ## TO-DOs
-
 ### Client
 * Add GUI. Images and all that.
 * Set the close of all opened connections in a Shutdown Hook when closed the whole client.
@@ -9,9 +9,27 @@
 ### Server
 * Set the port so it's asked by default when starting the server.
 
+### General
+* Adjust the timers. Right now there's a 5000 ms delay when ending a round until it starts the next one so the secondary thread has time to get the info several times (just in case).
+
 ## Future Planned Improvements
-* Set a timer for a player's action.
-* Adjust the timers. Right now there's a 5000 ms delay when ending a round until it starts the next one so the secondary thread has time to get the info several times.
+* Set a timer for a player's action so it cannot take him longer than i seconds. If he does, retire or bet 0.
+* Port it to Android(?). Should not be really difficult as almost everything's been done in Java.
+
+## State Machine
+### Information
+The _Server_ does implement a state machine which changes the behaviour of the game, depending on which phase it is currently at. The _trigger_ to change between phases are _Bet_ and _Retire_ actions. When the last player has betted, it changes the game to the next phase and calls the method to restart the checks for every player still in this round. When a player retires, it checks if now, after the retirement, there's only one player in this round. If there is, it jumps from phase to phase until _River_ where it assigns the last player standing as winner, gives him the winnings and starts a new round.
+
+Every player may retire from a round whenever he wants; Being only out for the current round and getting back at the start of the next one, as long as he has chips left. The game will not take into account retired players for the current round and jumps them.  
+
+When a player has no longer chips, he has lost, and as so he's fully retired from the game.
+
+The possible phases are:  
+* Preflop - Each player gets their 2 private cards.
+* Flop - Draws 3 common cards. Sends them to the players.
+* Turn - Draws 1 more common card. 4 until now. Sends them to the players.
+* River - Draws the last common card. All 5. Sends them to the players.
+
 
 ## Network
 ### Information
@@ -124,12 +142,10 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 
 ## Versions
 
+* __0.2.3__ Added a way to retire players from the current round without them being deleted from the game. They'll be able to get back at the start of the next round while they have chips left.
 * __0.2.2__ Added checks and a way so the game gets stopped and deleted automatically when there's only 1 player left in game.
 * __0.2.1__ Phases fully implemented, now the game flows smooth from the first, to the last one.  
 * __0.2__   Created and implemented State Machine Pattern. Structure of the several Phases in poker. Changes behaviour of actions.
 * __0.1.1__ Designing the basic structure of the network. Designing communications and package order. 
 * __0.1__   Added the code representation of a cards and a deck. Also methods to manipulate them.
 * __0.0.1__ Initial status. Made a repostitory for the project. Looking which code of old projects can I re-use.
-
-
-

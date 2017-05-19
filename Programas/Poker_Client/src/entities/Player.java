@@ -40,7 +40,7 @@ public class Player {
     }
     
     public boolean retire(String reference) {
-        boolean result = !Connection.retire(reference, ID);
+        boolean result = !Connection.sendRetirePlayerRound(reference, ID);
         setPlaying(result);
         return result;
     }

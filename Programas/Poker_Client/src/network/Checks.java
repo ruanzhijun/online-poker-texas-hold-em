@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * It serves the client to know when to do which automatic actions.
  * @author Mario Codes
  */
-public class Check {
+public class Checks {
     private static String phase = ""; // Phase the game is currently at. Will get updated by the thread.
     private static boolean turn = false, getChips = true; // Is this player turn?; Did this player won and already got the chips?
     
@@ -90,15 +90,19 @@ public class Check {
     public static ArrayList getWinner(String reference, Player player) {
         ArrayList winner = Connection.getWinner(reference, player.getID());
         addChips(winner, player);
-        player.setPlaying(true);
-        boolean retired = retirePlayer(player);
         return winner;
     }
     
     private static boolean retirePlayer(Player player) {
+        player.setPlaying(true);
         boolean retire = player.getChips() <= 0;
-        boolean retired = Connection.retireFromGame(retire);
+        boolean retired = Connection.retirePlayerFromGame(retire);
         return retired;
+    }
+    
+    private static void checksEndRound(String reference, Player player) {
+        getWinner(reference, player);
+        retirePlayer(player);
     }
     
     /**
@@ -120,7 +124,7 @@ public class Check {
                 break;
             case "River":
                 getTableCards(player, player.getTableCards(), reference, 5);
-                getWinner(reference, player); // todo: asign or return the AL from getWinner();
+                checksEndRound(reference, player);
                 break;
         }
     }

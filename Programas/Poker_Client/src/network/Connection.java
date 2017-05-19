@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Static class to encapsulate everything related to Client's connection management.
  * @author Mario Codes
- * @version 0.0.2 Connection achieved. Working on create_game.
+ * @version 0.0.3 Connection open and close inserted and tested.
  */
 public class Connection {
     private static final int PORT = 8143;
@@ -47,8 +47,6 @@ public class Connection {
             out = socket.getOutputStream();
             ois = new ObjectInputStream(in);
             oos = new ObjectOutputStream(out);
-            
-//            Runtime.getRuntime().addShutdownHook(new NetShutdownHook());
         } catch(IOException ex) { ex.printStackTrace(); }
     }
     
@@ -265,8 +263,9 @@ public class Connection {
         return -1;
     }
     
+    
     /**
-     * Gets the winner of a match.
+     * Gets the winner of a match. Works together with retirePlayerFromGame(). Share the same menu option.
      * It checks if the game exists and if the game has chosen a winner or there are plays to do yet.
      * @param reference Reference of the game the player is playing in.
      * @return AL. Contains the info of the winner. Null if game !exist or exception. Empty if the game has not a winner yet. Else [0] = ID of the winner. [1] = Name of the play. [2] = number of chips won.
@@ -296,7 +295,37 @@ public class Connection {
         return null; // Will also reach here when !exists.
     }
     
-    public static boolean retire(String reference, String id) {
+    /**
+     * Check to see if should retire a player definitely from a game. (He has no more chips and lost).
+     * Closes the connection but does not open it, goes after getWinnner().
+     * Sends a boolean - true if retire.
+     * Receives the confirmation stating if the player was correctly retired.
+     * @param retire True if the player has lost.
+     * @return True if the player was removed correctly from the game.
+     */
+    public static boolean retirePlayerFromGame(boolean retire) {
+        try {
+            boolean retired = false;
+            
+            oos.writeBoolean(retire);
+            oos.flush();
+            if(retire) retired = ois.readBoolean();
+            
+            close();
+            return retired;
+        } catch(IOException ex) { ex.printStackTrace(); }
+        
+        close();
+        return false;
+    }
+    
+    /**
+     * Option to retire a player from the current round. It will get re-incorporated in the next one.
+     * @param reference Reference of the game the player is in.
+     * @param id ID of the player to retire.
+     * @return Is the player correctly retired?
+     */
+    public static boolean sendRetirePlayerRound(String reference, String id) {
         try {
             open();
             oos.writeInt(RETIRE);
@@ -309,25 +338,14 @@ public class Connection {
                 boolean playing = ois.readBoolean();
                 if(playing) {
                     boolean retired = ois.readBoolean();
+                    
+                    close();
                     return retired;
                 }
             }
         } catch(IOException ex) { ex.printStackTrace(); }
         
-        return false;
-    }
-    
-    public static boolean retireFromGame(boolean retire) {
-        try {
-            boolean retired = false;
-            
-            oos.writeBoolean(retire);
-            oos.flush();
-            if(retire) retired = ois.readBoolean();
-            
-            return retired;
-        } catch(IOException ex) { ex.printStackTrace(); }
-        
+        close();
         return false;
     }
 }

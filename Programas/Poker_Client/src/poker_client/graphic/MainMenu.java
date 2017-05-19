@@ -1,8 +1,9 @@
 package poker_client.graphic;
 
 import entities.Player;
-import network.Check;
+import network.Checks;
 import network.Connection;
+import network.NetShutdownHook;
 
 /**
  * Client's MainMenu Window.
@@ -164,32 +165,32 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemOpenWebActionPerformed
 
     private static void round(Player o, Player a) {
-        Check.checks(o, "SU");
-        Check.checks(a, "SU");
+        Checks.checks(o, "SU");
+        Checks.checks(a, "SU");
 
         System.out.println("");
         int pool = o.bet("SU", 100);
         System.out.println("Pool after bet: " +pool);
         pool = a.bet("SU", 100);
         System.out.println("Pool after bet: " +pool);
-        Check.checks(o, "SU");
-        Check.checks(a, "SU");
+        Checks.checks(o, "SU");
+        Checks.checks(a, "SU");
         System.out.println("");
 
         pool = o.bet("SU", 100);
         System.out.println("Pool after bet: " +pool);
         pool = a.bet("SU", 100);
         System.out.println("Pool after bet: " +pool);
-        Check.checks(o, "SU");
-        Check.checks(a, "SU");
+        Checks.checks(o, "SU");
+        Checks.checks(a, "SU");
         System.out.println("");
 
         pool = o.bet("SU", 100);
         System.out.println("Pool after bet: " +pool);
         pool = a.bet("SU", 100);
         System.out.println("Pool after bet: " +pool);
-        Check.checks(o, "SU");
-        Check.checks(a, "SU");
+        Checks.checks(o, "SU");
+        Checks.checks(a, "SU");
         System.out.println("");
         
         
@@ -207,8 +208,8 @@ public class MainMenu extends javax.swing.JFrame {
 
         o.setChips(0);
         
-        Check.checks(o, "SU");
-        Check.checks(a, "SU");
+        Checks.checks(o, "SU");
+        Checks.checks(a, "SU");
 
         // System.out.println("AND THE WINNER IS: " +al.get(0) +", with: " +al.get(1) +", and has won: " +al.get(2) +" chips!");
         System.out.println("");
@@ -248,6 +249,7 @@ public class MainMenu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                Runtime.getRuntime().addShutdownHook(new NetShutdownHook()); // todo: set it where it has to be.
                 // new MainMenu().setVisible(true);
                 
                 System.out.println("Connection Opened");     

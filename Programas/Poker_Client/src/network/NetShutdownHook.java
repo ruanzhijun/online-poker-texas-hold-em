@@ -11,7 +11,7 @@ public class NetShutdownHook extends Thread {
      */
     @Override
     public void run() {
-        System.out.println("SU! Close!");
+        System.out.println("Shutting down opened connections.");
         Connection.close();
     }
 }

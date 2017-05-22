@@ -69,14 +69,17 @@ public class Games {
     /**
      * Adds a player to the selected game. Only if there's room left and the game's not started yet.
      * @param reference String. Reference of the game we want to join.
-     * @return Boolean. Result of the operation. False if game does not exist.
+     * @return result of the operation. 1 player joined. -1 game does not exist. -2 game has started.
      */
-    public static boolean joinGame(String reference, String id) {
-        boolean result = false;
+    public static int joinGame(String reference, String id) {
+        int result = 0;
         
         Game game = getGame(reference);
-        if(game != null) result = game.joinNewPlayer(id);
-        else System.out.println("Join rejected. There's no game #" +reference);
+        if(game != null) result = game.joinNewPlayer(id) ? 1 : -2;
+        else {
+            System.out.println("Join rejected. There's no game #" +reference);
+            result = -1;
+        }
         
         return result;
     }

@@ -161,6 +161,8 @@ public class Game {
      * Checks if the game has room left and !started.
      * Sets +1 to the number of current players, starts the game if all the players did join. Adds the player to global Map.
      * Makes a copy of the Map with all the players to the local round Map.
+     * @param id of the player to join.
+     * @boolean result. true if joined correctly. false game has already started.
      */
     boolean joinNewPlayer(String id) {
         if(isJoinable()) {
@@ -358,7 +360,7 @@ public class Game {
             }
         }
         
-        winner.add(chips); // fixme: if this does work, delete the number of chips at the end or make so the winner cant get it twice.
+        winner.add(chips);
         return winner;
     }
     

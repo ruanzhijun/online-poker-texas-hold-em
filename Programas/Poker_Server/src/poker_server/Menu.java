@@ -57,7 +57,7 @@ public class Menu {
     private synchronized static void joinGame() {
         String reference = Connection.getReference();
         String id = Connection.getID();
-        boolean result = Games.joinGame(reference, id);
+        int result = Games.joinGame(reference, id);
         Connection.sendResult(result);
     }
     

@@ -17,7 +17,6 @@ import java.util.ArrayList;
  */
 public class Connection {
     private static Socket socket = null;
-    
     private static InputStream in = null;
     private static OutputStream out = null;
     private static ObjectInputStream ois = null;
@@ -117,6 +116,17 @@ public class Connection {
         } catch(IOException ex) { ex.printStackTrace(); }
         
         return -1;
+    }
+    
+    /**
+     * Sends the result of an operation. Integer version.
+     * @param result Result to be sent.
+     */
+    public static void sendResult(int result) {
+        try {
+            oos.writeInt(result);
+            oos.flush();
+        } catch(IOException ex) { ex.printStackTrace(); }
     }
     
     /**

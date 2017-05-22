@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
@@ -34,10 +33,10 @@ public class GameWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanelPrincipal = new JPanel() {
+        jPanelMain = new JPanel() {
             public void paintComponent(Graphics g) {
                 Image img = Toolkit.getDefaultToolkit().getImage(
-                    WindowJugador.class.getResource("/imagenes/game_menu_background2.jpg"));
+                    GameWindow.class.getResource("/imagenes/game_menu_background2.jpg"));
                 g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
             }
         };
@@ -45,12 +44,9 @@ public class GameWindow extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButtonBet = new javax.swing.JButton();
-        jTextFieldBetAmmount = new javax.swing.JTextField();
         jLabelPoolComun = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabelIDPlayer = new javax.swing.JLabel();
-        jButtonRetire = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabelPlayerInfoTitle = new javax.swing.JLabel();
         jLabelOwnChips = new javax.swing.JLabel();
@@ -64,6 +60,12 @@ public class GameWindow extends javax.swing.JFrame {
         jLabelCartaMesa5 = new javax.swing.JLabel();
         jLabelCartaPropia1 = new javax.swing.JLabel();
         jLabelCartaPropia2 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jButtonRetire = new javax.swing.JButton();
+        jButtonBet = new javax.swing.JButton();
+        jTextFieldBetAmmount = new javax.swing.JTextField();
+        jLabelPhaseTitle = new javax.swing.JLabel();
+        jLabelPhaseOutput = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuProperties = new javax.swing.JMenu();
         jMenuItemLeaveGame = new javax.swing.JMenuItem();
@@ -74,7 +76,7 @@ public class GameWindow extends javax.swing.JFrame {
         setTitle("Game Window");
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagenes/icon.png")));
 
-        jPanelPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanelMain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton1.setText("Enviar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -82,7 +84,7 @@ public class GameWindow extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanelPrincipal.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 280, 127, 32));
+        jPanelMain.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 280, 127, 32));
 
         jButton2.setText("Get Ganador");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -90,7 +92,7 @@ public class GameWindow extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanelPrincipal.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 320, 113, 32));
+        jPanelMain.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 320, 113, 32));
 
         jButton3.setText("Destapar Propias");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -98,7 +100,7 @@ public class GameWindow extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanelPrincipal.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 200, -1, 32));
+        jPanelMain.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 200, -1, 32));
 
         jButton4.setText("Destapar Comunes");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -106,32 +108,65 @@ public class GameWindow extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanelPrincipal.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, -1, 32));
-
-        jButtonBet.setText("Bet");
-        jButtonBet.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonBetActionPerformed(evt);
-            }
-        });
-        jPanelPrincipal.add(jButtonBet, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 410, 80, 32));
-
-        jTextFieldBetAmmount.setText("50");
-        jTextFieldBetAmmount.setToolTipText("");
-        jPanelPrincipal.add(jTextFieldBetAmmount, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 380, 80, -1));
+        jPanelMain.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, -1, 32));
 
         jLabelPoolComun.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         jLabelPoolComun.setForeground(new java.awt.Color(255, 255, 255));
         jLabelPoolComun.setText("<html><b>Common Pool</b></html>");
-        jPanelPrincipal.add(jLabelPoolComun, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, -1, 31));
+        jPanelMain.add(jLabelPoolComun, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, -1, 31));
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/user.png"))); // NOI18N
-        jPanelPrincipal.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 28, 30, 30));
+        jPanelMain.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 28, 30, 30));
 
         jLabelIDPlayer.setForeground(new java.awt.Color(255, 255, 255));
         jLabelIDPlayer.setText("ID");
-        jPanelPrincipal.add(jLabelIDPlayer, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 20, 26));
+        jPanelMain.add(jLabelIDPlayer, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 20, 26));
+
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Connection");
+        jPanelMain.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 30, -1, -1));
+
+        jLabelPlayerInfoTitle.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelPlayerInfoTitle.setText("<html><u>Player's Info</u></html>");
+        jPanelMain.add(jLabelPlayerInfoTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, -1, -1));
+
+        jLabelOwnChips.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelOwnChips.setText("#Chips");
+        jPanelMain.add(jLabelOwnChips, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, -1, 31));
+
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/chip.png"))); // NOI18N
+        jPanelMain.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 41, 57));
+
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/chip2.png"))); // NOI18N
+        jPanelMain.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 30, 30));
+
+        jLabelConnectionStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cross.png"))); // NOI18N
+        jPanelMain.add(jLabelConnectionStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 10, 40, 47));
+
+        jLabelCartaMesa1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
+        jPanelMain.add(jLabelCartaMesa1, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 182, -1, 80));
+
+        jLabelCartaMesa2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
+        jPanelMain.add(jLabelCartaMesa2, new org.netbeans.lib.awtextra.AbsoluteConstraints(233, 182, -1, 80));
+
+        jLabelCartaMesa3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
+        jPanelMain.add(jLabelCartaMesa3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 180, -1, 80));
+
+        jLabelCartaMesa4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
+        jPanelMain.add(jLabelCartaMesa4, new org.netbeans.lib.awtextra.AbsoluteConstraints(502, 182, -1, 80));
+
+        jLabelCartaMesa5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
+        jPanelMain.add(jLabelCartaMesa5, new org.netbeans.lib.awtextra.AbsoluteConstraints(626, 182, -1, 80));
+
+        jLabelCartaPropia1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
+        jPanelMain.add(jLabelCartaPropia1, new org.netbeans.lib.awtextra.AbsoluteConstraints(305, 300, -1, 80));
+
+        jLabelCartaPropia2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
+        jPanelMain.add(jLabelCartaPropia2, new org.netbeans.lib.awtextra.AbsoluteConstraints(433, 300, -1, 80));
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Actions", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
 
         jButtonRetire.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/chicken2.png"))); // NOI18N
         jButtonRetire.setText("Retire");
@@ -140,50 +175,59 @@ public class GameWindow extends javax.swing.JFrame {
                 jButtonRetireActionPerformed(evt);
             }
         });
-        jPanelPrincipal.add(jButtonRetire, new org.netbeans.lib.awtextra.AbsoluteConstraints(677, 409, -1, -1));
 
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Connection");
-        jPanelPrincipal.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 30, -1, -1));
+        jButtonBet.setText("Bet");
+        jButtonBet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBetActionPerformed(evt);
+            }
+        });
 
-        jLabelPlayerInfoTitle.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelPlayerInfoTitle.setText("<html><u>Player's Info</u></html>");
-        jPanelPrincipal.add(jLabelPlayerInfoTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, -1, -1));
+        jTextFieldBetAmmount.setText("50");
+        jTextFieldBetAmmount.setToolTipText("");
 
-        jLabelOwnChips.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelOwnChips.setText("#Chips");
-        jPanelPrincipal.add(jLabelOwnChips, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, -1, 31));
+        jLabelPhaseTitle.setText("Phase:");
 
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/chip.png"))); // NOI18N
-        jPanelPrincipal.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 41, 57));
+        jLabelPhaseOutput.setText("(phase)");
 
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/chip2.png"))); // NOI18N
-        jPanelPrincipal.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 30, 30));
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonRetire, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jTextFieldBetAmmount)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabelPhaseTitle)
+                                .addGap(23, 23, 23)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabelPhaseOutput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonBet, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE))))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelPhaseTitle)
+                    .addComponent(jLabelPhaseOutput))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonBet)
+                    .addComponent(jTextFieldBetAmmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jButtonRetire)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
-        jLabelConnectionStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cross.png"))); // NOI18N
-        jPanelPrincipal.add(jLabelConnectionStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 10, 40, 47));
-
-        jLabelCartaMesa1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
-        jPanelPrincipal.add(jLabelCartaMesa1, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 182, -1, 80));
-
-        jLabelCartaMesa2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
-        jPanelPrincipal.add(jLabelCartaMesa2, new org.netbeans.lib.awtextra.AbsoluteConstraints(233, 182, -1, 80));
-
-        jLabelCartaMesa3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
-        jPanelPrincipal.add(jLabelCartaMesa3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 180, -1, 80));
-
-        jLabelCartaMesa4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
-        jPanelPrincipal.add(jLabelCartaMesa4, new org.netbeans.lib.awtextra.AbsoluteConstraints(502, 182, -1, 80));
-
-        jLabelCartaMesa5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
-        jPanelPrincipal.add(jLabelCartaMesa5, new org.netbeans.lib.awtextra.AbsoluteConstraints(626, 182, -1, 80));
-
-        jLabelCartaPropia1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
-        jPanelPrincipal.add(jLabelCartaPropia1, new org.netbeans.lib.awtextra.AbsoluteConstraints(305, 300, -1, 80));
-
-        jLabelCartaPropia2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
-        jPanelPrincipal.add(jLabelCartaPropia2, new org.netbeans.lib.awtextra.AbsoluteConstraints(433, 300, -1, 80));
+        jPanelMain.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 110, 170, 170));
 
         jMenuProperties.setText("Properties");
 
@@ -209,11 +253,11 @@ public class GameWindow extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
+            .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -399,6 +443,8 @@ public class GameWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelConnectionStatus;
     private javax.swing.JLabel jLabelIDPlayer;
     private javax.swing.JLabel jLabelOwnChips;
+    private javax.swing.JLabel jLabelPhaseOutput;
+    private javax.swing.JLabel jLabelPhaseTitle;
     private javax.swing.JLabel jLabelPlayerInfoTitle;
     private javax.swing.JLabel jLabelPoolComun;
     private javax.swing.JMenuBar jMenuBar1;
@@ -406,7 +452,8 @@ public class GameWindow extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemLeaveGame;
     private javax.swing.JMenu jMenuLeyend;
     private javax.swing.JMenu jMenuProperties;
-    private javax.swing.JPanel jPanelPrincipal;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelMain;
     private javax.swing.JTextField jTextFieldBetAmmount;
     // End of variables declaration//GEN-END:variables
 }

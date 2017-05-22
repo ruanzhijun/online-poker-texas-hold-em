@@ -4,6 +4,7 @@ Little personal project because I love playing card games with my family and fou
 ## TO-DOs
 ### Client
 * Add GUI. Images and all that.
+* Integrate the PHP files to manage user login with DBB.
 * Capture all the exceptions I manage to get and do it as dumb-proof as I can and more.
 
 ### Server
@@ -13,7 +14,10 @@ Little personal project because I love playing card games with my family and fou
 * Adjust the timers. Right now there's a 5000 ms delay when ending a round until it starts the next one so the secondary thread has time to get the info several times (just in case).
 
 ## Future Planned Improvements
+* Make it so a player can only bet the same as the previous player did or more.
 * Set a timer for a player's action so it cannot take him longer than i seconds. If he does, retire or bet 0.
+* The creator of the game may start it without all the players have joined. Only the creator.
+* Add the posibility to set passwords to games.
 * Port it to Android(?). Should not be really difficult as almost everything's been done in Java.
 
 ## Known Bugs
@@ -63,10 +67,15 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 * O. Int. Menu option.
 * O. String. Game reference.
 * O. String. Player's ID.
-* I. Bool. Result of the action.
+* I. Int. Result of the action.
 
 ##### Returns
-* Bool. Status of the operation
+* Int. Status of the operation
+
+##### Result Options
+* 1. Game joined correctly.
+* -1. Game with this reference does not exist.
+* -2. Game with this reference is already started and cannot be joined.
 
 #### Information Secondary Thread
 * O. Int. Menu option.
@@ -119,7 +128,8 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 
 ##### Returns
 * Int. Number of chips at the moment in common pool.
-###### Error
+
+###### Result Options
 * -1. IOException.
 * -2. This game does not exist. Should never be reachable, but better check for it anyway.
 * -3. Player may not bet right now. It's not his turn.
@@ -144,9 +154,42 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 ###### Error
 * Null. IOException or game does not exist.
 
+## Client
+
+### Information
+It has 2 windows. The first to create and manage all the possible info about games, user accounts and what the several phases of a game are and how it works. The second  it's the game itself.
+
+All the input from the user which has to be processed and is sensible, it's matched against regex patterns to check it has nothing weird and it's adequated to what the program asks.
+
+### First Window
+
+#### Create Game
+Asks for 2 inputs. Reference of the game and total number of players.
+* Reference. As this game has been designed to host multiple games at the same time, they need an unique ID so the rest of the players may enter to the same game you are creating. The ID can only contain: letters, numbers and underscore.
+* Number of players. It's the total number of players the game is going to host. The game will start once all of them have joined. Range: 2-9 (inclusive).
+
+##### Internal Result Options
+* 1. Everything went as expected. Game created and ready to be joined.
+* 0. Number the result is initialized with. Only if no other result. Should never be achievable.
+* -1. Connection troubles. The client cannot reach the server.
+* -2. Reference does not match regex.
+* -3. Number of players does not match regex.
+* -4. This reference is currently in use. Use another one.
+
+#### Join Game
+Joins a game. This game must exist, the reference must be valid, match and it may not be already started.
+
+##### Internal Result Options
+* 1. Game joined correctly.
+* 0. Number the result is initialized with. Internal general error. Check it.
+* -1. Connection troubles. Client cannot reach the server.
+* -2. Reference does not match regex.
+* -3. A game with this reference does not exist.
+* -4. The game with this reference has already started and cannot be joined.
 
 ## Versions
 
+* __ 0.3__ Setting specific error outputs in the client. The user will know what did go wrong.
 * __0.2.3__ Added a way to retire players from the current round without them being deleted from the game. They'll be able to get back at the start of the next round while they have chips left. The game just jumps them as if they weren't there.
 * __0.2.2__ Added checks and a way so the game gets stopped and deleted automatically when there's only 1 player left in game.
 * __0.2.1__ Phases fully implemented, now the game flows smooth from the first, to the last one.  

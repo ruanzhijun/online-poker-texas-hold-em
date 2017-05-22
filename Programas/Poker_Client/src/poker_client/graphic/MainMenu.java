@@ -1,6 +1,7 @@
 package poker_client.graphic;
 
 import entities.Player;
+import javax.swing.JOptionPane;
 import network.Checks;
 import network.Connection;
 import network.NetShutdownHook;
@@ -11,12 +12,14 @@ import network.NetShutdownHook;
  * @version 0.0.3.1 Adding checks and so to get the winner of a match.
  */
 public class MainMenu extends javax.swing.JFrame {
-
+    private Player player = new Player("SU");
+    
     /**
      * Creates new form Main
      */
     public MainMenu() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -65,6 +68,11 @@ public class MainMenu extends javax.swing.JFrame {
         jButtonSignUp.setText("Sign Up");
 
         jButtonExit.setText("Exit");
+        jButtonExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -156,13 +164,51 @@ public class MainMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void outputResultGame(int result) {
+        switch(result) {
+            case 1:
+                JOptionPane.showConfirmDialog(rootPane, "Game created correctly", "Result", JOptionPane.OK_CANCEL_OPTION);
+                break; // todo: close this window and open the game one.
+            case 0:
+                JOptionPane.showConfirmDialog(rootPane, "Internal error. Please try again.", "Result", JOptionPane.OK_CANCEL_OPTION);
+                break;
+            case -1:
+                JOptionPane.showConfirmDialog(rootPane, "Reference contains no valid characters. Only Alphanumerics and underscore.", "Result", JOptionPane.OK_CANCEL_OPTION);
+                break;
+            case -2:
+                JOptionPane.showConfirmDialog(rootPane, "Number of players no valid. Only numbers 2-9.", "Result", JOptionPane.OK_CANCEL_OPTION);
+                break;    
+            case -3:
+                JOptionPane.showConfirmDialog(rootPane, "This game's reference is currently in use. Please use another one.", "Result", JOptionPane.OK_CANCEL_OPTION);
+                break;
+        }
+    }
+    
+    private void createGame() {
+        String ref = JOptionPane.showInputDialog("Enter the new reference of the game:");
+        String numberPlayers = null;
+        int result;
+        
+        if(ref != null) {
+            numberPlayers = JOptionPane.showInputDialog("Total number of players (2-9):");
+            if(numberPlayers != null) {
+                result = Facade.createGame(player.getID(), ref, numberPlayers);
+                outputResultGame(result);
+            }
+        }
+    }
+    
     private void jButtonNewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewGameActionPerformed
-        // TODO add your handling code here:
+        createGame();
     }//GEN-LAST:event_jButtonNewGameActionPerformed
 
     private void jMenuItemOpenWebActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemOpenWebActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItemOpenWebActionPerformed
+
+    private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jButtonExitActionPerformed
 
     private static void round(Player o, Player a) {
         Checks.checks(o, "SU");
@@ -250,24 +296,24 @@ public class MainMenu extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Runtime.getRuntime().addShutdownHook(new NetShutdownHook()); // todo: set it where it has to be.
-                // new MainMenu().setVisible(true);
+                 new MainMenu().setVisible(true);
                 
-                System.out.println("Connection Opened");     
-                Player o = new Player("mario");
-                Player a = new Player("maria");
-                
-                Connection.createGame("SU", o.getID(),  2);
-                Connection.joinGame("SU", a.getID());
-                
-                round(o, a);
-                
-                try {
-                    Thread.sleep(6000);
-                } catch(InterruptedException ex) { ex.printStackTrace(); }
-                
-                // New Round.
-                System.out.println("New Round!");
-                round(o, a);
+//                System.out.println("Connection Opened");     
+//                Player o = new Player("mario");
+//                Player a = new Player("maria");
+//                
+//                Connection.createGame("SU", o.getID(),  2);
+//                Connection.joinGame("SU", a.getID());
+//                
+//                round(o, a);
+//                
+//                try {
+//                    Thread.sleep(6000);
+//                } catch(InterruptedException ex) { ex.printStackTrace(); }
+//                
+//                // New Round.
+//                System.out.println("New Round!");
+//                round(o, a);
             }
         });
     }

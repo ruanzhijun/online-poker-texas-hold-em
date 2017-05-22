@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -47,6 +48,9 @@ public class Connection {
             out = socket.getOutputStream();
             ois = new ObjectInputStream(in);
             oos = new ObjectOutputStream(out);
+        } catch(ConnectException ex) {
+            System.out.println(ex.getLocalizedMessage());
+            throw new RuntimeException(ex);
         } catch(IOException ex) { ex.printStackTrace(); }
     }
     

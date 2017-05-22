@@ -40,32 +40,36 @@ public class GameWindow extends javax.swing.JFrame {
                 g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
             }
         };
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jLabelPoolComun = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabelIDPlayer = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabelPlayerInfoTitle = new javax.swing.JLabel();
-        jLabelOwnChips = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        jLabelCommonPoolImg1 = new javax.swing.JLabel();
+        jLabelConnectionTitle = new javax.swing.JLabel();
         jLabelConnectionStatus = new javax.swing.JLabel();
-        jLabelCartaMesa1 = new javax.swing.JLabel();
-        jLabelCartaMesa2 = new javax.swing.JLabel();
-        jLabelCartaMesa3 = new javax.swing.JLabel();
-        jLabelCartaMesa4 = new javax.swing.JLabel();
-        jLabelCartaMesa5 = new javax.swing.JLabel();
-        jLabelCartaPropia1 = new javax.swing.JLabel();
-        jLabelCartaPropia2 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        jPanelActions = new javax.swing.JPanel();
         jButtonRetire = new javax.swing.JButton();
         jButtonBet = new javax.swing.JButton();
         jTextFieldBetAmmount = new javax.swing.JTextField();
         jLabelPhaseTitle = new javax.swing.JLabel();
         jLabelPhaseOutput = new javax.swing.JLabel();
+        jPanelLegacy = new javax.swing.JPanel();
+        jButtonGanador = new javax.swing.JButton();
+        jButtonEnviar = new javax.swing.JButton();
+        jButtonDestaparComunes = new javax.swing.JButton();
+        jButtonDestaparPropias = new javax.swing.JButton();
+        jPanelPlayerInfo = new javax.swing.JPanel();
+        jLabelIdImage = new javax.swing.JLabel();
+        jLabelIdOutput = new javax.swing.JLabel();
+        jLabelOwnChips = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jPanelCards = new javax.swing.JPanel();
+        jPanelCommonCards = new javax.swing.JPanel();
+        jLabelCartaMesa6 = new javax.swing.JLabel();
+        jLabelCartaMesa7 = new javax.swing.JLabel();
+        jLabelCartaMesa8 = new javax.swing.JLabel();
+        jLabelCartaMesa9 = new javax.swing.JLabel();
+        jLabelCartaMesa10 = new javax.swing.JLabel();
+        jPanelPrivateCards = new javax.swing.JPanel();
+        jLabelCartaPropia3 = new javax.swing.JLabel();
+        jLabelCartaPropia4 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuProperties = new javax.swing.JMenu();
         jMenuItemLeaveGame = new javax.swing.JMenuItem();
@@ -78,95 +82,22 @@ public class GameWindow extends javax.swing.JFrame {
 
         jPanelMain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("Enviar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanelMain.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 280, 127, 32));
-
-        jButton2.setText("Get Ganador");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanelMain.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 320, 113, 32));
-
-        jButton3.setText("Destapar Propias");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanelMain.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 200, -1, 32));
-
-        jButton4.setText("Destapar Comunes");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-        jPanelMain.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, -1, 32));
-
         jLabelPoolComun.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         jLabelPoolComun.setForeground(new java.awt.Color(255, 255, 255));
         jLabelPoolComun.setText("<html><b>Common Pool</b></html>");
-        jPanelMain.add(jLabelPoolComun, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, -1, 31));
+        jPanelMain.add(jLabelPoolComun, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 100, -1, 31));
 
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/user.png"))); // NOI18N
-        jPanelMain.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 28, 30, 30));
+        jLabelCommonPoolImg1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/chip.png"))); // NOI18N
+        jPanelMain.add(jLabelCommonPoolImg1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 90, 60, 50));
 
-        jLabelIDPlayer.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelIDPlayer.setText("ID");
-        jPanelMain.add(jLabelIDPlayer, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 20, 26));
-
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Connection");
-        jPanelMain.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 30, -1, -1));
-
-        jLabelPlayerInfoTitle.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelPlayerInfoTitle.setText("<html><u>Player's Info</u></html>");
-        jPanelMain.add(jLabelPlayerInfoTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, -1, -1));
-
-        jLabelOwnChips.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelOwnChips.setText("#Chips");
-        jPanelMain.add(jLabelOwnChips, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, -1, 31));
-
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/chip.png"))); // NOI18N
-        jPanelMain.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 41, 57));
-
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/chip2.png"))); // NOI18N
-        jPanelMain.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 30, 30));
+        jLabelConnectionTitle.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelConnectionTitle.setText("Connection");
+        jPanelMain.add(jLabelConnectionTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 20, 70, 30));
 
         jLabelConnectionStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cross.png"))); // NOI18N
-        jPanelMain.add(jLabelConnectionStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 10, 40, 47));
+        jPanelMain.add(jLabelConnectionStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 10, 80, 47));
 
-        jLabelCartaMesa1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
-        jPanelMain.add(jLabelCartaMesa1, new org.netbeans.lib.awtextra.AbsoluteConstraints(112, 182, -1, 80));
-
-        jLabelCartaMesa2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
-        jPanelMain.add(jLabelCartaMesa2, new org.netbeans.lib.awtextra.AbsoluteConstraints(233, 182, -1, 80));
-
-        jLabelCartaMesa3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
-        jPanelMain.add(jLabelCartaMesa3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 180, -1, 80));
-
-        jLabelCartaMesa4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
-        jPanelMain.add(jLabelCartaMesa4, new org.netbeans.lib.awtextra.AbsoluteConstraints(502, 182, -1, 80));
-
-        jLabelCartaMesa5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
-        jPanelMain.add(jLabelCartaMesa5, new org.netbeans.lib.awtextra.AbsoluteConstraints(626, 182, -1, 80));
-
-        jLabelCartaPropia1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
-        jPanelMain.add(jLabelCartaPropia1, new org.netbeans.lib.awtextra.AbsoluteConstraints(305, 300, -1, 80));
-
-        jLabelCartaPropia2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
-        jPanelMain.add(jLabelCartaPropia2, new org.netbeans.lib.awtextra.AbsoluteConstraints(433, 300, -1, 80));
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Actions", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
+        jPanelActions.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Actions", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
 
         jButtonRetire.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/chicken2.png"))); // NOI18N
         jButtonRetire.setText("Retire");
@@ -190,36 +121,36 @@ public class GameWindow extends javax.swing.JFrame {
 
         jLabelPhaseOutput.setText("(phase)");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelActionsLayout = new javax.swing.GroupLayout(jPanelActions);
+        jPanelActions.setLayout(jPanelActionsLayout);
+        jPanelActionsLayout.setHorizontalGroup(
+            jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelActionsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonRetire, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanelActionsLayout.createSequentialGroup()
+                        .addGroup(jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelActionsLayout.createSequentialGroup()
                                 .addComponent(jTextFieldBetAmmount)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanelActionsLayout.createSequentialGroup()
                                 .addComponent(jLabelPhaseTitle)
                                 .addGap(23, 23, 23)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabelPhaseOutput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonBet, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE))))
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        jPanelActionsLayout.setVerticalGroup(
+            jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelActionsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelPhaseTitle)
                     .addComponent(jLabelPhaseOutput))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonBet)
                     .addComponent(jTextFieldBetAmmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -227,7 +158,204 @@ public class GameWindow extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanelMain.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 110, 170, 170));
+        jPanelMain.add(jPanelActions, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 60, 170, 170));
+
+        jPanelLegacy.setBorder(javax.swing.BorderFactory.createTitledBorder("Legacy"));
+
+        jButtonGanador.setText("Get Ganador");
+        jButtonGanador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGanadorActionPerformed(evt);
+            }
+        });
+
+        jButtonEnviar.setText("Enviar");
+        jButtonEnviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEnviarActionPerformed(evt);
+            }
+        });
+
+        jButtonDestaparComunes.setText("Destapar Comunes");
+        jButtonDestaparComunes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDestaparComunesActionPerformed(evt);
+            }
+        });
+
+        jButtonDestaparPropias.setText("Destapar Propias");
+        jButtonDestaparPropias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDestaparPropiasActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelLegacyLayout = new javax.swing.GroupLayout(jPanelLegacy);
+        jPanelLegacy.setLayout(jPanelLegacyLayout);
+        jPanelLegacyLayout.setHorizontalGroup(
+            jPanelLegacyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLegacyLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelLegacyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonDestaparComunes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonDestaparPropias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonEnviar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonGanador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanelLegacyLayout.setVerticalGroup(
+            jPanelLegacyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLegacyLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButtonDestaparPropias)
+                .addGap(8, 8, 8)
+                .addComponent(jButtonDestaparComunes)
+                .addGap(8, 8, 8)
+                .addComponent(jButtonEnviar)
+                .addGap(8, 8, 8)
+                .addComponent(jButtonGanador)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanelMain.add(jPanelLegacy, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 240, 170, 190));
+
+        jPanelPlayerInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Player's Info", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
+
+        jLabelIdImage.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelIdImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/user.png"))); // NOI18N
+
+        jLabelIdOutput.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelIdOutput.setText("ID");
+
+        jLabelOwnChips.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelOwnChips.setText("#Chips");
+
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/chip2.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanelPlayerInfoLayout = new javax.swing.GroupLayout(jPanelPlayerInfo);
+        jPanelPlayerInfo.setLayout(jPanelPlayerInfoLayout);
+        jPanelPlayerInfoLayout.setHorizontalGroup(
+            jPanelPlayerInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelPlayerInfoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelPlayerInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelPlayerInfoLayout.createSequentialGroup()
+                        .addComponent(jLabelIdImage, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabelIdOutput, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelPlayerInfoLayout.createSequentialGroup()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabelOwnChips)))
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+        jPanelPlayerInfoLayout.setVerticalGroup(
+            jPanelPlayerInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelPlayerInfoLayout.createSequentialGroup()
+                .addGroup(jPanelPlayerInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelIdImage, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelPlayerInfoLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabelIdOutput, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10)
+                .addGroup(jPanelPlayerInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelPlayerInfoLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jLabelOwnChips, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        jPanelMain.add(jPanelPlayerInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 120, 120));
+
+        jLabelCartaMesa6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
+
+        jLabelCartaMesa7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
+
+        jLabelCartaMesa8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
+
+        jLabelCartaMesa9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
+
+        jLabelCartaMesa10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanelCommonCardsLayout = new javax.swing.GroupLayout(jPanelCommonCards);
+        jPanelCommonCards.setLayout(jPanelCommonCardsLayout);
+        jPanelCommonCardsLayout.setHorizontalGroup(
+            jPanelCommonCardsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelCommonCardsLayout.createSequentialGroup()
+                .addComponent(jLabelCartaMesa6)
+                .addGap(44, 44, 44)
+                .addComponent(jLabelCartaMesa7)
+                .addGap(55, 55, 55)
+                .addComponent(jLabelCartaMesa8)
+                .addGap(48, 48, 48)
+                .addComponent(jLabelCartaMesa9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addComponent(jLabelCartaMesa10))
+        );
+        jPanelCommonCardsLayout.setVerticalGroup(
+            jPanelCommonCardsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCommonCardsLayout.createSequentialGroup()
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addGroup(jPanelCommonCardsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelCommonCardsLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabelCartaMesa6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelCommonCardsLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabelCartaMesa7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelCartaMesa8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelCartaMesa9, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelCartaMesa10, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15))
+        );
+
+        jLabelCartaPropia3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
+
+        jLabelCartaPropia4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanelPrivateCardsLayout = new javax.swing.GroupLayout(jPanelPrivateCards);
+        jPanelPrivateCards.setLayout(jPanelPrivateCardsLayout);
+        jPanelPrivateCardsLayout.setHorizontalGroup(
+            jPanelPrivateCardsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrivateCardsLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelCartaPropia3)
+                .addGap(50, 50, 50)
+                .addComponent(jLabelCartaPropia4)
+                .addGap(16, 16, 16))
+        );
+        jPanelPrivateCardsLayout.setVerticalGroup(
+            jPanelPrivateCardsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelPrivateCardsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelPrivateCardsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelCartaPropia3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelCartaPropia4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanelCardsLayout = new javax.swing.GroupLayout(jPanelCards);
+        jPanelCards.setLayout(jPanelCardsLayout);
+        jPanelCardsLayout.setHorizontalGroup(
+            jPanelCardsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanelCommonCards, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCardsLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanelPrivateCards, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(160, 160, 160))
+        );
+        jPanelCardsLayout.setVerticalGroup(
+            jPanelCardsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCardsLayout.createSequentialGroup()
+                .addComponent(jPanelCommonCards, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanelPrivateCards, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
+        );
+
+        jPanelMain.add(jPanelCards, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 570, 240));
 
         jMenuProperties.setText("Properties");
 
@@ -257,7 +385,7 @@ public class GameWindow extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
         );
 
         pack();
@@ -344,27 +472,27 @@ public class GameWindow extends javax.swing.JFrame {
 //        taparCarta(jLabelCartaMesa5);
     }
     
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButtonDestaparPropiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDestaparPropiasActionPerformed
 //        getCartasPropias();
 //        comprobarJugada();
 //        destaparPropias();
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButtonDestaparPropiasActionPerformed
 
     private void jButtonBetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBetActionPerformed
 //        apostar();
     }//GEN-LAST:event_jButtonBetActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jButtonDestaparComunesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDestaparComunesActionPerformed
 //        getCartasComunes();
 //        comprobarJugada();
 //        destaparComunes();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_jButtonDestaparComunesActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
 //        JUGADOR.enviarJugada();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonEnviarActionPerformed
    
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonGanadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGanadorActionPerformed
 //        cubrirCartas();
 //        int ganancias = JUGADOR.getWinner();
 //        if(ganancias == -2) {
@@ -383,7 +511,7 @@ public class GameWindow extends javax.swing.JFrame {
 //            jLabelJugadaPropia.setText("");
 //            JUGADOR.finRonda();
 //        }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonGanadorActionPerformed
 
     private void retirarse() {
 //        boolean retirado = JUGADOR.retirarse();
@@ -423,37 +551,41 @@ public class GameWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemExitActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonBet;
+    private javax.swing.JButton jButtonDestaparComunes;
+    private javax.swing.JButton jButtonDestaparPropias;
+    private javax.swing.JButton jButtonEnviar;
+    private javax.swing.JButton jButtonGanador;
     private javax.swing.JButton jButtonRetire;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel jLabelCartaMesa1;
-    private javax.swing.JLabel jLabelCartaMesa2;
-    private javax.swing.JLabel jLabelCartaMesa3;
-    private javax.swing.JLabel jLabelCartaMesa4;
-    private javax.swing.JLabel jLabelCartaMesa5;
-    private javax.swing.JLabel jLabelCartaPropia1;
-    private javax.swing.JLabel jLabelCartaPropia2;
+    private javax.swing.JLabel jLabelCartaMesa10;
+    private javax.swing.JLabel jLabelCartaMesa6;
+    private javax.swing.JLabel jLabelCartaMesa7;
+    private javax.swing.JLabel jLabelCartaMesa8;
+    private javax.swing.JLabel jLabelCartaMesa9;
+    private javax.swing.JLabel jLabelCartaPropia3;
+    private javax.swing.JLabel jLabelCartaPropia4;
+    private javax.swing.JLabel jLabelCommonPoolImg1;
     private javax.swing.JLabel jLabelConnectionStatus;
-    private javax.swing.JLabel jLabelIDPlayer;
+    private javax.swing.JLabel jLabelConnectionTitle;
+    private javax.swing.JLabel jLabelIdImage;
+    private javax.swing.JLabel jLabelIdOutput;
     private javax.swing.JLabel jLabelOwnChips;
     private javax.swing.JLabel jLabelPhaseOutput;
     private javax.swing.JLabel jLabelPhaseTitle;
-    private javax.swing.JLabel jLabelPlayerInfoTitle;
     private javax.swing.JLabel jLabelPoolComun;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItemExit;
     private javax.swing.JMenuItem jMenuItemLeaveGame;
     private javax.swing.JMenu jMenuLeyend;
     private javax.swing.JMenu jMenuProperties;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelActions;
+    private javax.swing.JPanel jPanelCards;
+    private javax.swing.JPanel jPanelCommonCards;
+    private javax.swing.JPanel jPanelLegacy;
     private javax.swing.JPanel jPanelMain;
+    private javax.swing.JPanel jPanelPlayerInfo;
+    private javax.swing.JPanel jPanelPrivateCards;
     private javax.swing.JTextField jTextFieldBetAmmount;
     // End of variables declaration//GEN-END:variables
 }

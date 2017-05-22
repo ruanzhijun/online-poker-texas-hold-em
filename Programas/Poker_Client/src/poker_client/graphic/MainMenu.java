@@ -339,9 +339,10 @@ public class MainMenu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Runtime.getRuntime().addShutdownHook(new NetShutdownHook()); // todo: set it where it has to be.
-                 new MainMenu().setVisible(true);
-                
+//                Runtime.getRuntime().addShutdownHook(new NetShutdownHook()); // todo: set it where it has to be.
+                 new MainMenu().setVisible(false);
+                new GameWindow(new Player("Mario"));
+
 //                System.out.println("Connection Opened");     
 //                Player o = new Player("mario");
 //                Player a = new Player("maria");

@@ -152,16 +152,19 @@ It has 2 windows. The first to create and manage all the possible info about gam
 All the input from the user which has to be processed and is sensible, it's matched against regex patterns to check it has nothing weird and it's adequated to what the program asks.
 
 ### First Window
+
 #### Create Game
 Asks for 2 inputs. Reference of the game and total number of players.
 * Reference. As this game has been designed to host multiple games at the same time, they need an unique ID so the rest of the players may enter to the same game you are creating. The ID can only contain: letters, numbers and underscore.
 * Number of players. It's the total number of players the game is going to host. The game will start once all of them have joined. Range: 2-9 (inclusive).
+
 ##### Internal Output Options
 * 1. Everything went as expected. Game created and ready to be joined.
 * 0. Number the result is initialized with. Only if no other result. Should never be achievable.
 * -1. Reference does not match regex. Output info to user.
 * -2. Number of players does not match regex. Output info to user.
 * -3. This reference is currently in use. Use another one.
+* -4. Connection troubles. The client cannot reach the server.
 
 ## Versions
 

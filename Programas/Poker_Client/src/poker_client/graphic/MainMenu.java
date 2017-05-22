@@ -41,7 +41,7 @@ public class MainMenu extends javax.swing.JFrame {
         jButtonExit = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuAplication = new javax.swing.JMenu();
-        jMenuItemLogIn = new javax.swing.JMenuItem();
+        jMenuItemSignUp = new javax.swing.JMenuItem();
         jMenuItemLostPassword = new javax.swing.JMenuItem();
         jMenuItemOpenWeb = new javax.swing.JMenuItem();
         jMenuConfiguration = new javax.swing.JMenu();
@@ -121,8 +121,8 @@ public class MainMenu extends javax.swing.JFrame {
 
         jMenuAplication.setText("Aplication");
 
-        jMenuItemLogIn.setText("Log In");
-        jMenuAplication.add(jMenuItemLogIn);
+        jMenuItemSignUp.setText("Sign Up");
+        jMenuAplication.add(jMenuItemSignUp);
 
         jMenuItemLostPassword.setText("Lost Password");
         jMenuAplication.add(jMenuItemLostPassword);
@@ -236,7 +236,7 @@ public class MainMenu extends javax.swing.JFrame {
                 JOptionPane.showConfirmDialog(rootPane, "A game with this reference does not currently exist. You may create it.", "Result", JOptionPane.OK_CANCEL_OPTION);
                 break;
             case -4:
-                // JOptionPane.showConfirmDialog(rootPane, "This game's reference is currently in use. Please use another one.", "Result", JOptionPane.OK_CANCEL_OPTION);
+                JOptionPane.showConfirmDialog(rootPane, "The game with this reference has already started and cannot be joined.", "Result", JOptionPane.OK_CANCEL_OPTION);
                 break;
         }
     }
@@ -245,6 +245,7 @@ public class MainMenu extends javax.swing.JFrame {
         String ref = JOptionPane.showInputDialog("Enter the reference of the game to join:");
         if(ref != null) {
             int result = Facade.joinGame(player.getID(), ref);
+            System.out.println(result);
             outputJoinGame(result);
         }
     }
@@ -376,9 +377,9 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemAbout;
     private javax.swing.JMenuItem jMenuItemDocumentation;
     private javax.swing.JMenuItem jMenuItemLearnPlay;
-    private javax.swing.JMenuItem jMenuItemLogIn;
     private javax.swing.JMenuItem jMenuItemLostPassword;
     private javax.swing.JMenuItem jMenuItemOpenWeb;
+    private javax.swing.JMenuItem jMenuItemSignUp;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

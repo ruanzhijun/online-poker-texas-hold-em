@@ -108,7 +108,7 @@ public class Connection {
      * Sends game reference. Flush them.
      * Receives status of the operation.
      * @param reference
-     * @return 0 connection problems. 1 game joined. -1 game does not exist.
+     * @return 0 connection problems. 1 game joined. -1 game does not exist. -2 game exist but is already started.
      */
     public static int joinGame(String reference, String id) {
         int status = 0;
@@ -120,8 +120,8 @@ public class Connection {
                 oos.writeUTF(id);
                 oos.flush();
 
-                boolean result = ois.readBoolean();
-                status = result ? 1 : -1;
+                int result = ois.readInt();
+                status = result;
                 close();
             }
         } catch(IOException ex) { ex.printStackTrace(); }

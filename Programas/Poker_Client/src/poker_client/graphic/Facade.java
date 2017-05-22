@@ -63,6 +63,7 @@ public class Facade {
             else {
                 if(created == 0) result = -1;
                 else if(created == -1) result = -3;
+                else if(created == -2) result = -4;
             }
         } else result = -2;
         

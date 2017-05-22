@@ -9,9 +9,9 @@
             <Property name="text" type="java.lang.String" value="Aplication"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemLogIn">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemSignUp">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Log In"/>
+                <Property name="text" type="java.lang.String" value="Sign Up"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemLostPassword">

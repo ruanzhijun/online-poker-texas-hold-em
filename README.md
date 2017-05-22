@@ -14,6 +14,7 @@ Little personal project because I love playing card games with my family and fou
 
 ## Future Planned Improvements
 * Set a timer for a player's action so it cannot take him longer than i seconds. If he does, retire or bet 0.
+* The creator of the game may start it without all the players have joined. Only the creator.
 * Port it to Android(?). Should not be really difficult as almost everything's been done in Java.
 
 ## Known Bugs
@@ -144,6 +145,23 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 ###### Error
 * Null. IOException or game does not exist.
 
+## Client
+### Information
+It has 2 windows. The first to create and manage all the possible info about games, user accounts and what the several phases of a game are and how it works. The second  it's the game itself.
+
+All the input from the user which has to be processed and is sensible, it's matched against regex patterns to check it has nothing weird and it's adequated to what the program asks.
+
+### First Window
+#### Create Game
+Asks for 2 inputs. Reference of the game and total number of players.
+* Reference. As this game has been designed to host multiple games at the same time, they need an unique ID so the rest of the players may enter to the same game you are creating. The ID can only contain: letters, numbers and underscore.
+* Number of players. It's the total number of players the game is going to host. The game will start once all of them have joined. Range: 2-9 (inclusive).
+##### Internal Output Options
+* 1. Everything went as expected. Game created and ready to be joined.
+* 0. Number the result is initialized with. Only if no other result. Should never be achievable.
+* -1. Reference does not match regex. Output info to user.
+* -2. Number of players does not match regex. Output info to user.
+* -3. This reference is currently in use. Use another one.
 
 ## Versions
 

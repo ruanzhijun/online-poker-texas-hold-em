@@ -4,6 +4,7 @@ Little personal project because I love playing card games with my family and fou
 ## TO-DOs
 ### Client
 * Add GUI. Images and all that.
+* Capture all the exceptions I manage to get and do it as dumb-proof as I can and more.
 
 ### Server
 * Set the port so it's asked by default when starting the server.

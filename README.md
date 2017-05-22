@@ -161,10 +161,10 @@ Asks for 2 inputs. Reference of the game and total number of players.
 ##### Internal Output Options
 * 1. Everything went as expected. Game created and ready to be joined.
 * 0. Number the result is initialized with. Only if no other result. Should never be achievable.
-* -1. Reference does not match regex. Output info to user.
-* -2. Number of players does not match regex. Output info to user.
-* -3. This reference is currently in use. Use another one.
-* -4. Connection troubles. The client cannot reach the server.
+* -1. Connection troubles. The client cannot reach the server.
+* -2. Reference does not match regex.
+* -3. Number of players does not match regex.
+* -4. This reference is currently in use. Use another one.
 
 ## Versions
 

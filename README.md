@@ -15,6 +15,7 @@ Little personal project because I love playing card games with my family and fou
 ## Future Planned Improvements
 * Set a timer for a player's action so it cannot take him longer than i seconds. If he does, retire or bet 0.
 * The creator of the game may start it without all the players have joined. Only the creator.
+* Add the posibility to set passwords to games.
 * Port it to Android(?). Should not be really difficult as almost everything's been done in Java.
 
 ## Known Bugs
@@ -64,10 +65,15 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 * O. Int. Menu option.
 * O. String. Game reference.
 * O. String. Player's ID.
-* I. Bool. Result of the action.
+* I. Int. Result of the action.
 
 ##### Returns
-* Bool. Status of the operation
+* Int. Status of the operation
+
+##### Result Options
+* 1. Game joined correctly.
+* -1. Game with this reference does not exist.
+* -2. Game with this reference is already started and cannot be joined.
 
 #### Information Secondary Thread
 * O. Int. Menu option.
@@ -120,7 +126,8 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 
 ##### Returns
 * Int. Number of chips at the moment in common pool.
-###### Error
+
+###### Result Options
 * -1. IOException.
 * -2. This game does not exist. Should never be reachable, but better check for it anyway.
 * -3. Player may not bet right now. It's not his turn.
@@ -158,13 +165,24 @@ Asks for 2 inputs. Reference of the game and total number of players.
 * Reference. As this game has been designed to host multiple games at the same time, they need an unique ID so the rest of the players may enter to the same game you are creating. The ID can only contain: letters, numbers and underscore.
 * Number of players. It's the total number of players the game is going to host. The game will start once all of them have joined. Range: 2-9 (inclusive).
 
-##### Internal Output Options
+##### Internal Result Options
 * 1. Everything went as expected. Game created and ready to be joined.
 * 0. Number the result is initialized with. Only if no other result. Should never be achievable.
 * -1. Connection troubles. The client cannot reach the server.
 * -2. Reference does not match regex.
 * -3. Number of players does not match regex.
 * -4. This reference is currently in use. Use another one.
+
+#### Join Game
+Joins a game. This game must exist, the reference must be valid, match and it may not be already started.
+
+##### Internal Result Options
+* 1. Game joined correctly.
+* 0. Number the result is initialized with. Internal general error. Check it.
+* -1. Connection troubles. Client cannot reach the server.
+* -2. Reference does not match regex.
+* -3. A game with this reference does not exist.
+* -4. The game with this reference has already started and cannot be joined.
 
 ## Versions
 

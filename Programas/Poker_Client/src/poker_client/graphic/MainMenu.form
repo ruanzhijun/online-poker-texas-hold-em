@@ -108,7 +108,7 @@
                   <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jButtonExit" alignment="1" min="-2" pref="270" max="-2" attributes="0"/>
-                      <Component id="jButtonSignUp" alignment="1" min="-2" pref="270" max="-2" attributes="0"/>
+                      <Component id="jButtonLogIn" alignment="1" min="-2" pref="270" max="-2" attributes="0"/>
                       <Component id="jButtonJoinGame" alignment="1" min="-2" pref="270" max="-2" attributes="0"/>
                       <Component id="jButtonNewGame" alignment="1" min="-2" pref="270" max="-2" attributes="0"/>
                       <Component id="jLabelLogo" min="-2" pref="270" max="-2" attributes="0"/>
@@ -132,7 +132,7 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jButtonJoinGame" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jButtonSignUp" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonLogIn" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jButtonExit" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
@@ -165,10 +165,13 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Join Existing Game"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonJoinGameActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButtonSignUp">
+        <Component class="javax.swing.JButton" name="jButtonLogIn">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Sign Up"/>
+            <Property name="text" type="java.lang.String" value="Log In"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonExit">

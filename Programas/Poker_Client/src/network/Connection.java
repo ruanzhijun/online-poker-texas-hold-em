@@ -14,7 +14,7 @@ import java.util.ArrayList;
 /**
  * Static class to encapsulate everything related to Client's connection management.
  * @author Mario Codes
- * @version 0.0.3 Connection open and close inserted and tested.
+ * @version 0.0.4 Improving return results. Using integers instead of booleans. This way can difference between several error states.
  */
 public class Connection {
     private static final int PORT = 8143;
@@ -39,8 +39,9 @@ public class Connection {
     
     /**
      * Opens the connection to send and receive data.
+     * @return result of the operation. True if it was opened correctly.
      */
-    private static void open() {
+    private static boolean open() {
         try {
             socket = new Socket(SERVER_IP, PORT);
             
@@ -48,10 +49,12 @@ public class Connection {
             out = socket.getOutputStream();
             ois = new ObjectInputStream(in);
             oos = new ObjectOutputStream(out);
+            return true;
         } catch(ConnectException ex) {
-            System.out.println(ex.getLocalizedMessage());
-            throw new RuntimeException(ex);
+            System.out.println(ex.getLocalizedMessage() +". Please check the server is reachable and the connection options are correct.");
         } catch(IOException ex) { ex.printStackTrace(); }
+        
+        return false;
     }
     
     /**
@@ -77,21 +80,23 @@ public class Connection {
      * Receives result of the operation.
      * @param reference String. Reference to ID the game.
      * @param totalPlayers int. Total number of players there will be in our game.
-     * @return Boolean. Status of the operation, true if everything went well. False if ID in use.
+     * @return Status of the operation. 0 connection problems. 1 game created. -1 id in use.
      */
-    public static boolean createGame(String reference, String id, int totalPlayers) {
-        boolean status = false;
+    public static int createGame(String reference, String id, int totalPlayers) {
+        int status = 0;
         
         try {
-            open();
-            oos.writeInt(CREATE_GAME);
-            oos.writeUTF(reference);
-            oos.writeUTF(id);
-            oos.writeInt(totalPlayers);
-            oos.flush();
-            
-            status = ois.readBoolean();
-            close();
+            if(open()) {
+                oos.writeInt(CREATE_GAME);
+                oos.writeUTF(reference);
+                oos.writeUTF(id);
+                oos.writeInt(totalPlayers);
+                oos.flush();
+
+                boolean result = ois.readBoolean();
+                status = result ? 1 : -1;
+                close();
+            }
         } catch(IOException ex) { ex.printStackTrace(); }
         
         return status;
@@ -103,20 +108,22 @@ public class Connection {
      * Sends game reference. Flush them.
      * Receives status of the operation.
      * @param reference
-     * @return 
+     * @return 0 connection problems. 1 game joined. -1 game does not exist.
      */
-    public static boolean joinGame(String reference, String id) {
-        boolean status = false;
+    public static int joinGame(String reference, String id) {
+        int status = 0;
         
         try {
-            open();
-            oos.writeInt(JOIN_GAME);
-            oos.writeUTF(reference);
-            oos.writeUTF(id);
-            oos.flush();
-            
-            status = ois.readBoolean();
-            close();
+            if(open()) {
+                oos.writeInt(JOIN_GAME);
+                oos.writeUTF(reference);
+                oos.writeUTF(id);
+                oos.flush();
+
+                boolean result = ois.readBoolean();
+                status = result ? 1 : -1;
+                close();
+            }
         } catch(IOException ex) { ex.printStackTrace(); }
         
         return status;

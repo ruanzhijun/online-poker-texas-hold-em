@@ -37,7 +37,7 @@ public class MainMenu extends javax.swing.JFrame {
         jLabelLogo = new javax.swing.JLabel();
         jButtonNewGame = new javax.swing.JButton();
         jButtonJoinGame = new javax.swing.JButton();
-        jButtonSignUp = new javax.swing.JButton();
+        jButtonLogIn = new javax.swing.JButton();
         jButtonExit = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuAplication = new javax.swing.JMenu();
@@ -64,8 +64,13 @@ public class MainMenu extends javax.swing.JFrame {
         });
 
         jButtonJoinGame.setText("Join Existing Game");
+        jButtonJoinGame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonJoinGameActionPerformed(evt);
+            }
+        });
 
-        jButtonSignUp.setText("Sign Up");
+        jButtonLogIn.setText("Log In");
 
         jButtonExit.setText("Exit");
         jButtonExit.addActionListener(new java.awt.event.ActionListener() {
@@ -88,7 +93,7 @@ public class MainMenu extends javax.swing.JFrame {
                 .addGap(66, 66, 66)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButtonExit, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonJoinGame, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonNewGame, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -108,7 +113,7 @@ public class MainMenu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonJoinGame)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonSignUp)
+                .addComponent(jButtonLogIn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonExit)
                 .addGap(12, 12, 12))
@@ -164,21 +169,24 @@ public class MainMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void outputResultGame(int result) {
+    private void outputCreateGame(int result) {
         switch(result) {
             case 1:
-                JOptionPane.showConfirmDialog(rootPane, "Game created correctly", "Result", JOptionPane.OK_CANCEL_OPTION);
+                JOptionPane.showConfirmDialog(rootPane, "Game created correctly.", "Result", JOptionPane.OK_CANCEL_OPTION);
                 break; // todo: close this window and open the game one.
             case 0:
                 JOptionPane.showConfirmDialog(rootPane, "Internal error. Please try again.", "Result", JOptionPane.OK_CANCEL_OPTION);
                 break;
             case -1:
-                JOptionPane.showConfirmDialog(rootPane, "Reference contains no valid characters. Only Alphanumerics and underscore.", "Result", JOptionPane.OK_CANCEL_OPTION);
+                JOptionPane.showConfirmDialog(rootPane, "Connection error. Check the server is reachable by the client.", "Result", JOptionPane.OK_CANCEL_OPTION);
                 break;
             case -2:
-                JOptionPane.showConfirmDialog(rootPane, "Number of players no valid. Only numbers 2-9.", "Result", JOptionPane.OK_CANCEL_OPTION);
+                JOptionPane.showConfirmDialog(rootPane, "Reference contains no valid characters. Only Alphanumerics and underscore.", "Result", JOptionPane.OK_CANCEL_OPTION);
                 break;    
             case -3:
+                JOptionPane.showConfirmDialog(rootPane, "Number of players no valid. Only numbers 2-9.", "Result", JOptionPane.OK_CANCEL_OPTION);
+                break;
+            case -4:
                 JOptionPane.showConfirmDialog(rootPane, "This game's reference is currently in use. Please use another one.", "Result", JOptionPane.OK_CANCEL_OPTION);
                 break;
         }
@@ -193,7 +201,7 @@ public class MainMenu extends javax.swing.JFrame {
             numberPlayers = JOptionPane.showInputDialog("Total number of players (2-9):");
             if(numberPlayers != null) {
                 result = Facade.createGame(player.getID(), ref, numberPlayers);
-                outputResultGame(result);
+                outputCreateGame(result);
             }
         }
     }
@@ -209,6 +217,41 @@ public class MainMenu extends javax.swing.JFrame {
     private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jButtonExitActionPerformed
+
+    private void outputJoinGame(int result) {
+        switch(result) {
+            case 1:
+                JOptionPane.showConfirmDialog(rootPane, "Game joined correctly.", "Result", JOptionPane.OK_CANCEL_OPTION);
+                break; // todo: close this window and open the game one.
+            case 0:
+                JOptionPane.showConfirmDialog(rootPane, "Internal error. Please try again.", "Result", JOptionPane.OK_CANCEL_OPTION);
+                break;
+            case -1:
+                JOptionPane.showConfirmDialog(rootPane, "Connection error. Check the server is reachable by the client.", "Result", JOptionPane.OK_CANCEL_OPTION);
+                break;
+            case -2:
+                JOptionPane.showConfirmDialog(rootPane, "Reference contains no valid characters. Only Alphanumerics and underscore.", "Result", JOptionPane.OK_CANCEL_OPTION);
+                break;    
+            case -3:
+                JOptionPane.showConfirmDialog(rootPane, "A game with this reference does not currently exist. You may create it.", "Result", JOptionPane.OK_CANCEL_OPTION);
+                break;
+            case -4:
+                // JOptionPane.showConfirmDialog(rootPane, "This game's reference is currently in use. Please use another one.", "Result", JOptionPane.OK_CANCEL_OPTION);
+                break;
+        }
+    }
+    
+    private void joinGame() {
+        String ref = JOptionPane.showInputDialog("Enter the reference of the game to join:");
+        if(ref != null) {
+            int result = Facade.joinGame(player.getID(), ref);
+            outputJoinGame(result);
+        }
+    }
+    
+    private void jButtonJoinGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonJoinGameActionPerformed
+        joinGame();
+    }//GEN-LAST:event_jButtonJoinGameActionPerformed
 
     private static void round(Player o, Player a) {
         Checks.checks(o, "SU");
@@ -321,8 +364,8 @@ public class MainMenu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonExit;
     private javax.swing.JButton jButtonJoinGame;
+    private javax.swing.JButton jButtonLogIn;
     private javax.swing.JButton jButtonNewGame;
-    private javax.swing.JButton jButtonSignUp;
     private javax.swing.JLabel jLabelLogo;
     private javax.swing.JLabel jLabelUser;
     private javax.swing.JLabel jLabelUserChange;

@@ -4,6 +4,7 @@ Little personal project because I love playing card games with my family and fou
 ## TO-DOs
 ### Client
 * Add GUI. Images and all that.
+* Integrate the PHP files to manage user login with DBB.
 * Capture all the exceptions I manage to get and do it as dumb-proof as I can and more.
 
 ### Server
@@ -13,6 +14,7 @@ Little personal project because I love playing card games with my family and fou
 * Adjust the timers. Right now there's a 5000 ms delay when ending a round until it starts the next one so the secondary thread has time to get the info several times (just in case).
 
 ## Future Planned Improvements
+* Make it so a player can only bet the same as the previous player did or more.
 * Set a timer for a player's action so it cannot take him longer than i seconds. If he does, retire or bet 0.
 * The creator of the game may start it without all the players have joined. Only the creator.
 * Add the posibility to set passwords to games.
@@ -153,6 +155,7 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 * Null. IOException or game does not exist.
 
 ## Client
+
 ### Information
 It has 2 windows. The first to create and manage all the possible info about games, user accounts and what the several phases of a game are and how it works. The second  it's the game itself.
 
@@ -186,6 +189,7 @@ Joins a game. This game must exist, the reference must be valid, match and it ma
 
 ## Versions
 
+* __ 0.3__ Setting specific error outputs in the client. The user will know what did go wrong.
 * __0.2.3__ Added a way to retire players from the current round without them being deleted from the game. They'll be able to get back at the start of the next round while they have chips left. The game just jumps them as if they weren't there.
 * __0.2.2__ Added checks and a way so the game gets stopped and deleted automatically when there's only 1 player left in game.
 * __0.2.1__ Phases fully implemented, now the game flows smooth from the first, to the last one.  

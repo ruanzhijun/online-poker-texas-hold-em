@@ -161,7 +161,7 @@ It has 2 windows. The first to create and manage all the possible info about gam
 
 All the input from the user which has to be processed and is sensible, it's matched against regex patterns to check it has nothing weird and it's adequated to what the program asks.
 
-### First Window
+### Main Window
 
 #### Create Game
 Asks for 2 inputs. Reference of the game and total number of players.

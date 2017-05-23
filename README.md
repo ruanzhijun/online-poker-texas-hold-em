@@ -21,7 +21,7 @@ Little personal project because I love playing card games with my family and fou
 * Port it to Android(?). Should not be really difficult as almost everything's been done in Java.
 
 ## Known Bugs
-* (Internal) Web - Script of php executed from Java client. It does return the same number error for user not existing and password erroneous. The user should not be notified of what's wrong but for debugging purposes I should.
+* (Internal) Web - Script of php executed from Java client. It does return the same number error for user not existing and password erroneous. It should not. The user should not be notified of what's wrong but for debugging purposes I should.
 
 # Documentation
 This project differentiates between _Client_ and _Server_ and inside _Client_ it follows _MVC_ architecture. The heavy logic processing of the game is done by the _Server_, the _Client_ just has a serie of checks to know which info it has to currently retrieve.  

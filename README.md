@@ -169,7 +169,7 @@ Asks for 2 inputs. Reference of the game and total number of players.
 * Number of players. It's the total number of players the game is going to host. The game will start once all of them have joined. Range: 2-9 (inclusive).
 
 ##### Internal Result Options
-* 1. Everything went as expected. Game created and ready to be joined.
+*  1 . Everything went as expected. Game created and ready to be joined.
 * 0. Number the result is initialized with. Only if no other result. Should never be achievable.
 * -1. Connection troubles. The client cannot reach the server.
 * -2. Reference does not match regex.
@@ -180,7 +180,7 @@ Asks for 2 inputs. Reference of the game and total number of players.
 Joins a game. This game must exist, the reference must be valid, match and it may not be already started.
 
 ##### Internal Result Options
-* 1. Game joined correctly.
+*  1 . Game joined correctly.
 * 0. Number the result is initialized with. Internal general error. Check it.
 * -1. Connection troubles. Client cannot reach the server.
 * -2. Reference does not match regex.

@@ -6,6 +6,7 @@ Little personal project because I love playing card games with my family and fou
 * Add GUI. Images and all that.
 * Integrate the PHP files to manage user login with DBB.
 * Capture all the exceptions I manage to get and do it as dumb-proof as I can and more.
+* Assign a random client # when user joins a game without log-in.
 
 ### Server
 * Set the port so it's asked by default when starting the server.
@@ -21,6 +22,7 @@ Little personal project because I love playing card games with my family and fou
 * Port it to Android(?). Should not be really difficult as almost everything's been done in Java.
 
 ## Known Bugs
+* (Internal) Web - Script of php executed from Java client. It does return the same number error for user not existing and password erroneous. It should not. The user should not be notified of what's wrong but for debugging purposes I should.
 
 # Documentation
 This project differentiates between _Client_ and _Server_ and inside _Client_ it follows _MVC_ architecture. The heavy logic processing of the game is done by the _Server_, the _Client_ just has a serie of checks to know which info it has to currently retrieve.  

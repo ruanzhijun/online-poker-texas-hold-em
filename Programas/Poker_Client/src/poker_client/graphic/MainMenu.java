@@ -3,13 +3,28 @@ package poker_client.graphic;
 import entities.Player;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import network.Checks;
 import network.Connection;
 import network.NetShutdownHook;
+import javax.script.*;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
+import php.java.script.*;
+import php.java.servlet.*;
+
 
 /**
  * Client's MainMenu Window.
@@ -264,9 +279,58 @@ public class MainMenu extends javax.swing.JFrame {
         joinGame();
     }//GEN-LAST:event_jButtonJoinGameActionPerformed
 
+    private void login3() {
+        try {
+            HttpClient httpclient = HttpClients.createDefault();
+            HttpPost httppost = new HttpPost("http://mariocodes.com/php/login_java.php");
+
+            // Request parameters and other properties.
+            List<NameValuePair> params = new ArrayList<NameValuePair>(1);
+            params.add(new BasicNameValuePair("username", "maria"));
+            // params.add(new BasicNameValuePair("param-2", "Hello!"));
+            httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+
+            //Execute and get the response.
+            HttpResponse response = httpclient.execute(httppost);
+            HttpEntity entity = response.getEntity();
+
+            if (entity != null) {
+                InputStream instream = entity.getContent();
+                try {
+                    String s = "";
+                    int i;
+                    while((i = instream.read()) != -1) {
+                        s += (char) i;
+                    }
+                    
+                    System.out.println(s);
+                    // do something useful
+                    System.out.println("SU!");
+                } finally {
+                    instream.close();
+                }
+            }
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    private void login2() {
+        String code = "echo 'a';";
+        ScriptEngineManager manager = new ScriptEngineManager();
+        ScriptEngine engine = manager.getEngineByExtension("php");
+        
+        try {
+            Object s = engine.eval(code);
+            System.out.println(s);
+        } catch(ScriptException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     private void login() {
         try {
-            Process p = Runtime.getRuntime().exec("php ../../network/login_user.php");
+            Process p = Runtime.getRuntime().exec("php login_user.php mario sss");
             p.waitFor();
             
             String line;
@@ -294,7 +358,7 @@ public class MainMenu extends javax.swing.JFrame {
     }
     
     private void jButtonLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogInActionPerformed
-        login();
+        login3();
     }//GEN-LAST:event_jButtonLogInActionPerformed
 
     private static void round(Player o, Player a) {

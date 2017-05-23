@@ -1,6 +1,11 @@
 package poker_client.graphic;
 
 import entities.Player;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import javax.swing.JOptionPane;
 import network.Checks;
 import network.Connection;
@@ -71,6 +76,11 @@ public class MainMenu extends javax.swing.JFrame {
         });
 
         jButtonLogIn.setText("Log In");
+        jButtonLogIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLogInActionPerformed(evt);
+            }
+        });
 
         jButtonExit.setText("Exit");
         jButtonExit.addActionListener(new java.awt.event.ActionListener() {
@@ -254,6 +264,39 @@ public class MainMenu extends javax.swing.JFrame {
         joinGame();
     }//GEN-LAST:event_jButtonJoinGameActionPerformed
 
+    private void login() {
+        try {
+            Process p = Runtime.getRuntime().exec("php ../../network/login_user.php");
+            p.waitFor();
+            
+            String line;
+
+            BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+            while((line = error.readLine()) != null){
+                System.out.println(line);
+            }
+            error.close();
+
+            BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            while((line=input.readLine()) != null){
+                System.out.println(line);
+
+            }
+
+            input.close();
+
+            OutputStream outputStream = p.getOutputStream();
+            PrintStream printStream = new PrintStream(outputStream);
+            printStream.println();
+            printStream.flush();
+            printStream.close();
+        } catch(IOException|InterruptedException ex) { ex.printStackTrace(); }
+    }
+    
+    private void jButtonLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogInActionPerformed
+        login();
+    }//GEN-LAST:event_jButtonLogInActionPerformed
+
     private static void round(Player o, Player a) {
         Checks.checks(o, "SU");
         Checks.checks(a, "SU");
@@ -340,8 +383,8 @@ public class MainMenu extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
 //                Runtime.getRuntime().addShutdownHook(new NetShutdownHook()); // todo: set it where it has to be.
-                 new MainMenu().setVisible(false);
-                new GameWindow(new Player("Mario"));
+                 new MainMenu().setVisible(true);
+//                new GameWindow(new Player("Mario"));
 
 //                System.out.println("Connection Opened");     
 //                Player o = new Player("mario");

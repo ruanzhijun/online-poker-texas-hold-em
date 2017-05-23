@@ -12,13 +12,15 @@ Little personal project because I love playing card games with my family and fou
 * Set the port so it's asked by default when starting the server.
 
 ### General
+* Move this doc into a Word, leave here a basic explanation.
 * Adjust the timers. Right now there's a 5000 ms delay when ending a round until it starts the next one so the secondary thread has time to get the info several times (just in case).
 
 ## Future Planned Improvements
 * Make it so a player can only bet the same as the previous player did or more.
 * Set a timer for a player's action so it cannot take him longer than i seconds. If he does, retire or bet 0.
-* The creator of the game may start it without all the players have joined. Only the creator.
-* Add the posibility to set passwords to games.
+* The creator of the game may start it without all the players have joined (Only the creator).
+* Add the posibility to make password-protected games.
+* Update GUI to JavaFX (instead of Swing).
 * Port it to Android(?). Should not be really difficult as almost everything's been done in Java.
 
 ## Known Bugs
@@ -188,6 +190,9 @@ Joins a game. This game must exist, the reference must be valid, match and it ma
 * -2. Reference does not match regex.
 * -3. A game with this reference does not exist.
 * -4. The game with this reference has already started and cannot be joined.
+
+## Security
+All the user inputs which go to a database are escaped, the ones which are in the web with PHP; The log-in from the client with Java. This prevents SQL Injections. The accounts created have their password encripted by a PHP script. This same script is called from Java to check the credentials at log-in.
 
 ## Versions
 

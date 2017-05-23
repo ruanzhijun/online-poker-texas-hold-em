@@ -32,7 +32,8 @@ import php.java.servlet.*;
  * @version 0.0.3.1 Adding checks and so to get the winner of a match.
  */
 public class MainMenu extends javax.swing.JFrame {
-    private Player player = new Player("SU");
+    private Player player;
+    
     
     /**
      * Creates new form Main
@@ -279,15 +280,15 @@ public class MainMenu extends javax.swing.JFrame {
         joinGame();
     }//GEN-LAST:event_jButtonJoinGameActionPerformed
 
-    private void login3() {
+    private void login() {
         try {
             HttpClient httpclient = HttpClients.createDefault();
             HttpPost httppost = new HttpPost("http://mariocodes.com/php/login_java.php");
 
             // Request parameters and other properties.
             List<NameValuePair> params = new ArrayList<NameValuePair>(1);
-            params.add(new BasicNameValuePair("username", "maria"));
-            // params.add(new BasicNameValuePair("param-2", "Hello!"));
+            params.add(new BasicNameValuePair("username", "mari"));
+             params.add(new BasicNameValuePair("password", "mario"));
             httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
 
             //Execute and get the response.
@@ -303,9 +304,7 @@ public class MainMenu extends javax.swing.JFrame {
                         s += (char) i;
                     }
                     
-                    System.out.println(s);
-                    // do something useful
-                    System.out.println("SU!");
+                    System.out.println("Answer: " +s);
                 } finally {
                     instream.close();
                 }
@@ -315,50 +314,8 @@ public class MainMenu extends javax.swing.JFrame {
         }
     }
     
-    private void login2() {
-        String code = "echo 'a';";
-        ScriptEngineManager manager = new ScriptEngineManager();
-        ScriptEngine engine = manager.getEngineByExtension("php");
-        
-        try {
-            Object s = engine.eval(code);
-            System.out.println(s);
-        } catch(ScriptException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    private void login() {
-        try {
-            Process p = Runtime.getRuntime().exec("php login_user.php mario sss");
-            p.waitFor();
-            
-            String line;
-
-            BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-            while((line = error.readLine()) != null){
-                System.out.println(line);
-            }
-            error.close();
-
-            BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            while((line=input.readLine()) != null){
-                System.out.println(line);
-
-            }
-
-            input.close();
-
-            OutputStream outputStream = p.getOutputStream();
-            PrintStream printStream = new PrintStream(outputStream);
-            printStream.println();
-            printStream.flush();
-            printStream.close();
-        } catch(IOException|InterruptedException ex) { ex.printStackTrace(); }
-    }
-    
     private void jButtonLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogInActionPerformed
-        login3();
+        login();
     }//GEN-LAST:event_jButtonLogInActionPerformed
 
     private static void round(Player o, Player a) {

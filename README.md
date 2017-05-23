@@ -189,7 +189,7 @@ Joins a game. This game must exist, the reference must be valid, match and it ma
 
 ## Versions
 
-* __ 0.3__ Setting specific error outputs in the client. The user will know what did go wrong.
+* __0.3__ Setting specific error outputs in the client. The user will know what did go wrong.
 * __0.2.3__ Added a way to retire players from the current round without them being deleted from the game. They'll be able to get back at the start of the next round while they have chips left. The game just jumps them as if they weren't there.
 * __0.2.2__ Added checks and a way so the game gets stopped and deleted automatically when there's only 1 player left in game.
 * __0.2.1__ Phases fully implemented, now the game flows smooth from the first, to the last one.  

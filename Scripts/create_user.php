@@ -4,10 +4,10 @@
  * @return Connection opened.
  */
 function connectDB() {
-    $server = "mysql.hostinger.es";
-    $user = "u213982572_mario";
-    $pass = "1Z0lCYOlA8akS6zselkZ";
-    $bd = "u213982572_poker";
+    $server = "";
+    $user = "";
+    $pass = "";
+    $bd = "";
 
     $connection = new mysqli($server, $user, $pass, $bd);
     

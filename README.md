@@ -89,6 +89,7 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 * O. String. Player's ID.
 * I. String. Game's phase (State machine).
 * I. Bool. Is this player's turn?.
+* I. Int. Amount of chips in common pool.
 
 ##### Returns
 * ArrayList. [0] Str. Current Phase; [1] Bool. Does player speak now?.

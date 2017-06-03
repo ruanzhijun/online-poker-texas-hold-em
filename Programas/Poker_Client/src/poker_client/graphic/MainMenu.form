@@ -101,7 +101,7 @@
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="jLabelUser" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jLabelUserChange" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabelUserChange" min="-2" pref="70" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
@@ -121,9 +121,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabelUserChange" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabelUser" alignment="3" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabelUser" max="32767" attributes="0"/>
+                      <Component id="jLabelUserChange" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabelLogo" pref="166" max="32767" attributes="0"/>
@@ -142,9 +142,6 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabelUserChange">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Guest"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelUser">
           <Properties>

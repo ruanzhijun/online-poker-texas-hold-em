@@ -44,6 +44,7 @@ public class MainMenu extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         
         player = iniPlayer();
+        this.jLabelUserChange.setText(player.getID());
     }
 
     /**
@@ -53,7 +54,7 @@ public class MainMenu extends javax.swing.JFrame {
     private Player iniPlayer() {
         Random random = new Random();
         String id = Integer.toString(random.nextInt(10000));
-        return new Player(id);
+        return new Player("Guest" +id);
     }
     
     /**
@@ -85,8 +86,6 @@ public class MainMenu extends javax.swing.JFrame {
         jMenuItemAbout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabelUserChange.setText("Guest");
 
         jLabelUser.setText("User:");
 
@@ -126,7 +125,7 @@ public class MainMenu extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabelUser)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabelUserChange)
+                .addComponent(jLabelUserChange, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(66, 66, 66)
@@ -142,9 +141,9 @@ public class MainMenu extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelUserChange)
-                    .addComponent(jLabelUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelUserChange, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelLogo, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -300,7 +299,10 @@ public class MainMenu extends javax.swing.JFrame {
     private String[] askCredentials() {
         String[] credentials = new String[2];
         credentials[0] = JOptionPane.showInputDialog("User:");
-        if(credentials[0] != null) credentials[1] = JOptionPane.showInputDialog("Password: ");
+        if(credentials[0] != null) {
+            credentials[1] = JOptionPane.showInputDialog("Password: ");
+            if(credentials[1] == null) return null;
+        }
         else return null;
         
         return credentials;
@@ -354,11 +356,17 @@ public class MainMenu extends javax.swing.JFrame {
     private void jButtonLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogInActionPerformed
         int result = -10;
         String[] credentials = askCredentials();
-        if(credentials != null) result = login(credentials[0], credentials[1]);
-        if(result == 1) JOptionPane.showConfirmDialog(rootPane, "Welcome Back! User Loged-In.", "Succed", JOptionPane.OK_CANCEL_OPTION);
-        else JOptionPane.showConfirmDialog(rootPane, "Wrong User and / or Password.", "Failed", JOptionPane.OK_CANCEL_OPTION);
+        if(credentials != null) {
+            result = login(credentials[0], credentials[1]);
+            if(result == 1) {
+                this.jLabelUserChange.setText(credentials[0]);
+                this.jButtonLogIn.setEnabled(false);
+                JOptionPane.showConfirmDialog(rootPane, "Welcome Back! User Loged-In.", "Succed", JOptionPane.OK_CANCEL_OPTION);
+            } else JOptionPane.showConfirmDialog(rootPane, "Wrong User and / or Password.", "Failed", JOptionPane.OK_CANCEL_OPTION);
+        } 
     }//GEN-LAST:event_jButtonLogInActionPerformed
 
+    // todo: delete me!. Testing.
     private static void round(Player o, Player a) {
         Checks.checks(o, "SU");
         Checks.checks(a, "SU");
@@ -444,8 +452,8 @@ public class MainMenu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-//                Runtime.getRuntime().addShutdownHook(new NetShutdownHook()); // todo: set it where it has to be.
-                 new MainMenu().setVisible(true);
+                Runtime.getRuntime().addShutdownHook(new NetShutdownHook()); // Will close possible opened connections on close.
+                new MainMenu().setVisible(true);
 //                new GameWindow(new Player("Mario"));
 
 //                System.out.println("Connection Opened");     

@@ -30,6 +30,19 @@ public class GameWindow extends javax.swing.JFrame {
     }
     
     /**
+     * Enables and disables the buttons and fields in the interface.
+     * @param isTurn 
+     */
+    private void manageTurn(boolean isTurn) {
+        boolean prevStatus = this.jButtonBet.isEnabled();
+        if(isTurn != prevStatus) { // Will improve performance time.
+            this.jTextFieldBetAmmount.setEnabled(isTurn);
+            this.jButtonBet.setEnabled(isTurn);
+            this.jButtonRetire.setEnabled(isTurn);
+        }
+    }
+    
+    /**
      * Does launch the secondary thread which retrieves all the information.
      * Will be repeated periodically every i seconds. Look doc to see its functions.
      */
@@ -39,6 +52,7 @@ public class GameWindow extends javax.swing.JFrame {
                 try {                
                     Checks.checks(PLAYER, REFERENCE); 
                     this.jLabelPhaseOutput.setText(Checks.getPhase());
+                    manageTurn(Checks.isTurn());
                     this.jLabelTurnOutput.setText(Boolean.toString(Checks.isTurn())); // fixme: set it to an icon. red | green dot.
                     Thread.sleep(1000);
                 } catch(InterruptedException ex) { ex.printStackTrace(); }

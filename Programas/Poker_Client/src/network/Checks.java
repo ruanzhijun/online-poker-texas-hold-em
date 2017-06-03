@@ -137,12 +137,15 @@ public class Checks {
      */
     public static void checks(Player player, String reference) {
         ArrayList data = Connection.information(reference, player.getID());
-        if(data.size() > 0) {
+        if(data != null && data.size() > 0) {
             phase = (String) data.get(0);
             turn = (boolean) data.get(1);
             
             action(player, reference);
-        } else { System.out.println("The game #" +reference +" does not exist."); };
+        } else { 
+            if(data.size() <= 0) System.out.println("The game #" +reference +" has not started yet. Wait please.");
+            else System.out.println("The game #" +reference +" does not exist.");
+        };
     }
 
     /**

@@ -132,7 +132,7 @@ public class Connection {
     /**
      * Retrieving information on the current game. Will be executed periodically in a separated thread.
      * @param reference String. Games ID we want to obtain information on.
-     * @return AL. If length == 0 the game does not exist. Otherwise [0] = Current phase of the game. [1] = Players turn to talk (ID).
+     * @return AL. Null - game does not exist. AL.size() == 0 the game has not started; Waiting for all players. Otherwise [0] = Current phase of the game. [1] = Players turn to talk (ID).
      */
     public static ArrayList information(String reference, String id) {
         ArrayList inf = new ArrayList<>();
@@ -145,15 +145,18 @@ public class Connection {
             
             boolean exists = ois.readBoolean();
             if(exists) {
-                oos.writeUTF(id);
-                oos.flush();
-                
-                inf.add(ois.readUTF()); //Current Phase.
-                inf.add(ois.readBoolean()); // Players turn (ID).
+                boolean hasStarted = ois.readBoolean();
+                if(hasStarted) {
+                    oos.writeUTF(id);
+                    oos.flush();
+
+                    inf.add(ois.readUTF()); //Current Phase.
+                    inf.add(ois.readBoolean()); // Players turn (ID).
+                } else return inf;
             }
 
             close();
-            return inf;
+            return null;
         } catch(IOException ex) { ex.printStackTrace(); }
         
         return null;

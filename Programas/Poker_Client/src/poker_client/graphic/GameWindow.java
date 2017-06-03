@@ -29,8 +29,19 @@ public class GameWindow extends javax.swing.JFrame {
         launchInfoThread();
     }
     
+    /**
+     * Does launch the secondary thread which retrieves all the information.
+     * Will be repeated periodically every i seconds. Look doc to see its functions.
+     */
     private void launchInfoThread() {
-        Runnable task = () -> { Checks.checks(PLAYER, REFERENCE); };
+        Runnable task = () -> { 
+            while(true) {
+                try {                
+                    Checks.checks(PLAYER, REFERENCE); 
+                    Thread.sleep(1000);
+                } catch(InterruptedException ex) { ex.printStackTrace(); }
+            }
+        };
         new Thread(task).start();
     }
     

@@ -31,10 +31,14 @@ public class Menu {
         boolean exists = Games.checkGameExists(reference);
         Connection.sendResult(exists);
         if(exists) {
-            String id = Connection.getID();
-            String phase = Games.getPhase(reference);
-            boolean speaks = Games.isPlayersTurn(reference, id);
-            Connection.sendThreadInformation(phase, speaks);
+            boolean started = Games.checkGameStarted(reference);
+            Connection.sendResult(started);
+            if(started) {
+                String id = Connection.getID();
+                String phase = Games.getPhase(reference);
+                boolean speaks = Games.isPlayersTurn(reference, id);
+                Connection.sendThreadInformation(phase, speaks);
+            }
         }
     }
     

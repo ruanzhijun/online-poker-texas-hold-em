@@ -21,6 +21,19 @@ public class Games {
     }
     
     /**
+     * Checks wether the referenced game has started.
+     * @param reference Reference of the game to check.
+     * @return Bool. True if the game is started. False if does not exist or has not started yet.
+     */
+    public static boolean checkGameStarted(String reference) {
+        Game game;
+        if(checkGameExists(reference)) {
+            game = (Game) GAMES.get(reference);
+            return game.isStarted();
+        } else return false;
+    }
+    
+    /**
      * Checks if the game with the specified reference exists.
      * If it does, returns it.
      * @param reference Reference of the game to check.

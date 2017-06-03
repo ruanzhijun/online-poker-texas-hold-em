@@ -142,10 +142,7 @@ public class Checks {
             turn = (boolean) data.get(1);
             
             action(player, reference);
-        } else { 
-            if(data.size() <= 0) System.out.println("The game #" +reference +" has not started yet. Wait please.");
-            else System.out.println("The game #" +reference +" does not exist.");
-        };
+        } else System.out.println("The game #" +reference +" has not started yet. Wait please.");
     }
 
     /**

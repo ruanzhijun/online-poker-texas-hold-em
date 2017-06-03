@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import javax.swing.JOptionPane;
 import network.Checks;
 import network.Connection;
@@ -29,7 +30,7 @@ import php.java.servlet.*;
 /**
  * Client's MainMenu Window.
  * @author Mario Codes
- * @version 0.0.3.1 Adding checks and so to get the winner of a match.
+ * @version 0.4 Adding the set of a random player when not login to use.
  */
 public class MainMenu extends javax.swing.JFrame {
     private Player player;
@@ -41,8 +42,20 @@ public class MainMenu extends javax.swing.JFrame {
     public MainMenu() {
         initComponents();
         setLocationRelativeTo(null);
+        
+        player = iniPlayer();
     }
 
+    /**
+     * Doing an ini of a random player into the system. If the user does not log-in this will be the ID used.
+     * @return Ini player with a random ID.
+     */
+    private Player iniPlayer() {
+        Random random = new Random();
+        String id = Integer.toString(random.nextInt(10000));
+        return new Player(id);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

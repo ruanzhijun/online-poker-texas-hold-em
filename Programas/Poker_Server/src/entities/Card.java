@@ -30,4 +30,26 @@ public class Card implements Serializable {
         
         return sb.toString();
     }
+    
+    /**
+     * @return the VALUE
+     */
+    public String getVALUE() {
+        String v = VALUE;
+        
+        switch(v) {
+            case "J": return "11";
+            case "Q": return "12";
+            case "K": return "13";
+            case "A": return "14";
+            default: return v;
+        }
+    }
+
+    /**
+     * @return the SUIT
+     */
+    public String getSUIT() {
+        return SUIT;
+    }
 }

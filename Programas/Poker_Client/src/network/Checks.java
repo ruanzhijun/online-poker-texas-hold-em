@@ -13,6 +13,7 @@ public class Checks {
     private static String phase = ""; // Phase the game is currently at. Will get updated by the thread.
     private static boolean turn = false, getChips = true; // Is this player turn?; Did this player won and already got the chips?
     private static int pool; // Common pool of bets to update the info to the client.
+    
     /**
      * Check to see if the player does need its cards or he has them already.
      * @param cards Cards to be checked.

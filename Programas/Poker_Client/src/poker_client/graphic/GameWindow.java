@@ -14,7 +14,6 @@ import network.Checks;
 public class GameWindow extends javax.swing.JFrame {
     private final Player PLAYER;
     private final String REFERENCE;
-//    private static final Jugador JUGADOR = new Jugador();
     
     /**
      * Creates new form WindowJugador
@@ -51,8 +50,10 @@ public class GameWindow extends javax.swing.JFrame {
                 case "PreFlop":
                     showOwnCards();
                     break;
+                case "Flop": case "Turn": case "River":
+                    showTableCards();
                 default:
-                    break; // todo: add default case.
+                    break;
             }
         }
     } 
@@ -460,12 +461,13 @@ public class GameWindow extends javax.swing.JFrame {
     private void showCard(JLabel label, Card card) {
         String suit = card.getSUIT();
         int value = Integer.parseInt(card.getVALUE()); // Did the change of J = 11, Q = 12... in card getter.
-                
+        
         String imgName = "/imagenes/" +suit +"/" +suit +value +".png".trim();
-        label.setIcon(new javax.swing.ImageIcon(getClass().getResource(imgName)));
         
         /* Debug. Route to take the .png */
-//        System.out.println("Image Route: " +imgName);
+        System.out.println("Image Route: " +imgName);
+        
+        label.setIcon(new javax.swing.ImageIcon(getClass().getResource(imgName)));
     }
     
     private void showOwnCards() {
@@ -474,7 +476,16 @@ public class GameWindow extends javax.swing.JFrame {
         showCard(jLabelCartaPropia4, cards.get(1));
     }
     
-    private void destaparComunes() {
+    private void showTableCards() {
+        ArrayList<Card> cards = PLAYER.getTableCards();
+        showCard(jLabelCartaMesa6, cards.get(0));
+        showCard(jLabelCartaMesa7, cards.get(1));
+        showCard(jLabelCartaMesa8, cards.get(2));
+        
+        int amount = cards.size();
+        if(amount == 4) showCard(jLabelCartaMesa9, cards.get(3));
+        if(amount >= 5) showCard(jLabelCartaMesa10, cards.get(4));
+        
 //        int cartas = JUGADOR.getMano().getCartas_mesa().size();
 //        System.out.println("Cartas Length: " +cartas);
 //        if(cartas == 3) {

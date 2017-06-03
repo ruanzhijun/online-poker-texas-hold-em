@@ -70,6 +70,7 @@ public class GameWindow extends javax.swing.JFrame {
                     managePhases(Checks.getPhase());
                     this.jLabelPhaseOutput.setText(Checks.getPhase());
                     this.jLabelTurnOutput.setText(Boolean.toString(Checks.isTurn())); // fixme: set it to an icon. red | green dot.
+                    this.jLabelPoolComun.setText(Integer.toString(Checks.getPool()));
                     Thread.sleep(1000);
                 } catch(InterruptedException ex) { ex.printStackTrace(); }
             }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Checks {
     private static String phase = ""; // Phase the game is currently at. Will get updated by the thread.
     private static boolean turn = false, getChips = true; // Is this player turn?; Did this player won and already got the chips?
-    
+    private static int pool; // Common pool of bets to update the info to the client.
     /**
      * Check to see if the player does need its cards or he has them already.
      * @param cards Cards to be checked.
@@ -140,6 +140,7 @@ public class Checks {
         if(data != null && data.size() > 0) {
             phase = (String) data.get(0);
             turn = (boolean) data.get(1);
+            pool = (int) data.get(2);
             
             action(player, reference);
         } else System.out.println("The game #" +reference +" has not started yet. Wait please.");
@@ -157,5 +158,12 @@ public class Checks {
      */
     public static String getPhase() {
         return phase;
+    }
+
+    /**
+     * @return the pool
+     */
+    public static int getPool() {
+        return pool;
     }
 }

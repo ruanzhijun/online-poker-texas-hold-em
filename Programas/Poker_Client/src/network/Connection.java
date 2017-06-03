@@ -150,8 +150,9 @@ public class Connection {
                     oos.writeUTF(id);
                     oos.flush();
 
-                    inf.add(ois.readUTF()); //Current Phase.
+                    inf.add(ois.readUTF()); // Current Phase.
                     inf.add(ois.readBoolean()); // Players turn (ID).
+                    inf.add(ois.readInt()); // Common pool amount.
                 }
             }
 

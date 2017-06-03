@@ -7,21 +7,31 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import network.Checks;
 
 
 public class GameWindow extends javax.swing.JFrame {
     private final Player PLAYER;
+    private final String REFERENCE;
 //    private static final Jugador JUGADOR = new Jugador();
     
     /**
      * Creates new form WindowJugador
      */
-    public GameWindow(Player player) {
+    public GameWindow(Player player, String reference) {
         initComponents();
         PLAYER = player;
+        REFERENCE = reference;
         
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+        
+        launchInfoThread();
+    }
+    
+    private void launchInfoThread() {
+        Runnable task = () -> { Checks.checks(PLAYER, REFERENCE); };
+        new Thread(task).start();
     }
     
     /**

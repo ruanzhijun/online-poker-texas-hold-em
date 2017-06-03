@@ -255,7 +255,7 @@ public class MainMenu extends javax.swing.JFrame {
                 if(result == 1) {
                     JOptionPane.showMessageDialog(rootPane, "The game will start when all the players have joined. Please wait patiently.", "Information", JOptionPane.OK_CANCEL_OPTION);
                     this.dispose();
-                    new GameWindow(player);
+                    new GameWindow(player, ref);
                 }
             }
         }

@@ -280,15 +280,33 @@ public class MainMenu extends javax.swing.JFrame {
         joinGame();
     }//GEN-LAST:event_jButtonJoinGameActionPerformed
 
-    private void login() {
+    /**
+     * Asking the user for the credentials to Log-In.
+     * @return String[]. [1] = User, [2] = Pwd. Null = Cancelled by user.
+     */
+    private String[] askCredentials() {
+        String[] credentials = new String[2];
+        credentials[0] = JOptionPane.showInputDialog("User:");
+        if(credentials[0] != null) credentials[1] = JOptionPane.showInputDialog("Password: ");
+        else return null;
+        
+        return credentials;
+    }
+    
+    /**
+     * Log-In into the game with an username and password.
+     *  The credentials will be checked by a script in my web page.
+     * @return Int. 1 = correct credentials. -1 = wrong user or pwd.
+     */
+    private int login(String user, String pwd) {
         try {
             HttpClient httpclient = HttpClients.createDefault();
             HttpPost httppost = new HttpPost("http://mariocodes.com/php/login_java.php");
 
             // Request parameters and other properties.
             List<NameValuePair> params = new ArrayList<NameValuePair>(1);
-            params.add(new BasicNameValuePair("username", "mari"));
-             params.add(new BasicNameValuePair("password", "mario"));
+            params.add(new BasicNameValuePair("username", user));
+             params.add(new BasicNameValuePair("password", pwd));
             httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
 
             //Execute and get the response.
@@ -304,7 +322,7 @@ public class MainMenu extends javax.swing.JFrame {
                         s += (char) i;
                     }
                     
-                    System.out.println("Answer: " +s);
+                    return Integer.parseInt(s);
                 } finally {
                     instream.close();
                 }
@@ -312,10 +330,20 @@ public class MainMenu extends javax.swing.JFrame {
         } catch(Exception ex) {
             ex.printStackTrace();
         }
+        
+        return -2;
     }
     
+    /**
+     * Complete action to log-in a player into the system.
+     * @param evt 
+     */
     private void jButtonLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogInActionPerformed
-        login();
+        int result = -10;
+        String[] credentials = askCredentials();
+        if(credentials != null) result = login(credentials[0], credentials[1]);
+        if(result == 1) JOptionPane.showConfirmDialog(rootPane, "Welcome Back! User Loged-In.", "Succed", JOptionPane.OK_CANCEL_OPTION);
+        else JOptionPane.showConfirmDialog(rootPane, "Wrong User and / or Password.", "Failed", JOptionPane.OK_CANCEL_OPTION);
     }//GEN-LAST:event_jButtonLogInActionPerformed
 
     private static void round(Player o, Player a) {

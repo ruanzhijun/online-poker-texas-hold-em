@@ -37,7 +37,8 @@ public class Menu {
                 String id = Connection.getID();
                 String phase = Games.getPhase(reference);
                 boolean speaks = Games.isPlayersTurn(reference, id);
-                Connection.sendThreadInformation(phase, speaks);
+                int pool = Games.getPool(reference);
+                Connection.sendThreadInformation(phase, speaks, pool);
             }
         }
     }

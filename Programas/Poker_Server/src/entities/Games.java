@@ -97,6 +97,12 @@ public class Games {
         return result;
     }
     
+    public static int getPool(String reference) {
+        Game game = getGame(reference);
+        if(game != null) return game.getChips();
+        else return -1;
+    }
+    
     /**
      * Checks inside the game specified, the user ID to see if it's this user's turn to speak.
      * @param reference Reference of the game we want to check.

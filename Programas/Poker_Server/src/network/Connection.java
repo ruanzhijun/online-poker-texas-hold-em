@@ -146,10 +146,11 @@ public class Connection {
      * @param phase Phase the game is currently at.
      * @param speaks Does this player speak now?
      */
-    public static void sendThreadInformation(String phase, boolean speaks) {
+    public static void sendThreadInformation(String phase, boolean speaks, int pool) {
         try {
             oos.writeUTF(phase);
             oos.writeBoolean(speaks);
+            oos.writeInt(pool);
             oos.flush();
         } catch(IOException ex) { ex.printStackTrace(); }
     }

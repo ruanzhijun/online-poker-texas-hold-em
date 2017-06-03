@@ -498,4 +498,11 @@ public class Game {
     public String getREFERENCE() {
         return REFERENCE;
     }
+
+    /**
+     * @return the chips
+     */
+    public int getChips() {
+        return chips;
+    }
 }

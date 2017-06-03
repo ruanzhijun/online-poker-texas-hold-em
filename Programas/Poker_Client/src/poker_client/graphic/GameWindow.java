@@ -5,6 +5,7 @@ import entities.Player;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import network.Checks;
@@ -42,6 +43,19 @@ public class GameWindow extends javax.swing.JFrame {
         }
     }
     
+    private void managePhases(String turn) {
+        String prevPhase = this.jLabelPhaseOutput.getText();
+        if(!turn.matches(prevPhase)) {
+            switch(turn) {
+                case "PreFlop":
+                    showOwnCards();
+                    break;
+                default:
+                    break; // todo: add default case.
+            }
+        }
+    } 
+    
     /**
      * Does launch the secondary thread which retrieves all the information.
      * Will be repeated periodically every i seconds. Look doc to see its functions.
@@ -50,9 +64,10 @@ public class GameWindow extends javax.swing.JFrame {
         Runnable task = () -> { 
             while(true) {
                 try {                
-                    Checks.checks(PLAYER, REFERENCE); 
-                    this.jLabelPhaseOutput.setText(Checks.getPhase());
+                    Checks.checks(PLAYER, REFERENCE);
                     manageTurn(Checks.isTurn());
+                    managePhases(Checks.getPhase());
+                    this.jLabelPhaseOutput.setText(Checks.getPhase());
                     this.jLabelTurnOutput.setText(Boolean.toString(Checks.isTurn())); // fixme: set it to an icon. red | green dot.
                     Thread.sleep(1000);
                 } catch(InterruptedException ex) { ex.printStackTrace(); }
@@ -438,25 +453,7 @@ public class GameWindow extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    /**
-     * Obtencion de las cartas propias exclusivas del Jugador.
-     */
-    private void getCartasPropias() {
-//        if(JUGADOR.getMano().getCartasPropias().isEmpty()) {
-//            JUGADOR.obtenerCartasPersonales();
-//            JUGADOR.verCartasPropias(); //fixme: Testeo. Sout Cartas. Borrar Cuando no sea necesario.
-//        }else System.out.println("Ya tienes tus cartas.");
-    }
-    
-    /**
-     * Obtencion de las Cartas Comunes a todos.
-     */
-    private void getCartasComunes() {
-//        JUGADOR.obtenerCartasComunes();
-//        JUGADOR.verCartasComunes(); //fixme: Testeo. Sout Cartas. Borrar Cuando no sea necesario.
-    }
-    
+      
     /**
      * Accion de apostar la cantidad que haya indicada.
      */
@@ -477,17 +474,21 @@ public class GameWindow extends javax.swing.JFrame {
 //        this.jLabelJugadaPropia.setText(jugada);
     }
     
-    private void destaparCarta(JLabel label, Card carta) {
-//        String palo = carta.getPALO();
-//        int valor = Jugadas.getValor(carta);
-//        String nombreIMG = "../imagenes/" +palo +"/" +palo +valor +".png".trim();
-//        System.out.println("Nombre de la imagen: " +nombreIMG);
-//        label.setIcon(new javax.swing.ImageIcon(getClass().getResource(nombreIMG)));
+    private void showCard(JLabel label, Card card) {
+        String suit = card.getSUIT();
+        int value = Integer.parseInt(card.getVALUE()); // Did the change of J = 11, Q = 12... in card getter.
+                
+        String imgName = "../imagenes/" +suit +"/" +suit +value +".png".trim();
+        
+        /* Debug. Route to take the .png */
+//        System.out.println("Image Route: " +imgName);
+        label.setIcon(new javax.swing.ImageIcon(getClass().getResource(imgName)));
     }
     
-    private void destaparPropias() {
-//        destaparCarta(jLabelCartaPropia1, JUGADOR.getMano().getCartasPropias().get(0));
-//        destaparCarta(jLabelCartaPropia2, JUGADOR.getMano().getCartasPropias().get(1));
+    private void showOwnCards() {
+        ArrayList<Card> cards = PLAYER.getOwnCards();
+        showCard(jLabelCartaPropia3, cards.get(0));
+        showCard(jLabelCartaPropia4, cards.get(1));
     }
     
     private void destaparComunes() {

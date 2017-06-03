@@ -101,6 +101,7 @@ public class GameWindow extends javax.swing.JFrame {
 
         jButtonRetire.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/chicken2.png"))); // NOI18N
         jButtonRetire.setText("Retire");
+        jButtonRetire.setEnabled(false);
         jButtonRetire.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRetireActionPerformed(evt);
@@ -108,6 +109,7 @@ public class GameWindow extends javax.swing.JFrame {
         });
 
         jButtonBet.setText("Bet");
+        jButtonBet.setEnabled(false);
         jButtonBet.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonBetActionPerformed(evt);
@@ -116,10 +118,11 @@ public class GameWindow extends javax.swing.JFrame {
 
         jTextFieldBetAmmount.setText("50");
         jTextFieldBetAmmount.setToolTipText("");
+        jTextFieldBetAmmount.setEnabled(false);
 
         jLabelPhaseTitle.setText("Phase:");
 
-        jLabelPhaseOutput.setText("(phase)");
+        jLabelPhaseOutput.setText("Not started");
 
         javax.swing.GroupLayout jPanelActionsLayout = new javax.swing.GroupLayout(jPanelActions);
         jPanelActions.setLayout(jPanelActionsLayout);
@@ -128,7 +131,9 @@ public class GameWindow extends javax.swing.JFrame {
             .addGroup(jPanelActionsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonRetire, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanelActionsLayout.createSequentialGroup()
+                        .addComponent(jButtonRetire, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanelActionsLayout.createSequentialGroup()
                         .addGroup(jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelActionsLayout.createSequentialGroup()
@@ -137,9 +142,9 @@ public class GameWindow extends javax.swing.JFrame {
                             .addGroup(jPanelActionsLayout.createSequentialGroup()
                                 .addComponent(jLabelPhaseTitle)
                                 .addGap(23, 23, 23)))
-                        .addGroup(jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabelPhaseOutput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonBet, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE))))
+                        .addGroup(jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelPhaseOutput, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonBet, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanelActionsLayout.setVerticalGroup(
@@ -248,7 +253,7 @@ public class GameWindow extends javax.swing.JFrame {
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(jLabelOwnChips)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         jPanelPlayerInfoLayout.setVerticalGroup(
             jPanelPlayerInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -264,10 +269,10 @@ public class GameWindow extends javax.swing.JFrame {
                     .addGroup(jPanelPlayerInfoLayout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(jLabelOwnChips, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 14, Short.MAX_VALUE))
         );
 
-        jPanelMain.add(jPanelPlayerInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 120, 120));
+        jPanelMain.add(jPanelPlayerInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 140, 130));
 
         jLabelCartaMesa6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/card_back.png"))); // NOI18N
 
@@ -299,15 +304,14 @@ public class GameWindow extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCommonCardsLayout.createSequentialGroup()
                 .addContainerGap(17, Short.MAX_VALUE)
                 .addGroup(jPanelCommonCardsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelCommonCardsLayout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jLabelCartaMesa6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelCommonCardsLayout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jLabelCartaMesa7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabelCartaMesa8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelCartaMesa9, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelCartaMesa10, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelCartaMesa10, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelCommonCardsLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addGroup(jPanelCommonCardsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelCartaMesa6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelCartaMesa7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(15, 15, 15))
         );
 
@@ -373,6 +377,7 @@ public class GameWindow extends javax.swing.JFrame {
         jMenuBar1.add(jMenuProperties);
 
         jMenuLeyend.setText("Leyend");
+        jMenuLeyend.setEnabled(false);
         jMenuBar1.add(jMenuLeyend);
 
         setJMenuBar(jMenuBar1);
@@ -546,8 +551,7 @@ public class GameWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRetireActionPerformed
 
     private void jMenuItemExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemExitActionPerformed
-//        Conexion.cerradoCabecerasConexion();
-//        this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_jMenuItemExitActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

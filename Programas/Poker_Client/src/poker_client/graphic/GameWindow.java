@@ -27,6 +27,7 @@ public class GameWindow extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         
+        jLabelOwnChips.setText(Integer.toString(PLAYER.getChips()));
         launchInfoThread();
     }
     
@@ -37,7 +38,7 @@ public class GameWindow extends javax.swing.JFrame {
     private void manageTurn(boolean isTurn) {
         boolean prevStatus = this.jButtonBet.isEnabled();
         if(isTurn != prevStatus) { // Will improve performance time.
-            this.jTextFieldBetAmmount.setEnabled(isTurn);
+            this.jSpinnerBetAmount.setEnabled(isTurn);
             this.jButtonBet.setEnabled(isTurn);
             this.jButtonRetire.setEnabled(isTurn);
         }
@@ -99,9 +100,9 @@ public class GameWindow extends javax.swing.JFrame {
         jPanelActions = new javax.swing.JPanel();
         jButtonRetire = new javax.swing.JButton();
         jButtonBet = new javax.swing.JButton();
-        jTextFieldBetAmmount = new javax.swing.JTextField();
         jLabelPhaseTitle = new javax.swing.JLabel();
         jLabelPhaseOutput = new javax.swing.JLabel();
+        jSpinnerBetAmount = new javax.swing.JSpinner();
         jPanelLegacy = new javax.swing.JPanel();
         jButtonGanador = new javax.swing.JButton();
         jButtonEnviar = new javax.swing.JButton();
@@ -170,13 +171,12 @@ public class GameWindow extends javax.swing.JFrame {
             }
         });
 
-        jTextFieldBetAmmount.setText("50");
-        jTextFieldBetAmmount.setToolTipText("");
-        jTextFieldBetAmmount.setEnabled(false);
-
         jLabelPhaseTitle.setText("Phase:");
 
         jLabelPhaseOutput.setText("Not started");
+
+        jSpinnerBetAmount.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), null, null, Integer.valueOf(5)));
+        jSpinnerBetAmount.setEnabled(false);
 
         javax.swing.GroupLayout jPanelActionsLayout = new javax.swing.GroupLayout(jPanelActions);
         jPanelActions.setLayout(jPanelActionsLayout);
@@ -185,21 +185,16 @@ public class GameWindow extends javax.swing.JFrame {
             .addGroup(jPanelActionsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelActionsLayout.createSequentialGroup()
-                        .addComponent(jButtonRetire, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jButtonRetire, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelActionsLayout.createSequentialGroup()
                         .addGroup(jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelActionsLayout.createSequentialGroup()
-                                .addComponent(jTextFieldBetAmmount)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                            .addGroup(jPanelActionsLayout.createSequentialGroup()
-                                .addComponent(jLabelPhaseTitle)
-                                .addGap(23, 23, 23)))
+                            .addComponent(jLabelPhaseTitle)
+                            .addComponent(jSpinnerBetAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelPhaseOutput, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonBet, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelActionsLayout.setVerticalGroup(
             jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,10 +206,10 @@ public class GameWindow extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonBet)
-                    .addComponent(jTextFieldBetAmmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSpinnerBetAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButtonRetire)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         jPanelMain.add(jPanelActions, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 60, 170, 170));
@@ -454,20 +449,6 @@ public class GameWindow extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-      
-    /**
-     * Accion de apostar la cantidad que haya indicada.
-     */
-    private void apostar() {
-//        int pool = JUGADOR.apostar(Integer.parseInt(jTextField1.getText()));
-//
-//        if(pool != -1) {
-//            if(pool != -2) {
-//                this.jLabelPoolComun.setText(Integer.toString(pool));
-//                this.jLabelFichasPropias.setText(Integer.toString(JUGADOR.getFichas()));
-//            } else  System.out.println("Obviamente no puedes apostar fichas que no tienes...");
-//        } else System.out.println("No es momento de apostar.");
-    }
     
     private void comprobarJugada() {
 //        Jugadas.checkJugada(JUGADOR.getMano().getCartasPropias(), JUGADOR.getMano().getCartas_mesa());
@@ -525,8 +506,20 @@ public class GameWindow extends javax.swing.JFrame {
     private void jButtonDestaparPropiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDestaparPropiasActionPerformed
     }//GEN-LAST:event_jButtonDestaparPropiasActionPerformed
 
+    /**
+     * Complete action to bet. Gets the value from the jSpinner.
+     * @return Int. Total pool after the bet has been added.
+     */
+    private int bet() {
+        int amount = (int) jSpinnerBetAmount.getValue();
+        int pool = PLAYER.bet(REFERENCE, amount);
+        return pool;
+    }
+    
     private void jButtonBetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBetActionPerformed
-//        apostar();
+        int pool = bet();
+        this.jLabelOwnChips.setText(Integer.toString(PLAYER.getChips()));
+        this.jLabelPoolComun.setText(Integer.toString(pool));
     }//GEN-LAST:event_jButtonBetActionPerformed
 
     private void jButtonDestaparComunesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDestaparComunesActionPerformed
@@ -634,6 +627,6 @@ public class GameWindow extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelMain;
     private javax.swing.JPanel jPanelPlayerInfo;
     private javax.swing.JPanel jPanelPrivateCards;
-    private javax.swing.JTextField jTextFieldBetAmmount;
+    private javax.swing.JSpinner jSpinnerBetAmount;
     // End of variables declaration//GEN-END:variables
 }

@@ -38,6 +38,8 @@ public class GameWindow extends javax.swing.JFrame {
             while(true) {
                 try {                
                     Checks.checks(PLAYER, REFERENCE); 
+                    this.jLabelPhaseOutput.setText(Checks.getPhase());
+                    this.jLabelTurnOutput.setText(Boolean.toString(Checks.isTurn())); // fixme: set it to an icon. red | green dot.
                     Thread.sleep(1000);
                 } catch(InterruptedException ex) { ex.printStackTrace(); }
             }
@@ -91,6 +93,8 @@ public class GameWindow extends javax.swing.JFrame {
         jPanelPrivateCards = new javax.swing.JPanel();
         jLabelCartaPropia3 = new javax.swing.JLabel();
         jLabelCartaPropia4 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabelTurnOutput = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuProperties = new javax.swing.JMenu();
         jMenuItemLeaveGame = new javax.swing.JMenuItem();
@@ -382,6 +386,10 @@ public class GameWindow extends javax.swing.JFrame {
 
         jPanelMain.add(jPanelCards, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 570, 240));
 
+        jLabel1.setText("Turn");
+        jPanelMain.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, -1, -1));
+        jPanelMain.add(jLabelTurnOutput, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, 60, 20));
+
         jMenuProperties.setText("Properties");
 
         jMenuItemLeaveGame.setText("Leave Game");
@@ -582,6 +590,7 @@ public class GameWindow extends javax.swing.JFrame {
     private javax.swing.JButton jButtonEnviar;
     private javax.swing.JButton jButtonGanador;
     private javax.swing.JButton jButtonRetire;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelCartaMesa10;
     private javax.swing.JLabel jLabelCartaMesa6;
@@ -599,6 +608,7 @@ public class GameWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelPhaseOutput;
     private javax.swing.JLabel jLabelPhaseTitle;
     private javax.swing.JLabel jLabelPoolComun;
+    private javax.swing.JLabel jLabelTurnOutput;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItemExit;
     private javax.swing.JMenuItem jMenuItemLeaveGame;

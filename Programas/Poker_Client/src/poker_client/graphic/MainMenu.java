@@ -223,7 +223,7 @@ public class MainMenu extends javax.swing.JFrame {
         switch(result) {
             case 1:
                 JOptionPane.showConfirmDialog(rootPane, "Game created correctly.", "Result", JOptionPane.OK_CANCEL_OPTION);
-                break; // todo: close this window and open the game one.
+                break;
             case 0:
                 JOptionPane.showConfirmDialog(rootPane, "Internal error. Please try again.", "Result", JOptionPane.OK_CANCEL_OPTION);
                 break;

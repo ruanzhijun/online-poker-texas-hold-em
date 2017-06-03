@@ -313,6 +313,7 @@
             <Component class="javax.swing.JButton" name="jButtonDestaparPropias">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Destapar Propias"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonDestaparPropiasActionPerformed"/>

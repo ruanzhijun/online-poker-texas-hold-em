@@ -243,6 +243,7 @@ public class GameWindow extends javax.swing.JFrame {
         });
 
         jButtonDestaparPropias.setText("Destapar Propias");
+        jButtonDestaparPropias.setEnabled(false);
         jButtonDestaparPropias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonDestaparPropiasActionPerformed(evt);
@@ -478,11 +479,11 @@ public class GameWindow extends javax.swing.JFrame {
         String suit = card.getSUIT();
         int value = Integer.parseInt(card.getVALUE()); // Did the change of J = 11, Q = 12... in card getter.
                 
-        String imgName = "../imagenes/" +suit +"/" +suit +value +".png".trim();
+        String imgName = "/imagenes/" +suit +"/" +suit +value +".png".trim();
+        label.setIcon(new javax.swing.ImageIcon(getClass().getResource(imgName)));
         
         /* Debug. Route to take the .png */
 //        System.out.println("Image Route: " +imgName);
-        label.setIcon(new javax.swing.ImageIcon(getClass().getResource(imgName)));
     }
     
     private void showOwnCards() {
@@ -522,9 +523,6 @@ public class GameWindow extends javax.swing.JFrame {
     }
     
     private void jButtonDestaparPropiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDestaparPropiasActionPerformed
-//        getCartasPropias();
-//        comprobarJugada();
-//        destaparPropias();
     }//GEN-LAST:event_jButtonDestaparPropiasActionPerformed
 
     private void jButtonBetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBetActionPerformed

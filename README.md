@@ -85,6 +85,7 @@ The sending order is specified __from the point of view of a _Client_ to the _Se
 * O. Int. Menu option.
 * O. String. Game reference.
 * I. Bool. Does game exist?.
+* I. Bool. Has the game started? -> Important to the player which creates the game.
 * O. String. Player's ID.
 * I. String. Game's phase (State machine).
 * I. Bool. Is this player's turn?.

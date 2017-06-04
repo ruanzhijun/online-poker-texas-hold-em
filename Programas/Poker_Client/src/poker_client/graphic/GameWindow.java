@@ -49,13 +49,14 @@ public class GameWindow extends javax.swing.JFrame {
         if(!turn.matches(prevPhase) || turn.matches("River")) {
             switch(turn) {
                 case "PreFlop":
+                    Checks.setShowed(false);
                     showOwnCards();
                     break;
                 case "Flop": case "Turn":
                     showTableCards();
                     break;
                 case "River":
-                    showTableCards();
+                    if(!turn.matches(prevPhase)) showTableCards();
                     ArrayList info = Checks.checksEndRound(REFERENCE, PLAYER);
                     showWinner(info);
                     break;
@@ -66,15 +67,19 @@ public class GameWindow extends javax.swing.JFrame {
     } 
     
     private void showWinner(ArrayList info) {
-        if(info != null && info.size() > 0) {
+        if(info != null && info.size() > 0 && !Checks.isShowed()) {
             String idWinner = (String) info.get(0);
             String play = (String) info.get(1);
             int pool = (int) info.get(2); 
             
-            if(idWinner.contains(PLAYER.getID())) JOptionPane.showMessageDialog(rootPane, "You won this round! You have won " +pool +" chips.");
-            else JOptionPane.showMessageDialog(rootPane, "The winner is " +idWinner +", with " +play);
+            if(idWinner.contains(PLAYER.getID())) JOptionPane.showMessageDialog(rootPane, "You won this round! You have won " +pool +" chips. Next round will start in 5 seconds.");
+            else JOptionPane.showMessageDialog(rootPane, "The winner is " +idWinner +", with " +play +". Next round will start in 5 seconds.");
             
             this.jLabelOwnChips.setText(Integer.toString(PLAYER.getChips()));
+            
+            resetCards();
+            PLAYER.reset();
+            Checks.setShowed(true);
         }
     }
     
@@ -472,12 +477,6 @@ public class GameWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    private void comprobarJugada() {
-//        Jugadas.checkJugada(JUGADOR.getMano().getCartasPropias(), JUGADOR.getMano().getCartas_mesa());
-//        String jugada = Jugadas.jugada;
-//        this.jLabelJugadaPropia.setText(jugada);
-    }
-    
     private void showCard(JLabel label, Card card) {
         String suit = card.getSUIT();
         int value = Integer.parseInt(card.getVALUE()); // Did the change of J = 11, Q = 12... in card getter.
@@ -505,19 +504,6 @@ public class GameWindow extends javax.swing.JFrame {
         int amount = cards.size();
         if(amount == 4) showCard(jLabelCartaMesa9, cards.get(3));
         if(amount >= 5) showCard(jLabelCartaMesa10, cards.get(4));
-        
-//        int cartas = JUGADOR.getMano().getCartas_mesa().size();
-//        System.out.println("Cartas Length: " +cartas);
-//        if(cartas == 3) {
-//            destaparCarta(jLabelCartaMesa1, JUGADOR.getMano().getCartas_mesa().get(0));
-//            destaparCarta(jLabelCartaMesa2, JUGADOR.getMano().getCartas_mesa().get(1));
-//            destaparCarta(jLabelCartaMesa3, JUGADOR.getMano().getCartas_mesa().get(2));
-//        } else {
-//            if(cartas == 4) destaparCarta(jLabelCartaMesa4, JUGADOR.getMano().getCartas_mesa().get(3));
-//            else {
-//                if(cartas == 5) destaparCarta(jLabelCartaMesa5, JUGADOR.getMano().getCartas_mesa().get(4));
-//            }
-//        }
     }
     
     private void resetCard(JLabel label) {
@@ -555,34 +541,12 @@ public class GameWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBetActionPerformed
 
     private void jButtonDestaparComunesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDestaparComunesActionPerformed
-//        getCartasComunes();
-//        comprobarJugada();
-//        destaparComunes();
     }//GEN-LAST:event_jButtonDestaparComunesActionPerformed
 
     private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
-//        JUGADOR.enviarJugada();
     }//GEN-LAST:event_jButtonEnviarActionPerformed
    
     private void jButtonGanadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGanadorActionPerformed
-//        cubrirCartas();
-//        int ganancias = JUGADOR.getWinner();
-//        if(ganancias == -2) {
-//            JOptionPane.showMessageDialog(this, "Te has quedado sin fichas y has sido eliminado.");
-//            jButton1.setEnabled(false);
-//            jButton2.setEnabled(false);
-//            jButton3.setEnabled(false);
-//            jButton4.setEnabled(false);
-//            jButton5.setEnabled(false);
-//            jButton6.setEnabled(false);
-//            jTextField1.setEnabled(false);
-//        }
-//        else {
-//            jLabelFichasPropias.setText(Integer.toString(ganancias));
-//            jLabelPoolComun.setText("");
-//            jLabelJugadaPropia.setText("");
-//            JUGADOR.finRonda();
-//        }
     }//GEN-LAST:event_jButtonGanadorActionPerformed
 
     private void retirarse() {
@@ -601,15 +565,6 @@ public class GameWindow extends javax.swing.JFrame {
     }
     
     private void esperarFinRonda(java.awt.event.ActionEvent evt) {
-//        jButton2ActionPerformed(evt);
-//        
-//        jButton1.setEnabled(true);
-//        jButton2.setEnabled(true);
-//        jButton3.setEnabled(true);
-//        jButton4.setEnabled(true);
-//        jButton5.setEnabled(true);
-//        jButton6.setEnabled(true);
-//        jTextField1.setEnabled(true);
     }
     
     private void jButtonRetireActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRetireActionPerformed

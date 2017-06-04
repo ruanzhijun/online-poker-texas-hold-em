@@ -13,6 +13,7 @@ public class Checks {
     private static String phase = ""; // Phase the game is currently at. Will get updated by the thread.
     private static boolean turn = false, getChips = true; // Is this player turn?; Did this player won and already got the chips?
     private static int pool; // Common pool of bets to update the info to the client.
+    private static boolean showed = false; // Last resort, should change the way to do it.
     
     /**
      * Check to see if the player does need its cards or he has them already.
@@ -180,5 +181,19 @@ public class Checks {
      */
     public static boolean isGetChips() {
         return getChips;
+    }
+
+    /**
+     * @return the showed
+     */
+    public static boolean isShowed() {
+        return showed;
+    }
+
+    /**
+     * @param aShowed the showed to set
+     */
+    public static void setShowed(boolean aShowed) {
+        showed = aShowed;
     }
 }

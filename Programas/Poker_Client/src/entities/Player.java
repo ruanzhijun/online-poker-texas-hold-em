@@ -23,6 +23,10 @@ public class Player {
         this.ID = ID;
     }
     
+    public void reset() {
+        hand.clean();
+    }
+    
     /**
      * Bets an amount of chips and adds them to the common pool.
      * @param reference Reference of the game the player is playing.

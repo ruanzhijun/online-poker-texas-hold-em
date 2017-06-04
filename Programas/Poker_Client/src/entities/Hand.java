@@ -33,8 +33,9 @@ public class Hand {
      * To do when starting a new round.
      */
     void clean() {
-        own = new ArrayList<>();
-        table = new ArrayList<>();
+        own.clear();
+        table.clear();
+        System.out.println("RESET");
     }
     
     /**

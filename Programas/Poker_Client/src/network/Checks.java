@@ -133,7 +133,7 @@ public class Checks {
                 getTableCards(player, player.getTableCards(), reference, 4);
                 break;
             case "River":
-                getTableCards(player, player.getTableCards(), reference, 5);
+                if(!showed) getTableCards(player, player.getTableCards(), reference, 5);
                 break;
         }
     }

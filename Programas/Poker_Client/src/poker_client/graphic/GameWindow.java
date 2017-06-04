@@ -497,6 +497,8 @@ public class GameWindow extends javax.swing.JFrame {
     
     private void showTableCards() {
         ArrayList<Card> cards = PLAYER.getTableCards();
+        System.out.println("Tamaño: " +cards.size());
+        
         showCard(jLabelCartaMesa6, cards.get(0));
         showCard(jLabelCartaMesa7, cards.get(1));
         showCard(jLabelCartaMesa8, cards.get(2));

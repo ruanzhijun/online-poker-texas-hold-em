@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import network.Checks;
 
@@ -55,13 +56,27 @@ public class GameWindow extends javax.swing.JFrame {
                     break;
                 case "River":
                     showTableCards();
-                    Checks.checksEndRound(REFERENCE, PLAYER);
+                    ArrayList info = Checks.checksEndRound(REFERENCE, PLAYER);
+                    showWinner(info);
                     break;
                 default:
                     break;
             }
         }
     } 
+    
+    private void showWinner(ArrayList info) {
+        if(info != null && info.size() > 0) {
+            String idWinner = (String) info.get(0);
+            String play = (String) info.get(1);
+            int pool = (int) info.get(2); 
+            
+            if(idWinner.contains(PLAYER.getID())) JOptionPane.showMessageDialog(rootPane, "You won this round! You have won " +pool +" chips.");
+            else JOptionPane.showMessageDialog(rootPane, "The winner is " +idWinner +", with " +play);
+            
+            this.jLabelOwnChips.setText(Integer.toString(PLAYER.getChips()));
+        }
+    }
     
     /**
      * Does launch the secondary thread which retrieves all the information.

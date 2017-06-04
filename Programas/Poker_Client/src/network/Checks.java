@@ -101,6 +101,13 @@ public class Checks {
         return retired;
     }
     
+    /**
+     * Complete action to check the end of a round.
+     * Gets the winner and takes out a player when he cannot longer play.
+     * @param reference Reference of the game.
+     * @param player ID of the player.
+     * @return AL with winner's info. [0] = Str. ID of the player. [1] = Str. Name of the play achieved. [2] = int. Number of chips won; It equals the total pool. 
+     */
     public static ArrayList checksEndRound(String reference, Player player) {
         ArrayList results = getWinner(reference, player);
         retirePlayer(player);

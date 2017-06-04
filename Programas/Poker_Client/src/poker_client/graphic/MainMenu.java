@@ -91,6 +91,9 @@ public class MainMenu extends javax.swing.JFrame {
 
         jLabelUser.setText("User:");
 
+        jLabelLogo.setFont(new java.awt.Font("Dialog", 3, 36)); // NOI18N
+        jLabelLogo.setText("Texas Hold'EM");
+
         jButtonNewGame.setText("New Game");
         jButtonNewGame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -123,32 +126,33 @@ public class MainMenu extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabelUser)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabelUserChange, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(66, 66, 66)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButtonExit, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonJoinGame, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonNewGame, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelUser)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelUserChange, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButtonExit, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonJoinGame, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonNewGame, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(59, 59, 59))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelUserChange, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelLogo, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabelUserChange, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelUser, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelLogo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonNewGame)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonJoinGame)
@@ -156,7 +160,7 @@ public class MainMenu extends javax.swing.JFrame {
                 .addComponent(jButtonLogIn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonExit)
-                .addGap(12, 12, 12))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         jMenuAplication.setText("Aplication");
@@ -261,19 +265,11 @@ public class MainMenu extends javax.swing.JFrame {
         }
     }
     
-    private void jButtonNewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewGameActionPerformed
-        createGame();
-    }//GEN-LAST:event_jButtonNewGameActionPerformed
-
     private void jMenuItemOpenWebActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemOpenWebActionPerformed
         try {
             Desktop.getDesktop().browse(new URI("http://mariocodes.com/proyectos/poker-java"));
         } catch(IOException | URISyntaxException ex) { ex.printStackTrace(); }
     }//GEN-LAST:event_jMenuItemOpenWebActionPerformed
-
-    private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_jButtonExitActionPerformed
 
     private void outputJoinGame(int result) {
         switch(result) {
@@ -312,10 +308,6 @@ public class MainMenu extends javax.swing.JFrame {
         }
     }
     
-    private void jButtonJoinGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonJoinGameActionPerformed
-        joinGame();
-    }//GEN-LAST:event_jButtonJoinGameActionPerformed
-
     /**
      * Asking the user for the credentials to Log-In.
      * @return String[]. [1] = User, [2] = Pwd. Null = Cancelled by user.
@@ -373,23 +365,6 @@ public class MainMenu extends javax.swing.JFrame {
         return -2;
     }
     
-    /**
-     * Complete action to log-in a player into the system.
-     * @param evt 
-     */
-    private void jButtonLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogInActionPerformed
-        int result = -10;
-        String[] credentials = askCredentials();
-        if(credentials != null) {
-            result = login(credentials[0], credentials[1]);
-            if(result == 1) {
-                this.jLabelUserChange.setText(credentials[0]);
-                this.jButtonLogIn.setEnabled(false);
-                JOptionPane.showConfirmDialog(rootPane, "Welcome Back! User Loged-In.", "Succed", JOptionPane.OK_CANCEL_OPTION);
-            } else JOptionPane.showConfirmDialog(rootPane, "Wrong User and / or Password.", "Failed", JOptionPane.OK_CANCEL_OPTION);
-        } 
-    }//GEN-LAST:event_jButtonLogInActionPerformed
-
     private void jMenuItemSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSignUpActionPerformed
         try {
             Desktop.getDesktop().browse(new URI("http://mariocodes.com/proyectos/poker-java/sign-up"));
@@ -401,6 +376,36 @@ public class MainMenu extends javax.swing.JFrame {
             Desktop.getDesktop().browse(new URI("https://en.wikipedia.org/wiki/Texas_hold_%27em#Rules"));
         } catch(IOException | URISyntaxException ex) { ex.printStackTrace(); }
     }//GEN-LAST:event_jMenuItemRulesActionPerformed
+
+    private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jButtonExitActionPerformed
+
+    /**
+     * Complete action to log-in a player into the system.
+     * @param evt 
+     */
+    private void jButtonLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogInActionPerformed
+        int result = -10;
+        String[] credentials = askCredentials();
+        if(credentials != null) {
+            result = login(credentials[0], credentials[1]);
+            if(result == 1) {
+                this.jLabelUserChange.setText(credentials[0]);
+                player = new Player(jLabelUserChange.getText());
+                this.jButtonLogIn.setEnabled(false);
+                JOptionPane.showConfirmDialog(rootPane, "Welcome Back! User Loged-In.", "Succed", JOptionPane.OK_CANCEL_OPTION);
+            } else JOptionPane.showConfirmDialog(rootPane, "Wrong User and / or Password.", "Failed", JOptionPane.OK_CANCEL_OPTION);
+        }
+    }//GEN-LAST:event_jButtonLogInActionPerformed
+
+    private void jButtonJoinGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonJoinGameActionPerformed
+        joinGame();
+    }//GEN-LAST:event_jButtonJoinGameActionPerformed
+
+    private void jButtonNewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewGameActionPerformed
+        createGame();
+    }//GEN-LAST:event_jButtonNewGameActionPerformed
 
     // todo: delete me!. Testing.
     private static void round(Player o, Player a) {

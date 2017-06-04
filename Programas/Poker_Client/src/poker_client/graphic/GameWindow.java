@@ -40,7 +40,7 @@ public class GameWindow extends javax.swing.JFrame {
         if(isTurn != prevStatus) { // Will improve performance time.
             this.jSpinnerBetAmount.setEnabled(isTurn);
             this.jButtonBet.setEnabled(isTurn);
-            this.jButtonRetire.setEnabled(isTurn);
+            this.jButtonPass.setEnabled(isTurn);
         }
     }
     
@@ -125,11 +125,11 @@ public class GameWindow extends javax.swing.JFrame {
         jLabelConnectionTitle = new javax.swing.JLabel();
         jLabelConnectionStatus = new javax.swing.JLabel();
         jPanelActions = new javax.swing.JPanel();
-        jButtonRetire = new javax.swing.JButton();
         jButtonBet = new javax.swing.JButton();
         jLabelPhaseTitle = new javax.swing.JLabel();
         jLabelPhaseOutput = new javax.swing.JLabel();
         jSpinnerBetAmount = new javax.swing.JSpinner();
+        jButtonPass = new javax.swing.JButton();
         jPanelLegacy = new javax.swing.JPanel();
         jButtonGanador = new javax.swing.JButton();
         jButtonEnviar = new javax.swing.JButton();
@@ -181,15 +181,6 @@ public class GameWindow extends javax.swing.JFrame {
 
         jPanelActions.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Actions", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
 
-        jButtonRetire.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/chicken2.png"))); // NOI18N
-        jButtonRetire.setText("Retire");
-        jButtonRetire.setEnabled(false);
-        jButtonRetire.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRetireActionPerformed(evt);
-            }
-        });
-
         jButtonBet.setText("Bet");
         jButtonBet.setEnabled(false);
         jButtonBet.addActionListener(new java.awt.event.ActionListener() {
@@ -202,8 +193,16 @@ public class GameWindow extends javax.swing.JFrame {
 
         jLabelPhaseOutput.setText("Not started");
 
-        jSpinnerBetAmount.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), null, null, Integer.valueOf(5)));
+        jSpinnerBetAmount.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(10), Integer.valueOf(1), null, Integer.valueOf(10)));
         jSpinnerBetAmount.setEnabled(false);
+
+        jButtonPass.setText("Pass");
+        jButtonPass.setEnabled(false);
+        jButtonPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPassActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelActionsLayout = new javax.swing.GroupLayout(jPanelActions);
         jPanelActions.setLayout(jPanelActionsLayout);
@@ -212,15 +211,13 @@ public class GameWindow extends javax.swing.JFrame {
             .addGroup(jPanelActionsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonRetire, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanelActionsLayout.createSequentialGroup()
-                        .addGroup(jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelPhaseTitle)
-                            .addComponent(jSpinnerBetAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelPhaseOutput, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonBet, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jLabelPhaseTitle)
+                    .addComponent(jSpinnerBetAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonPass, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelPhaseOutput, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonBet, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelActionsLayout.setVerticalGroup(
@@ -230,13 +227,13 @@ public class GameWindow extends javax.swing.JFrame {
                 .addGroup(jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelPhaseTitle)
                     .addComponent(jLabelPhaseOutput))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(jButtonPass)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelActionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonBet)
                     .addComponent(jSpinnerBetAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jButtonRetire)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addGap(14, 14, 14))
         );
 
         jPanelMain.add(jPanelActions, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 60, 170, 170));
@@ -499,11 +496,13 @@ public class GameWindow extends javax.swing.JFrame {
         ArrayList<Card> cards = PLAYER.getTableCards();
         System.out.println("Tamaño: " +cards.size());
         
-        showCard(jLabelCartaMesa6, cards.get(0));
-        showCard(jLabelCartaMesa7, cards.get(1));
-        showCard(jLabelCartaMesa8, cards.get(2));
-        
         int amount = cards.size();
+        if(amount > 0) {
+            showCard(jLabelCartaMesa6, cards.get(0));
+            showCard(jLabelCartaMesa7, cards.get(1));
+            showCard(jLabelCartaMesa8, cards.get(2));
+        }
+        
         if(amount == 4) showCard(jLabelCartaMesa9, cards.get(3));
         if(amount >= 5) showCard(jLabelCartaMesa10, cards.get(4));
     }
@@ -530,16 +529,18 @@ public class GameWindow extends javax.swing.JFrame {
      * Complete action to bet. Gets the value from the jSpinner.
      * @return Int. Total pool after the bet has been added.
      */
-    private int bet() {
-        int amount = (int) jSpinnerBetAmount.getValue();
+    private int bet(int amount) {
         int pool = PLAYER.bet(REFERENCE, amount);
         return pool;
     }
     
     private void jButtonBetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBetActionPerformed
-        int pool = bet();
-        this.jLabelOwnChips.setText(Integer.toString(PLAYER.getChips()));
-        this.jLabelPoolComun.setText(Integer.toString(pool));
+        int amount = (int) jSpinnerBetAmount.getValue();
+        if(amount <= PLAYER.getChips()) {
+            int pool = bet(amount);
+            this.jLabelOwnChips.setText(Integer.toString(PLAYER.getChips()));
+            this.jLabelPoolComun.setText(Integer.toString(pool));
+        } else JOptionPane.showMessageDialog(rootPane, "You can bet more chips than you have.");
     }//GEN-LAST:event_jButtonBetActionPerformed
 
     private void jButtonDestaparComunesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDestaparComunesActionPerformed
@@ -550,33 +551,16 @@ public class GameWindow extends javax.swing.JFrame {
    
     private void jButtonGanadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGanadorActionPerformed
     }//GEN-LAST:event_jButtonGanadorActionPerformed
-
-    private void retirarse() {
-//        boolean retirado = JUGADOR.retirarse();
-//        if(retirado) {
-//            System.out.println("Jugador retirado.");
-//            jButton1.setEnabled(false);
-//            jButton2.setEnabled(false);
-//            jButton3.setEnabled(false);
-//            jButton4.setEnabled(false);
-//            jButton5.setEnabled(false);
-//            jButton6.setEnabled(false);
-//            jTextField1.setEnabled(false);
-//        }
-//        else System.out.println("Problemas al retirar al jugador.");
-    }
     
-    private void esperarFinRonda(java.awt.event.ActionEvent evt) {
-    }
-    
-    private void jButtonRetireActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRetireActionPerformed
-//        retirarse();
-//        new Thread(() -> esperarFinRonda(evt)).start();
-    }//GEN-LAST:event_jButtonRetireActionPerformed
-
     private void jMenuItemExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemExitActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jMenuItemExitActionPerformed
+
+    private void jButtonPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPassActionPerformed
+        int pool = bet(0);
+        this.jLabelOwnChips.setText(Integer.toString(PLAYER.getChips()));
+        this.jLabelPoolComun.setText(Integer.toString(pool));
+    }//GEN-LAST:event_jButtonPassActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBet;
@@ -584,7 +568,7 @@ public class GameWindow extends javax.swing.JFrame {
     private javax.swing.JButton jButtonDestaparPropias;
     private javax.swing.JButton jButtonEnviar;
     private javax.swing.JButton jButtonGanador;
-    private javax.swing.JButton jButtonRetire;
+    private javax.swing.JButton jButtonPass;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelCartaMesa10;

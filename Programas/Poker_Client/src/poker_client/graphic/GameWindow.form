@@ -154,18 +154,14 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButtonRetire" min="-2" pref="124" max="-2" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabelPhaseTitle" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jSpinnerBetAmount" min="-2" pref="50" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabelPhaseOutput" min="-2" pref="86" max="-2" attributes="0"/>
-                                  <Component id="jButtonBet" min="-2" pref="76" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="jLabelPhaseTitle" min="-2" max="-2" attributes="0"/>
+                          <Component id="jSpinnerBetAmount" min="-2" pref="50" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jButtonPass" alignment="0" min="-2" pref="76" max="-2" attributes="0"/>
+                          <Component id="jLabelPhaseOutput" min="-2" pref="86" max="-2" attributes="0"/>
+                          <Component id="jButtonBet" min="-2" pref="76" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -179,31 +175,19 @@
                           <Component id="jLabelPhaseTitle" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabelPhaseOutput" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace pref="27" max="32767" attributes="0"/>
+                      <Component id="jButtonPass" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jButtonBet" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jSpinnerBetAmount" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jButtonRetire" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="13" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="jButtonRetire">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagenes/chicken2.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Retire"/>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRetireActionPerformed"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JButton" name="jButtonBet">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Bet"/>
@@ -226,10 +210,19 @@
             <Component class="javax.swing.JSpinner" name="jSpinnerBetAmount">
               <Properties>
                 <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                  <SpinnerModel initial="0" numberType="java.lang.Integer" stepSize="5" type="number"/>
+                  <SpinnerModel initial="10" minimum="1" numberType="java.lang.Integer" stepSize="10" type="number"/>
                 </Property>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButtonPass">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Pass"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonPassActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

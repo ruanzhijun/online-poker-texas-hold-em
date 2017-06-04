@@ -45,13 +45,18 @@ public class GameWindow extends javax.swing.JFrame {
     
     private void managePhases(String turn) {
         String prevPhase = this.jLabelPhaseOutput.getText();
-        if(!turn.matches(prevPhase)) {
+        if(!turn.matches(prevPhase) || turn.matches("River")) {
             switch(turn) {
                 case "PreFlop":
                     showOwnCards();
                     break;
-                case "Flop": case "Turn": case "River":
+                case "Flop": case "Turn":
                     showTableCards();
+                    break;
+                case "River":
+                    showTableCards();
+                    Checks.checksEndRound(REFERENCE, PLAYER);
+                    break;
                 default:
                     break;
             }
@@ -72,7 +77,7 @@ public class GameWindow extends javax.swing.JFrame {
                     this.jLabelPhaseOutput.setText(Checks.getPhase());
                     this.jLabelTurnOutput.setText(Boolean.toString(Checks.isTurn())); // fixme: set it to an icon. red | green dot.
                     this.jLabelPoolComun.setText(Integer.toString(Checks.getPool()));
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch(InterruptedException ex) { ex.printStackTrace(); }
             }
         };
@@ -500,19 +505,19 @@ public class GameWindow extends javax.swing.JFrame {
 //        }
     }
     
-    private void taparCarta(JLabel label) {
-//        String rutaIMG = "../imagenes/windows/juego/card_back.png";
-//        label.setIcon(new javax.swing.ImageIcon(getClass().getResource(rutaIMG)));
+    private void resetCard(JLabel label) {
+        String route = "/imagenes/windows/juego/card_back.png";
+        label.setIcon(new javax.swing.ImageIcon(getClass().getResource(route)));
     }
     
-    private void cubrirCartas() {
-//        taparCarta(jLabelCartaPropia1);
-//        taparCarta(jLabelCartaPropia2);
-//        taparCarta(jLabelCartaMesa1);
-//        taparCarta(jLabelCartaMesa2);
-//        taparCarta(jLabelCartaMesa3);
-//        taparCarta(jLabelCartaMesa4);
-//        taparCarta(jLabelCartaMesa5);
+    private void resetCards() {
+        resetCard(jLabelCartaPropia3);
+        resetCard(jLabelCartaPropia4);
+        resetCard(jLabelCartaMesa6);
+        resetCard(jLabelCartaMesa7);
+        resetCard(jLabelCartaMesa8);
+        resetCard(jLabelCartaMesa9);
+        resetCard(jLabelCartaMesa10);
     }
     
     private void jButtonDestaparPropiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDestaparPropiasActionPerformed

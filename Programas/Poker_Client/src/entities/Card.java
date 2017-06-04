@@ -40,7 +40,7 @@ public class Card implements Serializable {
             case "J": return "11";
             case "Q": return "12";
             case "K": return "13";
-            case "A": return "14";
+            case "1": case "A": return "14";
             default: return v;
         }
     }

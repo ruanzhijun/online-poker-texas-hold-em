@@ -101,9 +101,10 @@ public class Checks {
         return retired;
     }
     
-    private static void checksEndRound(String reference, Player player) {
-        getWinner(reference, player);
+    public static ArrayList checksEndRound(String reference, Player player) {
+        ArrayList results = getWinner(reference, player);
         retirePlayer(player);
+        return results;
     }
     
     /**
@@ -125,7 +126,6 @@ public class Checks {
                 break;
             case "River":
                 getTableCards(player, player.getTableCards(), reference, 5);
-                checksEndRound(reference, player);
                 break;
         }
     }
@@ -166,5 +166,12 @@ public class Checks {
      */
     public static int getPool() {
         return pool;
+    }
+
+    /**
+     * @return the getChips
+     */
+    public static boolean isGetChips() {
+        return getChips;
     }
 }

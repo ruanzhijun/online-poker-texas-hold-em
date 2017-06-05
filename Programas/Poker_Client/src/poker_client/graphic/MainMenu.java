@@ -84,7 +84,6 @@ public class MainMenu extends javax.swing.JFrame {
         jMenuHelp = new javax.swing.JMenu();
         jMenuItemRules = new javax.swing.JMenuItem();
         jMenuItemDocumentation = new javax.swing.JMenuItem();
-        jMenuItemAbout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -199,10 +198,6 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
         jMenuHelp.add(jMenuItemDocumentation);
-
-        jMenuItemAbout.setText("About...");
-        jMenuItemAbout.setEnabled(false);
-        jMenuHelp.add(jMenuItemAbout);
 
         jMenuBar1.add(jMenuHelp);
 
@@ -412,60 +407,6 @@ public class MainMenu extends javax.swing.JFrame {
         } catch(IOException | URISyntaxException ex) { ex.printStackTrace(); }
     }//GEN-LAST:event_jMenuItemDocumentationActionPerformed
 
-    // todo: delete me!. Testing.
-    private static void round(Player o, Player a) {
-        Checks.checks(o, "SU");
-        Checks.checks(a, "SU");
-
-        System.out.println("");
-        int pool = o.bet("SU", 100);
-        System.out.println("Pool after bet: " +pool);
-        pool = a.bet("SU", 100);
-        System.out.println("Pool after bet: " +pool);
-        Checks.checks(o, "SU");
-        Checks.checks(a, "SU");
-        System.out.println("");
-
-        pool = o.bet("SU", 100);
-        System.out.println("Pool after bet: " +pool);
-        pool = a.bet("SU", 100);
-        System.out.println("Pool after bet: " +pool);
-        Checks.checks(o, "SU");
-        Checks.checks(a, "SU");
-        System.out.println("");
-
-        pool = o.bet("SU", 100);
-        System.out.println("Pool after bet: " +pool);
-        pool = a.bet("SU", 100);
-        System.out.println("Pool after bet: " +pool);
-        Checks.checks(o, "SU");
-        Checks.checks(a, "SU");
-        System.out.println("");
-        
-        
-        System.out.println("");
-        System.out.println("Player retired");
-        o.retire("SU");
-        System.out.println("");
-        
-        
-        pool = o.bet("SU", 100);
-        System.out.println("Pool after bet: " +pool);
-        pool = a.bet("SU", 100);
-        System.out.println("Pool after bet: " +pool);
-        System.out.println("");
-
-        o.setChips(0);
-        
-        Checks.checks(o, "SU");
-        Checks.checks(a, "SU");
-
-        // System.out.println("AND THE WINNER IS: " +al.get(0) +", with: " +al.get(1) +", and has won: " +al.get(2) +" chips!");
-        System.out.println("");
-        System.out.println("Chips of " +o.getID() +": " +o.getChips());
-        System.out.println("Chips of " +a.getID() +": " +a.getChips());
-        System.out.println("");
-    }
     
     /**
      * @param args the command line arguments
@@ -500,24 +441,6 @@ public class MainMenu extends javax.swing.JFrame {
             public void run() {
                 Runtime.getRuntime().addShutdownHook(new NetShutdownHook()); // Will close possible opened connections on close.
                 new MainMenu().setVisible(true);
-//                new GameWindow(new Player("Mario"));
-
-//                System.out.println("Connection Opened");     
-//                Player o = new Player("mario");
-//                Player a = new Player("maria");
-//                
-//                Connection.createGame("SU", o.getID(),  2);
-//                Connection.joinGame("SU", a.getID());
-//                
-//                round(o, a);
-//                
-//                try {
-//                    Thread.sleep(6000);
-//                } catch(InterruptedException ex) { ex.printStackTrace(); }
-//                
-//                // New Round.
-//                System.out.println("New Round!");
-//                round(o, a);
             }
         });
     }
@@ -533,7 +456,6 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuAplication;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuHelp;
-    private javax.swing.JMenuItem jMenuItemAbout;
     private javax.swing.JMenuItem jMenuItemDocumentation;
     private javax.swing.JMenuItem jMenuItemOpenWeb;
     private javax.swing.JMenuItem jMenuItemRules;

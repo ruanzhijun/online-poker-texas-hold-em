@@ -144,7 +144,6 @@ public class GameWindow extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuProperties = new javax.swing.JMenu();
         jMenuItemExit = new javax.swing.JMenuItem();
-        jMenuLeyend = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Game Window");
@@ -248,10 +247,6 @@ public class GameWindow extends javax.swing.JFrame {
         jMenuProperties.add(jMenuItemExit);
 
         jMenuBar1.add(jMenuProperties);
-
-        jMenuLeyend.setText("Leyend");
-        jMenuLeyend.setEnabled(false);
-        jMenuBar1.add(jMenuLeyend);
 
         setJMenuBar(jMenuBar1);
 
@@ -367,7 +362,6 @@ public class GameWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelPoolComun;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItemExit;
-    private javax.swing.JMenu jMenuLeyend;
     private javax.swing.JMenu jMenuProperties;
     private javax.swing.JPanel jPanelMain;
     private javax.swing.JSpinner jSpinnerBetAmount;

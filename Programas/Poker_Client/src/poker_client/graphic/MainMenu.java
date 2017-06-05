@@ -81,7 +81,6 @@ public class MainMenu extends javax.swing.JFrame {
         jMenuAplication = new javax.swing.JMenu();
         jMenuItemOpenWeb = new javax.swing.JMenuItem();
         jMenuItemSignUp = new javax.swing.JMenuItem();
-        jMenuConfiguration = new javax.swing.JMenu();
         jMenuHelp = new javax.swing.JMenu();
         jMenuItemRules = new javax.swing.JMenuItem();
         jMenuItemDocumentation = new javax.swing.JMenuItem();
@@ -183,10 +182,6 @@ public class MainMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenuAplication);
 
-        jMenuConfiguration.setText("Config");
-        jMenuConfiguration.setEnabled(false);
-        jMenuBar1.add(jMenuConfiguration);
-
         jMenuHelp.setText("Help");
 
         jMenuItemRules.setText("Rules");
@@ -198,7 +193,11 @@ public class MainMenu extends javax.swing.JFrame {
         jMenuHelp.add(jMenuItemRules);
 
         jMenuItemDocumentation.setText("Documentation");
-        jMenuItemDocumentation.setEnabled(false);
+        jMenuItemDocumentation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemDocumentationActionPerformed(evt);
+            }
+        });
         jMenuHelp.add(jMenuItemDocumentation);
 
         jMenuItemAbout.setText("About...");
@@ -407,6 +406,12 @@ public class MainMenu extends javax.swing.JFrame {
         createGame();
     }//GEN-LAST:event_jButtonNewGameActionPerformed
 
+    private void jMenuItemDocumentationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDocumentationActionPerformed
+        try {
+            Desktop.getDesktop().browse(new URI("https://mega.nz/#F!dJ5V2BxY!yjV11f4oP3GzpbzlJ9kEmA"));
+        } catch(IOException | URISyntaxException ex) { ex.printStackTrace(); }
+    }//GEN-LAST:event_jMenuItemDocumentationActionPerformed
+
     // todo: delete me!. Testing.
     private static void round(Player o, Player a) {
         Checks.checks(o, "SU");
@@ -527,7 +532,6 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelUserChange;
     private javax.swing.JMenu jMenuAplication;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenu jMenuConfiguration;
     private javax.swing.JMenu jMenuHelp;
     private javax.swing.JMenuItem jMenuItemAbout;
     private javax.swing.JMenuItem jMenuItemDocumentation;

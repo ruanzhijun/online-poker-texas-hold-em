@@ -21,6 +21,7 @@ Little personal project because I love playing card games with my family and fou
 * The creator of the game may start it without all the players have joined (Only the creator).
 * Add the posibility to make password-protected games.
 * Update GUI to JavaFX (instead of Swing).
+* Update check and auto-update.
 * Port it to Android(?). Should not be really difficult as almost everything's been done in Java.
 
 ## Known Bugs

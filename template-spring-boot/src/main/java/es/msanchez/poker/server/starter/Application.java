@@ -13,11 +13,11 @@ import org.springframework.context.annotation.Bean;
 
 import lombok.extern.slf4j.Slf4j;
 
+import static es.msanchez.poker.server.config.Properties.PORT;
+
 @Slf4j
 @SpringBootApplication
 public class Application {
-
-    private static final int PORT = 8143; // TODO: move to configurable properties.
 
     public static void main(final String[] args) {
         SpringApplication.run(Application.class, args);
@@ -27,13 +27,15 @@ public class Application {
     public CommandLineRunner commandLineRunner(final ApplicationContext context) {
         return args -> {
             try {
-                ServerSocket serverSocket = new ServerSocket(PORT);
-                System.out.println("Server started and ready.");
+                final ServerSocket serverSocket = context.getBean(ServerSocket.class);
+                log.info("Started new ServerSocket on port '{}'", serverSocket.getLocalPort());
                 while (true) {
                     final Socket socket = serverSocket.accept();
                     Connection.open(socket);
-                    Runnable menu = Menu::selector; // New Thread where it does its operations.
-                    new Thread(menu).start();
+                    final Runnable menu = Menu::selector; // New Thread where it does its operations.
+                    final Thread t = new Thread(menu);
+                    t.start();
+                    log.info("Stated new thread '{}'", t);
                 }
             } catch (IOException ex) {
                 log.error("", ex);

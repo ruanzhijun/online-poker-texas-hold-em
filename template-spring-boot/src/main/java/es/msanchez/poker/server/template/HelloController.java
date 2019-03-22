@@ -1,4 +1,4 @@
-package es.msanchez.frameworks.spring.boot.controller;
+package es.msanchez.poker.server.template;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

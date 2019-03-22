@@ -1,4 +1,4 @@
-package es.msanchez.frameworks.spring.boot.controller;
+package es.msanchez.poker.server.template;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

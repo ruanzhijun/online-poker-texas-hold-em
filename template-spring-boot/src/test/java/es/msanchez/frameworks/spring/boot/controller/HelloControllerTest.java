@@ -16,38 +16,38 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @RunWith(MockitoJUnitRunner.class)
 public class HelloControllerTest {
 
-  private MockMvc mvcMock;
+    private MockMvc mvcMock;
 
-  @InjectMocks
-  private HelloController controller;
+    @InjectMocks
+    private HelloController controller;
 
-  @Before
-  public void setUp() {
-    this.mvcMock = MockMvcBuilders.standaloneSetup(this.controller).build();
-  }
+    @Before
+    public void setUp() {
+        this.mvcMock = MockMvcBuilders.standaloneSetup(this.controller).build();
+    }
 
-  @Test
-  public void givenMockMvcWhenGetThenHttpStatusOk() throws Exception {
-    // Given
+    @Test
+    public void givenMockMvcWhenGetThenHttpStatusOk() throws Exception {
+        // Given
 
-    // When
-    final MockHttpServletResponse response = this.mvcMock.perform(
-        MockMvcRequestBuilders.get("/")).andReturn().getResponse();
+        // When
+        final MockHttpServletResponse response = this.mvcMock.perform(
+                MockMvcRequestBuilders.get("/")).andReturn().getResponse();
 
-    // Then
-    assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-  }
+        // Then
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+    }
 
-  @Test
-  public void givenMockMvcWhenGetThenExpectedStringResponse() throws Exception {
-    // Given
+    @Test
+    public void givenMockMvcWhenGetThenExpectedStringResponse() throws Exception {
+        // Given
 
-    // When
-    final MockHttpServletResponse response = this.mvcMock.perform(
-        MockMvcRequestBuilders.get("/")).andReturn().getResponse();
+        // When
+        final MockHttpServletResponse response = this.mvcMock.perform(
+                MockMvcRequestBuilders.get("/")).andReturn().getResponse();
 
-    // Then
-    assertThat(response.getContentAsString()).isEqualTo("Greetings from Spring Boot!");
-  }
+        // Then
+        assertThat(response.getContentAsString()).isEqualTo("Greetings from Spring Boot!");
+    }
 
 }

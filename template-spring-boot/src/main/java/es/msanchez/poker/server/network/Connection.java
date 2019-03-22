@@ -1,7 +1,6 @@
 package es.msanchez.poker.server.network;
 
 import es.msanchez.poker.server.entities.Card;
-import es.msanchez.poker.server.entities.Deck;
 
 import java.io.*;
 import java.net.Socket;

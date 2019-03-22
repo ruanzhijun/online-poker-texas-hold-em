@@ -1,12 +1,10 @@
 package es.msanchez.poker.server.entities;
 
+import es.msanchez.poker.server.services.DeckService;
 import es.msanchez.poker.server.states.Phase;
 import es.msanchez.poker.server.states.PreFlop;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Encapsulates the logic of a game. Handles and stores everything needed.
@@ -18,7 +16,8 @@ public class Game {
     private Phase phase = null; // State machine. Read interface's Phase code.
     private boolean started = false; // Used so other players can't join a game that's currently going on.
     private boolean ended = false;
-    private Deck deck; // Deck with all it's cards. A new one will be created for every round.
+    private DeckService deckService; // DeckService with all it's cards. A new one will be created for every round.
+    private Round round;
 
     private final String REFERENCE; // Own ID of this game to handle multi-matches.
     private final LinkedHashMap<String, ArrayList> ALLPLAYERS = new LinkedHashMap<>(); /* A copy of every player in the game. A player will only get deleted from here when he has no more chips and cannot continue playing. Also when he disconnects. */
@@ -53,14 +52,14 @@ public class Game {
 
 
     /**
-     * Obtains the private cards from the deck for every player still in game.
+     * Obtains the private cards from the deckService for every player still in game.
      * It adds them in the player's HashMap as entries [2] and [3] inside the AL.
      */
     private void retrievePrivateCards() {
         for (Map.Entry<String, ArrayList> entry : ROUNDPLAYERS.entrySet()) {
             ArrayList list = entry.getValue();
-            list.add(deck.getCard());
-            list.add(deck.getCard());
+            list.add(round.withdrawCard());
+            list.add(round.withdrawCard());
         }
     }
 
@@ -70,7 +69,7 @@ public class Game {
      * @param number Number of cards to retrieve. It changes depending the phase.
      */
     public void retrieveTableCards(int number) {
-        deck.retrieveTableCards(number);
+        round.withdrawTableCards(number);
     }
 
     /**
@@ -100,13 +99,13 @@ public class Game {
 
     /**
      * Resets everything that needs to be reseted for a new round.
-     * That is ROUNDPLAYER values; WINNER AL; new Deck; Pool of chips.
+     * That is ROUNDPLAYER values; WINNER AL; new DeckService; Pool of chips.
      */
     private void resetRoundValues() {
         ROUNDPLAYERS.clear();
         resetPlayersList();
         WINNER.clear();
-        deck = new Deck();
+        deckService = new DeckService();
         chips = 0;
     }
 
@@ -114,7 +113,7 @@ public class Game {
      * Method to be called by state machine -> PreFlop.
      * Gets everything ready to start a new fresh round.
      * Erases and 'copies' all the players to a new round Map.
-     * Creates a new fresh deck.
+     * Creates a new fresh deckService.
      */
     public void startNewRound() {
         resetRoundValues();
@@ -219,8 +218,8 @@ public class Game {
      *
      * @return AL<Card> with all the common cards.
      */
-    ArrayList<Card> getCommonCards() {
-        return deck.getCARDS_TABLE();
+    List<Card> getCommonCards() {
+        return round.getTableCards();
     }
 
     /**
@@ -322,7 +321,7 @@ public class Game {
      * @param al Private player ArrayList where we can find their info.
      * @return AL <Card>. Contains the 2 private cards of the player.
      */
-    private ArrayList<Card> getUserCards(ArrayList al) {
+    private ArrayList<Card> getUserCards(List al) {
         ArrayList<Card> cards = new ArrayList<>();
         Card card1 = (Card) al.get(2);
         Card card2 = (Card) al.get(3);
@@ -341,9 +340,9 @@ public class Game {
         Iterator it = ROUNDPLAYERS.keySet().iterator();
         while (it.hasNext()) {
             String key = (String) it.next();
-            ArrayList user = ROUNDPLAYERS.get(key);
-            ArrayList<Card> privateCards = getUserCards(user);
-            ArrayList result = deck.checkPlay(privateCards);
+            List user = ROUNDPLAYERS.get(key);
+            List<Card> privateCards = getUserCards(user);
+            List result = deckService.checkPlay(privateCards);
 
             user.add(4, result.get(0)); // String. Name of the play achieved.
             user.add(5, result.get(1)); // int. score of that play.

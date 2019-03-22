@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * FIXME: Fuck this whole class. Use Rest architecture.
@@ -188,7 +189,7 @@ public class Connection {
      *
      * @param cards Number of cards to be sent.
      */
-    public void sendCards(ArrayList<Card> cards) {
+    public void sendCards(List<Card> cards) {
         try {
             oos.writeInt(cards.size());
             for (int i = 0; i < cards.size(); i++) oos.writeObject(cards.get(i));

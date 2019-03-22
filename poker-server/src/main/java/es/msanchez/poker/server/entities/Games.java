@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -208,7 +209,7 @@ public class Games {
      * @param reference Reference of the game where the player is playing in.
      * @return AL<Card>. Common player cards.
      */
-    public ArrayList<Card> getCommonCards(String reference) {
+    public List<Card> getCommonCards(String reference) {
         Game game = getGame(reference);
         if (game != null) return game.getCommonCards();
         else return null;

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class to encapsulate menus and options selection.
@@ -95,7 +96,7 @@ public class Menu {
         boolean exists = games.checkGameExists(reference);
         conn.sendResult(exists);
         if (exists) {
-            ArrayList<Card> cards = games.getCommonCards(reference);
+            List<Card> cards = games.getCommonCards(reference);
             conn.sendCards(cards);
         }
     }

@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.io.Serializable;
 
 /**
- * Representation of a card in a deck.
+ * Representation of a card in a cards.
  *
  * @author msanchez
  * @since 21.03.2019

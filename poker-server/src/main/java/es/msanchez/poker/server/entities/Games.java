@@ -1,16 +1,21 @@
 package es.msanchez.poker.server.entities;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Class to store and manipulate the multiple games which can be executed simultaneously.
  *
  * @author msanchez
  */
+@Component
 public class Games {
 
-    private static final HashMap GAMES = new <String, Game>HashMap(); /* Place to store the multiple games. I must access here to retrieve them with their specific key. */
+    // Place to store the multiple games. I must access here to retrieve them with their specific key.
+    private final Map GAMES = new HashMap<String, Game>();
 
     /**
      * Checks if a game with the reference already exists.
@@ -18,7 +23,7 @@ public class Games {
      * @param reference Reference to check.
      * @return Boolean. True if a game with this reference already exists.
      */
-    public static boolean checkGameExists(String reference) {
+    public boolean checkGameExists(String reference) {
         return GAMES.containsKey(reference);
     }
 
@@ -28,7 +33,7 @@ public class Games {
      * @param reference Reference of the game to check.
      * @return Bool. True if the game is started. False if does not exist or has not started yet.
      */
-    public static boolean checkGameStarted(String reference) {
+    public boolean checkGameStarted(String reference) {
         Game game;
         if (checkGameExists(reference)) {
             game = (Game) GAMES.get(reference);
@@ -43,7 +48,7 @@ public class Games {
      * @param reference Reference of the game to check.
      * @return Game if it does exist, null otherwise.
      */
-    private static Game getGame(String reference) {
+    private Game getGame(String reference) {
         if (checkGameExists(reference)) return (Game) GAMES.get(reference);
         else return null;
     }
@@ -54,7 +59,7 @@ public class Games {
      *
      * @return Status of the operation. True if created correctly.
      */
-    public static boolean createGame(ArrayList parameters) {
+    public boolean createGame(ArrayList parameters) {
         boolean result = false;
 
         String reference = (String) parameters.get(0);
@@ -76,7 +81,7 @@ public class Games {
      *
      * @param reference Reference of the game to delete.
      */
-    public static void deleteGame(String reference) {
+    public void deleteGame(String reference) {
         if (GAMES.containsKey(reference)) {
             GAMES.remove(reference);
             System.out.println("Game with reference #" + reference + " has been deleted");
@@ -89,7 +94,7 @@ public class Games {
      * @param reference String. Reference of the game we want to join.
      * @return result of the operation. 1 player joined. -1 game does not exist. -2 game has started.
      */
-    public static int joinGame(String reference, String id) {
+    public int joinGame(String reference, String id) {
         int result = 0;
 
         Game game = getGame(reference);
@@ -102,7 +107,7 @@ public class Games {
         return result;
     }
 
-    public static int getPool(String reference) {
+    public int getPool(String reference) {
         Game game = getGame(reference);
         if (game != null) return game.getChips();
         else return -1;
@@ -115,7 +120,7 @@ public class Games {
      * @param id        ID of the player to check.
      * @return Boolean. True if he speaks. False if not such game or does not speak.
      */
-    public static boolean isPlayersTurn(String reference, String id) {
+    public boolean isPlayersTurn(String reference, String id) {
         Game game = getGame(reference);
         if (game != null) return game.isPlayersTurn(id);
         else return false;
@@ -128,7 +133,7 @@ public class Games {
      * @param id        ID of the player to check.
      * @return Boolean. True if this player is still playing this current round.
      */
-    public static boolean isPlayerInRound(String reference, String id) {
+    public boolean isPlayerInRound(String reference, String id) {
         Game game = getGame(reference);
         if (game != null) return game.isPlayerInRound(id);
         else return false;
@@ -141,7 +146,7 @@ public class Games {
      * @param id        String. ID of the player who tries to speak.
      * @return Boolean. States if the player may bet or not.
      */
-    public static boolean checkMayPlayerBet(String reference, String id) {
+    public boolean checkMayPlayerBet(String reference, String id) {
         Game game = getGame(reference);
         if (game != null) return game.getPhase().checkMayPlayerBet(game, id);
         else return false;
@@ -153,7 +158,7 @@ public class Games {
      * @param reference Reference of the game to check.
      * @return Bool. True if there's already a winner.
      */
-    public static boolean hasGameAWinner(String reference) {
+    public boolean hasGameAWinner(String reference) {
         Game game = getGame(reference);
         if (game != null) return game.hasGameAWinner();
         else return false;
@@ -165,7 +170,7 @@ public class Games {
      * @param reference Reference of the game to check.
      * @return True if there are more players left.
      */
-    public static boolean checkMorePlayersLeft(String reference) {
+    public boolean checkMorePlayersLeft(String reference) {
         Game game = getGame(reference);
         if (game != null) return !game.isLastPlayerInRound();
         else return false;
@@ -178,7 +183,7 @@ public class Games {
      * @param reference Games reference we want to obtain it's phase from.
      * @return String. Phase this game is currently at.
      */
-    public static String getPhase(String reference) {
+    public String getPhase(String reference) {
         Game game = getGame(reference);
         if (game != null) return game.getPhase().toString();
         else return null;
@@ -191,7 +196,7 @@ public class Games {
      * @param id        Unique ID to know from which player get its cards.
      * @return AL<Card>. Private player cards.
      */
-    public static ArrayList<Card> getPrivateCards(String reference, String id) {
+    public ArrayList<Card> getPrivateCards(String reference, String id) {
         Game game = getGame(reference);
         if (game != null) return game.getPrivateCards(id);
         else return null;
@@ -203,7 +208,7 @@ public class Games {
      * @param reference Reference of the game where the player is playing in.
      * @return AL<Card>. Common player cards.
      */
-    public static ArrayList<Card> getCommonCards(String reference) {
+    public ArrayList<Card> getCommonCards(String reference) {
         Game game = getGame(reference);
         if (game != null) return game.getCommonCards();
         else return null;
@@ -218,7 +223,7 @@ public class Games {
      * @param amount    Amount of chips to bet.
      * @return Int. Total amount of the pool until now (after the bet has been added). -1 if the game does not exist.
      */
-    public static int doBet(String reference, String id, int amount) {
+    public int doBet(String reference, String id, int amount) {
         Game game = getGame(reference);
         if (game != null) return game.getPhase().doBet(game, id, amount);
         else return -1;
@@ -230,7 +235,7 @@ public class Games {
      * @param reference Reference of the game to get the winner from.
      * @return AL. [0] = String. Winner ID. [1] = String. Winner play. [2] = Int. winner's number of chips.
      */
-    public static ArrayList getWinner(String reference) {
+    public ArrayList getWinner(String reference) {
         Game game = getGame(reference);
         if (game != null && hasGameAWinner(reference)) return game.getWINNER();
         return null;
@@ -243,7 +248,7 @@ public class Games {
      * @param ID        personal ID of the player to retire.
      * @return Result of the operation. True if he was correctly retired and is no longer in this round.
      */
-    public static boolean retirePlayerFromRound(String reference, String ID) {
+    public boolean retirePlayerFromRound(String reference, String ID) {
         Game game = getGame(reference);
         if (game != null) return game.getPhase().retirePlayerFromRound(game, ID);
         else return false;
@@ -256,7 +261,7 @@ public class Games {
      * @param ID        ID of the player to retire.
      * @return Result of the operation. Was this player retired?
      */
-    public static boolean retirePlayerFromGame(String reference, String ID) {
+    public boolean retirePlayerFromGame(String reference, String ID) {
         Game game = getGame(reference);
         if (game != null) return game.retirePlayerFromGame(ID);
         else return false;

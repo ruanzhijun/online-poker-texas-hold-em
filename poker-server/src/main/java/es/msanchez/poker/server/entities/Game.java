@@ -143,7 +143,7 @@ public class Game {
      */
     private void startGame() {
         started = true;
-        new PreFlop().change(this);
+        new PreFlop(new Games()).change(this);
     }
 
     /**

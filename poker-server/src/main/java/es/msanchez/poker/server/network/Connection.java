@@ -1,35 +1,37 @@
 package es.msanchez.poker.server.network;
 
 import es.msanchez.poker.server.entities.Card;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * FIXME: Fuck this whole class. Use Rest architecture.
+ * <p>
+ * Everything related to the Server's connection and network.
+ * Before touching anything here, read the doc and then read it again. Inside the documentation it's stated the order in which the packages need be so Client and Server are coordinated.
+ *
+ * @author msanchez
+ */
+@Component
 public class Connection {
 
-    /**
-     * Everything related to the Server's connection and network.
-     * Before touching anything here, read the doc and then read it again. Inside the documentation it's stated the order in which the packages need be so Client and Server are coordinated.
-     *
-     * @author Mario Codes
-     * @version 0.0.3.1 Developed methods to obtain the winner through the thread. Refactorized methods so it's easier to understand.
-     */
-
-    private static Socket socket = null;
-    private static InputStream in = null;
-    private static OutputStream out = null;
-    private static ObjectInputStream ois = null;
-    private static ObjectOutputStream oos = null;
+    private Socket socket = null;
+    private InputStream in = null;
+    private OutputStream out = null;
+    private ObjectInputStream ois = null;
+    private ObjectOutputStream oos = null;
 
     /**
-     * Opens the connection and sets the static channels to be used.
+     * Opens the connection and sets the  channels to be used.
      *
      * @param socket Socket opened by main.
      */
-    public static void open(Socket socket) {
+    public void open(Socket socket) {
         try {
-            Connection.socket = socket;
+            this.socket = socket;
             in = socket.getInputStream();
             out = socket.getOutputStream();
             oos = new ObjectOutputStream(out);
@@ -43,7 +45,7 @@ public class Connection {
      * Closes a connection if is opened.
      * ATENTION! Shouldn't really use it until close the whole server. The Client is the one who should disconnect.
      */
-    public static void close() {
+    public void close() {
         try {
             if (ois != null) ois.close();
             if (oos != null) oos.close();
@@ -60,7 +62,7 @@ public class Connection {
      *
      * @return Option to be used in the menu. -1 error.
      */
-    public static int getMenuOption() {
+    public int getMenuOption() {
         try {
             return ois.readInt();
         } catch (IOException ex) {
@@ -75,7 +77,7 @@ public class Connection {
      *
      * @return Contains [0] Ref of the new game; [1] Total number of players in the game.
      */
-    public static ArrayList getGameParemeters() {
+    public ArrayList getGameParemeters() {
         ArrayList parameters = new ArrayList();
 
         try {
@@ -94,7 +96,7 @@ public class Connection {
      *
      * @return String. ID of the player.
      */
-    public static String getID() {
+    public String getID() {
         try {
             return ois.readUTF();
         } catch (IOException ex) {
@@ -109,7 +111,7 @@ public class Connection {
      *
      * @return String. Reference of the game.
      */
-    public static String getReference() {
+    public String getReference() {
         try {
             return ois.readUTF();
         } catch (IOException ex) {
@@ -124,7 +126,7 @@ public class Connection {
      *
      * @return Amount of chips to bet.
      */
-    public static int getBet() {
+    public int getBet() {
         try {
             return ois.readInt();
         } catch (IOException ex) {
@@ -139,7 +141,7 @@ public class Connection {
      *
      * @param result Result to be sent.
      */
-    public static void sendResult(int result) {
+    public void sendResult(int result) {
         try {
             oos.writeInt(result);
             oos.flush();
@@ -153,7 +155,7 @@ public class Connection {
      *
      * @param result boolean. Result of the operation we want to inform the user.
      */
-    public static void sendResult(boolean result) {
+    public void sendResult(boolean result) {
         try {
             oos.writeBoolean(result);
             oos.flush();
@@ -169,7 +171,7 @@ public class Connection {
      * @param phase  Phase the game is currently at.
      * @param speaks Does this player speak now?
      */
-    public static void sendThreadInformation(String phase, boolean speaks, int pool) {
+    public void sendThreadInformation(String phase, boolean speaks, int pool) {
         try {
             oos.writeUTF(phase);
             oos.writeBoolean(speaks);
@@ -186,7 +188,7 @@ public class Connection {
      *
      * @param cards Number of cards to be sent.
      */
-    public static void sendCards(ArrayList<Card> cards) {
+    public void sendCards(ArrayList<Card> cards) {
         try {
             oos.writeInt(cards.size());
             for (int i = 0; i < cards.size(); i++) oos.writeObject(cards.get(i));
@@ -201,7 +203,7 @@ public class Connection {
      *
      * @param amount Total amount of chips in common pool.
      */
-    public static void sendChips(int amount) {
+    public void sendChips(int amount) {
         try {
             oos.writeInt(amount);
             oos.flush();
@@ -215,7 +217,7 @@ public class Connection {
      *
      * @param winner AL containing all the info to be sent.
      */
-    public static void sendWinner(ArrayList winner) {
+    public void sendWinner(ArrayList winner) {
         try {
             oos.writeUTF((String) winner.get(0)); // ID of the winner.
             oos.writeUTF((String) winner.get(1)); // Name of the play achieved.
@@ -231,7 +233,7 @@ public class Connection {
      *
      * @return Retire this player? (If he has no chips left)
      */
-    public static boolean getRetire() {
+    public boolean getRetire() {
         try {
             return ois.readBoolean();
         } catch (IOException ex) {

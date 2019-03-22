@@ -3,45 +3,48 @@ package es.msanchez.poker.server.starter;
 import es.msanchez.poker.server.entities.Card;
 import es.msanchez.poker.server.entities.Games;
 import es.msanchez.poker.server.network.Connection;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
 /**
- * Static class to encapsulate menus and options selection.
+ * Class to encapsulate menus and options selection.
  * It is also a monitor so threads do not collide with sensible methods.
  *
- * @author Mario Codes
- * @version 0.0.3.1 Added new checks and error exits to bet.
+ * @author msanchez
  */
+@Component
 public class Menu {
 
-    private static final int INFORMATION = 0; // First Group. Before the game starts.
-    private static final int CREATE_GAME = 1;
-    private static final int JOIN_GAME = 2;
+    private final Connection conn;
+    private final Games games;
 
-    private static final int GET_CARDS_PRIVATE = 4; // Second Group. Game options.
-    private static final int GET_CARDS_COMMON = 5;
-    private static final int BET = 6;
-    private static final int RETIRE = 7;
-    private static final int GET_WINNER = 8;
+    @Autowired
+    public Menu(final Connection conn,
+                final Games games) {
+        this.conn = conn;
+        this.games = games;
+    }
+
 
     /**
      * Check which does the secondary thread launched by the clients.
      * Gets the game reference and player id, sends the game phase and if this player may speak or wait until it's his turn.
      */
-    private synchronized static void sendInformation() {
-        String reference = Connection.getReference();
-        boolean exists = Games.checkGameExists(reference);
-        Connection.sendResult(exists);
+    public synchronized void sendInformation() {
+        String reference = conn.getReference();
+        boolean exists = games.checkGameExists(reference);
+        conn.sendResult(exists);
         if (exists) {
-            boolean started = Games.checkGameStarted(reference);
-            Connection.sendResult(started);
+            boolean started = games.checkGameStarted(reference);
+            conn.sendResult(started);
             if (started) {
-                String id = Connection.getID();
-                String phase = Games.getPhase(reference);
-                boolean speaks = Games.isPlayersTurn(reference, id);
-                int pool = Games.getPool(reference);
-                Connection.sendThreadInformation(phase, speaks, pool);
+                String id = conn.getID();
+                String phase = games.getPhase(reference);
+                boolean speaks = games.isPlayersTurn(reference, id);
+                int pool = games.getPool(reference);
+                conn.sendThreadInformation(phase, speaks, pool);
             }
         }
     }
@@ -51,10 +54,10 @@ public class Menu {
      * Gets the reference to be used, checks it. If it doesn't exist, it creates the game with it.
      * Sends the result of the operation through the socket.
      */
-    private synchronized static void createGame() {
-        ArrayList parameters = Connection.getGameParemeters();
-        boolean result = Games.createGame(parameters);
-        Connection.sendResult(result);
+    private synchronized void createGame() {
+        ArrayList parameters = conn.getGameParemeters();
+        boolean result = games.createGame(parameters);
+        conn.sendResult(result);
     }
 
 
@@ -62,38 +65,38 @@ public class Menu {
      * Join a previously created game.
      * Does check if the game exists, adds a player to it and sends the result of the operation.
      */
-    private synchronized static void joinGame() {
-        String reference = Connection.getReference();
-        String id = Connection.getID();
-        int result = Games.joinGame(reference, id);
-        Connection.sendResult(result);
+    private synchronized void joinGame() {
+        String reference = conn.getReference();
+        String id = conn.getID();
+        int result = games.joinGame(reference, id);
+        conn.sendResult(result);
     }
 
 
     /**
      * Retrieves and sends the private user cards through the socket.
      */
-    private static void sendPrivateCards() {
-        String reference = Connection.getReference();
-        boolean exist = Games.checkGameExists(reference);
-        Connection.sendResult(exist);
+    private void sendPrivateCards() {
+        String reference = conn.getReference();
+        boolean exist = games.checkGameExists(reference);
+        conn.sendResult(exist);
         if (exist) {
-            String id = Connection.getID();
-            ArrayList<Card> cards = Games.getPrivateCards(reference, id);
-            Connection.sendCards(cards);
+            String id = conn.getID();
+            ArrayList<Card> cards = games.getPrivateCards(reference, id);
+            conn.sendCards(cards);
         }
     }
 
     /**
      * Gets the common cards of the game and sends it to the user who requested it.
      */
-    private static void sendCommonCards() {
-        String reference = Connection.getReference();
-        boolean exists = Games.checkGameExists(reference);
-        Connection.sendResult(exists);
+    private void sendCommonCards() {
+        String reference = conn.getReference();
+        boolean exists = games.checkGameExists(reference);
+        conn.sendResult(exists);
         if (exists) {
-            ArrayList<Card> cards = Games.getCommonCards(reference);
-            Connection.sendCards(cards);
+            ArrayList<Card> cards = games.getCommonCards(reference);
+            conn.sendCards(cards);
         }
     }
 
@@ -101,26 +104,26 @@ public class Menu {
      * Checks if it's the player's turn to bet.
      * If it is, it does bet.
      * It does a special 'flow'. Goes through the state machine to manipulate turn changes.
-     * The order of execution is Menu -> Games -> Game Phase -> Game. The phase it's a filter.
+     * The order of execution is Menu -> games -> Game Phase -> Game. The phase it's a filter.
      */
-    private static void doBet() {
-        String reference = Connection.getReference();
-        String id = Connection.getID();
-        boolean exist = Games.checkGameExists(reference);
-        Connection.sendResult(exist);
+    private void doBet() {
+        String reference = conn.getReference();
+        String id = conn.getID();
+        boolean exist = games.checkGameExists(reference);
+        conn.sendResult(exist);
         if (exist) {
-            boolean isInGame = Games.isPlayerInRound(reference, id);
-            Connection.sendResult(isInGame);
+            boolean isInGame = games.isPlayerInRound(reference, id);
+            conn.sendResult(isInGame);
             if (isInGame) {
-                boolean morePlayersLeft = Games.checkMorePlayersLeft(reference);
-                Connection.sendResult(morePlayersLeft);
+                boolean morePlayersLeft = games.checkMorePlayersLeft(reference);
+                conn.sendResult(morePlayersLeft);
                 if (morePlayersLeft) {
-                    boolean mayBet = Games.checkMayPlayerBet(reference, id);
-                    Connection.sendResult(mayBet);
+                    boolean mayBet = games.checkMayPlayerBet(reference, id);
+                    conn.sendResult(mayBet);
                     if (mayBet) {
-                        int amount = Connection.getBet();
-                        int chips = Games.doBet(reference, id, amount);
-                        Connection.sendChips(chips);
+                        int amount = conn.getBet();
+                        int chips = games.doBet(reference, id, amount);
+                        conn.sendChips(chips);
                     }
                 }
             }
@@ -131,22 +134,22 @@ public class Menu {
      * Sends information about the winner of a game.
      * Checks if the games does exist and if this game has already chosen a winner.
      */
-    private static void sendWinner() {
-        String reference = Connection.getReference();
-        String id = Connection.getID();
-        boolean exists = Games.checkGameExists(reference);
-        Connection.sendResult(exists);
+    private void sendWinner() {
+        String reference = conn.getReference();
+        String id = conn.getID();
+        boolean exists = games.checkGameExists(reference);
+        conn.sendResult(exists);
         if (exists) {
-            boolean hasWinner = Games.hasGameAWinner(reference);
-            Connection.sendResult(hasWinner);
+            boolean hasWinner = games.hasGameAWinner(reference);
+            conn.sendResult(hasWinner);
             if (hasWinner) {
-                ArrayList winner = Games.getWinner(reference);
-                Connection.sendWinner(winner);
-                boolean retirePlayer = Connection.getRetire();
+                ArrayList winner = games.getWinner(reference);
+                conn.sendWinner(winner);
+                boolean retirePlayer = conn.getRetire();
                 boolean retired = false;
                 if (retirePlayer) {
-                    retired = Games.retirePlayerFromGame(reference, id);
-                    Connection.sendResult(retired);
+                    retired = games.retirePlayerFromGame(reference, id);
+                    conn.sendResult(retired);
                 }
             }
         }
@@ -155,58 +158,84 @@ public class Menu {
     /**
      * Sends information about the action of retiring a player from the game.
      */
-    private static void retirePlayer() {
-        String reference = Connection.getReference();
-        String id = Connection.getID();
-        boolean exists = Games.checkGameExists(reference);
-        Connection.sendResult(exists);
+    private void retirePlayer() {
+        String reference = conn.getReference();
+        String id = conn.getID();
+        boolean exists = games.checkGameExists(reference);
+        conn.sendResult(exists);
         if (exists) {
-            boolean isPlaying = Games.isPlayerInRound(reference, id);
-            Connection.sendResult(isPlaying);
+            boolean isPlaying = games.isPlayerInRound(reference, id);
+            conn.sendResult(isPlaying);
             if (isPlaying) {
-                boolean playerRetired = Games.retirePlayerFromRound(reference, id);
-                Connection.sendResult(playerRetired);
+                boolean playerRetired = games.retirePlayerFromRound(reference, id);
+                conn.sendResult(playerRetired);
             }
         }
     }
 
     /**
      * Main Switch which derives everything where it needs to be.
-     * Here the socket's connection has already been opened!.
+     * Here the socket's conn has already been opened!.
      */
-    static void selector() {
-        int option = Connection.getMenuOption();
+    void selector() {
+        int option = conn.getMenuOption();
         switch (option) {
-            case INFORMATION:
+            case MenuOptions.INFORMATION:
                 sendInformation();
                 break;
-            case CREATE_GAME:
+            case MenuOptions.CREATE_GAME:
                 createGame();
                 break;
-            case JOIN_GAME:
+            case MenuOptions.JOIN_GAME:
                 joinGame();
                 break;
-            case GET_CARDS_PRIVATE:
+            case GameOptions.GET_CARDS_PRIVATE:
                 sendPrivateCards();
                 break;
-            case GET_CARDS_COMMON:
+            case GameOptions.GET_CARDS_COMMON:
                 sendCommonCards();
                 break;
-            case BET:
+            case GameOptions.BET:
                 doBet();
                 break;
-            case RETIRE:
+            case GameOptions.RETIRE:
                 retirePlayer();
                 break;
-            case GET_WINNER:
+            case GameOptions.GET_WINNER:
                 sendWinner();
                 break;
             case -1:
-                System.out.println("Problem with the connection. Error output by main switch.");
+                System.out.println("Problem with the conn. Error output by main switch.");
                 break;
             default:
                 System.out.println("Undefined error. Default option by main switch.");
                 break;
         }
+    }
+
+    /**
+     * Possible options for the menu to be selected.
+     */
+    private static final class MenuOptions {
+
+        // Before the game starts
+        private static final int INFORMATION = 0;
+        private static final int CREATE_GAME = 1;
+        private static final int JOIN_GAME = 2;
+
+    }
+
+    /**
+     * Possible options once the game has started.
+     */
+    private static final class GameOptions {
+
+        // Game options
+        private static final int GET_CARDS_PRIVATE = 4;
+        private static final int GET_CARDS_COMMON = 5;
+        private static final int BET = 6;
+        private static final int RETIRE = 7;
+        private static final int GET_WINNER = 8;
+
     }
 }

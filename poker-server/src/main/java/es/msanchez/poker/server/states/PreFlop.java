@@ -3,6 +3,7 @@ package es.msanchez.poker.server.states;
 
 import es.msanchez.poker.server.entities.Game;
 import es.msanchez.poker.server.entities.Games;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * PreFlop. Initial phase.
@@ -12,13 +13,20 @@ import es.msanchez.poker.server.entities.Games;
  */
 public class PreFlop implements Phase {
 
+    private final Games games;
+
+    @Autowired
+    public PreFlop(final Games games) {
+        this.games = games;
+    }
+
     @Override
     public void change(Game game) {
         game.setPhase(this);
         if (!game.isEnded()) game.startNewRound();
         else {
             System.out.println("Game with reference #" + game.getREFERENCE() + " has ended");
-            Games.deleteGame(game.getREFERENCE());
+            games.deleteGame(game.getREFERENCE());
         }
     }
 

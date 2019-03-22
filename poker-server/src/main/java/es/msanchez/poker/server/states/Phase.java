@@ -16,7 +16,7 @@ public interface Phase {
      *
      * @param game Game we're operating with.
      */
-    public void change(Game game);
+    void change(Game game);
 
     /**
      * Checks if the player may or may not bet right now.
@@ -25,7 +25,7 @@ public interface Phase {
      * @param id   ID of the player to check.
      * @return Boolean. May the player bet?
      */
-    public boolean checkMayPlayerBet(Game game, String id);
+    boolean checkMayPlayerBet(Game game, String id);
 
     /**
      * Does the bet action. Here it's already been checked if the player may do it.
@@ -35,7 +35,7 @@ public interface Phase {
      * @param amount Amount of chips to bet.
      * @return Total amount of chips after the bet.
      */
-    public int doBet(Game game, String id, int amount);
+    int doBet(Game game, String id, int amount);
 
     /**
      * Retires a player from the current round.
@@ -45,5 +45,5 @@ public interface Phase {
      * @param id   ID of the player to retire.
      * @return Result of the operation.
      */
-    public boolean retirePlayerFromRound(Game game, String id);
+    boolean retirePlayerFromRound(Game game, String id);
 }

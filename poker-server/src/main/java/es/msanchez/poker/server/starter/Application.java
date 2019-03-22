@@ -28,11 +28,12 @@ public class Application {
     public CommandLineRunner commandLineRunner(final ApplicationContext context) {
         return args -> {
             try {
+                final Connection conn = context.getBean(Connection.class);
                 final ServerSocket serverSocket = context.getBean(ServerSocket.class);
                 log.info("Started new ServerSocket on port '{}'", serverSocket.getLocalPort());
                 while (true) {
                     final Socket socket = serverSocket.accept();
-                    Connection.open(socket);
+                    conn.open(socket);
                     final Menu menu = context.getBean(Menu.class);
                     final Runnable menuRunnable = menu::selector; // New Thread where it does its operations.
                     final Thread t = new Thread(menuRunnable);

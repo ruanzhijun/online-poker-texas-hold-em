@@ -1,6 +1,7 @@
 package es.msanchez.poker.server.validator;
 
 import es.msanchez.poker.server.entities.Card;
+import org.apache.commons.collections4.ListUtils;
 import org.assertj.core.api.BDDAssertions;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
@@ -18,14 +19,16 @@ public class PlayValidatorTest {
     private PlayValidator validator;
 
     @Test
-    public void testCheckPlay() {
+    public void testIsPair() {
         // Given
         final List<Card> tableCards = this.prepareTableCards();
         final List<Card> own = Lists.newArrayList(new Card("A", "diamonds"),
                 new Card("K", "diamonds"));
 
+        final List<Card> joinedCards = ListUtils.union(tableCards, own);
+
         // When
-        final boolean result = validator.isPair(own, tableCards);
+        final boolean result = validator.isPair(joinedCards);
 
         // Then
         BDDAssertions.assertThat(result).isTrue();
@@ -39,4 +42,19 @@ public class PlayValidatorTest {
         return cards;
     }
 
+    @Test
+    public void testIsPairCaseNegative() {
+        // Given
+        final List<Card> tableCards = this.prepareTableCards();
+        final List<Card> own = Lists.newArrayList(new Card("J", "diamonds"),
+                new Card("K", "diamonds"));
+
+        final List<Card> joinedCards = ListUtils.union(tableCards, own);
+
+        // When
+        final boolean result = validator.isPair(joinedCards);
+
+        // Then
+        BDDAssertions.assertThat(result).isFalse();
+    }
 }

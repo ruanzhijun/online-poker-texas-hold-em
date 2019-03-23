@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -24,36 +25,72 @@ public class PlayValidator {
 
     /**
      * @param cards -
-     * @return true, if the {@code cards} contain, at least three of a kind.
+     * @return true, if the {@code cards} contain five cards in order.
      */
-    public boolean isThreeOfAKind(final List<Card> cards) {
-        final List<String> values = cards.stream()
-                .map(Card::getValue)
-                .sorted(String::compareTo)
-                .collect(Collectors.toList());
-
-        return this.searchThreeOfAKind(values);
+    public boolean isStraight(final List<Card> cards) {
+        final List<Integer> values = obtainOrderedValues(cards);
+        final int deadCards = 4;
+        return searchPlay(values, deadCards, this::straightFound);
     }
 
-    private boolean searchThreeOfAKind(final List<String> values) {
+    private boolean straightFound(final List<Integer> values,
+                                  final int index) {
+        final Integer actualValue = values.get(index);
+        return values.get(index + 1).equals(actualValue + 1)
+                && values.get(index + 2).equals(actualValue + 2)
+                && values.get(index + 3).equals(actualValue + 3)
+                && values.get(index + 4).equals(actualValue + 4);
+    }
+
+    /**
+     * @param cards -
+     * @return true, if the {@code cards} contain, at least three cards with the same value.
+     */
+    public boolean isThreeOfAKind(final List<Card> cards) {
+        final List<Integer> values = obtainOrderedValues(cards);
+        final int deadCards = 2;
+        return this.searchPlay(values, deadCards, this::threeOfAKindFound);
+    }
+
+    private List<Integer> obtainOrderedValues(final List<Card> cards) {
+        return cards.stream()
+                .map(Card::getValue)
+                .map(Integer::parseInt)
+                .sorted(Integer::compareTo)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * @param values    -
+     * @param deadCards number of cards left, with which the play is impossible.
+     *                  <p>
+     *                  For example, if I didn't find Three of a Kind checking all the possible
+     *                  combinations for the first 5 cards, it's impossible I have it, missing
+     *                  only 2 cards to check. This also avoids a {@link ArrayIndexOutOfBoundsException}
+     * @param playToSearch condition which will be true if we found the play we're looking for.
+     * @return -
+     */
+    private boolean searchPlay(final List<Integer> values,
+                               final int deadCards,
+                               final BiPredicate<List<Integer>, Integer> playToSearch) {
         boolean matchFound = false;
-        for (int index = 0; index < values.size() - 2 && !matchFound; index++) {
-            if (this.threeOfAKindFound(values, index)) {
+        for (int index = 0; index < values.size() - deadCards && !matchFound; index++) {
+            if (playToSearch.test(values, index)) {
                 matchFound = true;
             }
         }
         return matchFound;
     }
 
-    private boolean threeOfAKindFound(final List<String> values,
+    private boolean threeOfAKindFound(final List<Integer> values,
                                       final int index) {
-        return values.get(index).equalsIgnoreCase(values.get(index + 1))
-                && values.get(index).equalsIgnoreCase(values.get(index + 2));
+        return values.get(index).equals(values.get(index + 1))
+                && values.get(index).equals(values.get(index + 2));
     }
 
     /**
      * @param cards -
-     * @return true, if the {@code cards} contain, at least a double pair.
+     * @return true, if the {@code cards} contain, at least two single pairs.
      */
     public boolean isDoublePair(final List<Card> cards) {
         final Predicate<String> isUnique = new HashSet<>()::add;
@@ -67,9 +104,10 @@ public class PlayValidator {
 
     /**
      * @param cards -
-     * @return true, if the {@code cards} contain, at least a pair.
+     * @return true, if the {@code cards} contain, at least two equal cards.
      */
     public boolean isPair(final List<Card> cards) {
+        // TODO: Measure which solution is faster for a Pair. This or the one at Three of a Kind.
         final Predicate<String> isUnique = new HashSet<>()::add;
         return cards.stream()
                 .map(Card::getValue)

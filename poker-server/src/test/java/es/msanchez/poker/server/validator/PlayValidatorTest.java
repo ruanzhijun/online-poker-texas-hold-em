@@ -42,6 +42,8 @@ public class PlayValidatorTest {
         final List<Card> cards = new ArrayList<>();
         cards.add(new Card("2", "hearts"));
         cards.add(new Card("3", "hearts"));
+        cards.add(new Card("4", "diamonds"));
+        cards.add(new Card("8", "diamonds"));
         cards.add(new Card("A", "hearts"));
         return cards;
     }
@@ -99,7 +101,7 @@ public class PlayValidatorTest {
         // Given
         final List<Card> tableCards = this.prepareTableCards();
         final List<Card> own = Lists.newArrayList(new Card("A", "diamonds"),
-                new Card("4", "diamonds"));
+                new Card("10", "diamonds"));
 
         final List<Card> joinedCards = ListUtils.union(tableCards, own);
 
@@ -172,6 +174,22 @@ public class PlayValidatorTest {
 
         // Then
         BDDAssertions.assertThat(result).isFalse();
+    }
+
+    @Test
+    public void testIsStraight() {
+        // Given
+        final List<Card> tableCards = this.prepareTableCards();
+        final List<Card> own = Lists.newArrayList(new Card("5", "diamonds"),
+                new Card("6", "jacks"));
+
+        final List<Card> joinedCards = ListUtils.union(tableCards, own);
+
+        // When
+        final boolean result = validator.isStraight(joinedCards);
+
+        // Then
+        BDDAssertions.assertThat(result).isTrue();
     }
 
 }

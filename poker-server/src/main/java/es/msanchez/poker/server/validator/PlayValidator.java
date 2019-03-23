@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import java.util.HashSet;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * To use this class to check a {@code List<Card>} it has to be checked
@@ -20,6 +21,35 @@ import java.util.function.Predicate;
  */
 @Component
 public class PlayValidator {
+
+    /**
+     * @param cards -
+     * @return true, if the {@code cards} contain, at least three of a kind.
+     */
+    public boolean isThreeOfAKind(final List<Card> cards) {
+        final List<String> values = cards.stream()
+                .map(Card::getValue)
+                .sorted(String::compareTo)
+                .collect(Collectors.toList());
+
+        return this.searchThreeOfAKind(values);
+    }
+
+    private boolean searchThreeOfAKind(final List<String> values) {
+        boolean matchFound = false;
+        for (int index = 0; index < values.size() - 2 && !matchFound; index++) {
+            if (this.threeOfAKindFound(values, index)) {
+                matchFound = true;
+            }
+        }
+        return matchFound;
+    }
+
+    private boolean threeOfAKindFound(final List<String> values,
+                                      final int index) {
+        return values.get(index).equalsIgnoreCase(values.get(index + 1))
+                && values.get(index).equalsIgnoreCase(values.get(index + 2));
+    }
 
     /**
      * @param cards -

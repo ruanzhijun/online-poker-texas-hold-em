@@ -2,12 +2,15 @@ package es.msanchez.poker.server.services;
 
 import es.msanchez.poker.server.entities.Card;
 import es.msanchez.poker.server.entities.Deck;
+import es.msanchez.poker.server.enums.Suit;
 import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+
+import static es.msanchez.poker.server.enums.Suit.*;
 
 /**
  * @author msanchez
@@ -37,10 +40,10 @@ public class DeckService {
      */
     private List<Card> prepareShuffledCards() {
         final List<Card> cards = new ArrayList<>();
-        initCardSuit(cards, "hearts");
-        initCardSuit(cards, "picas");
-        initCardSuit(cards, "trebol");
-        initCardSuit(cards, "diamonds");
+        initCardSuit(cards, HEARTS);
+        initCardSuit(cards, SPADES);
+        initCardSuit(cards, JACK);
+        initCardSuit(cards, DIAMOND);
         shuffle(cards);
         return cards;
     }
@@ -60,7 +63,8 @@ public class DeckService {
         }
     }
 
-    private void initCardSuit(final List<Card> cards, String suit) {
+    private void initCardSuit(final List<Card> cards,
+                              final Suit suit) {
         for (int value = 2; value < 11; value++) {
             cards.add(new Card(Integer.toString(value), suit));
         }

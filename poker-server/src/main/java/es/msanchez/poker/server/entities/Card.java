@@ -1,5 +1,6 @@
 package es.msanchez.poker.server.entities;
 
+import es.msanchez.poker.server.enums.Suit;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -16,7 +17,7 @@ import java.io.Serializable;
 public class Card implements Serializable {
 
     private final String value;
-    private final String suit;
+    private final Suit suit;
 
     // FIXME: Convert this into an enum and do there the conversions. Same for Suit.
     public String getValue() {

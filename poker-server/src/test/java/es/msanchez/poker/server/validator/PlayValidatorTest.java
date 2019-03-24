@@ -1,11 +1,11 @@
 package es.msanchez.poker.server.validator;
 
+import es.msanchez.poker.server.abstraction.PokerTest;
 import es.msanchez.poker.server.entities.Card;
 import org.apache.commons.collections4.ListUtils;
 import org.assertj.core.api.BDDAssertions;
 import org.assertj.core.util.Lists;
 import org.mockito.InjectMocks;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -16,15 +16,10 @@ import java.util.List;
  * @author msanchez
  * @since 22.03.2019
  */
-public class PlayValidatorTest {
+public class PlayValidatorTest extends PokerTest {
 
     @InjectMocks
     private PlayValidator validator;
-
-    @BeforeMethod
-    public void setUp() {
-        this.validator = new PlayValidator();
-    }
 
     @Test
     public void testIsPair() {

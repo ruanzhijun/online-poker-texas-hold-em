@@ -192,4 +192,20 @@ public class PlayValidatorTest {
         BDDAssertions.assertThat(result).isTrue();
     }
 
+    @Test
+    public void testIsStraightNegativeCaseAlmost() {
+        // Given
+        final List<Card> tableCards = this.prepareTableCards();
+        final List<Card> own = Lists.newArrayList(new Card("6", "diamonds"),
+                new Card("7", "jacks"));
+
+        final List<Card> joinedCards = ListUtils.union(tableCards, own);
+
+        // When
+        final boolean result = validator.isStraight(joinedCards);
+
+        // Then
+        BDDAssertions.assertThat(result).isFalse();
+    }
+
 }

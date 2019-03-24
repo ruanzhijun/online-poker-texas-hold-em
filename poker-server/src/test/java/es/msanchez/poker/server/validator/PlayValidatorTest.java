@@ -4,10 +4,10 @@ import es.msanchez.poker.server.entities.Card;
 import org.apache.commons.collections4.ListUtils;
 import org.assertj.core.api.BDDAssertions;
 import org.assertj.core.util.Lists;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +16,15 @@ import java.util.List;
  * @author msanchez
  * @since 22.03.2019
  */
-@RunWith(MockitoJUnitRunner.class)
 public class PlayValidatorTest {
 
     @InjectMocks
     private PlayValidator validator;
+
+    @BeforeMethod
+    public void setUp() {
+        this.validator = new PlayValidator();
+    }
 
     @Test
     public void testIsPair() {
@@ -48,20 +52,26 @@ public class PlayValidatorTest {
         return cards;
     }
 
-    @Test
-    public void testIsPairNegativeCaseHighCard() {
+    @Test(dataProvider = "dataProviderPairCaseNegative")
+    public void testIsPairCaseNegative(final List<Card> joinedCards) {
         // Given
-        final List<Card> tableCards = this.prepareTableCards();
-        final List<Card> own = Lists.newArrayList(new Card("J", "diamonds"),
-                new Card("K", "diamonds"));
-
-        final List<Card> joinedCards = ListUtils.union(tableCards, own);
 
         // When
         final boolean result = validator.isPair(joinedCards);
 
         // Then
         BDDAssertions.assertThat(result).isFalse();
+    }
+
+    @DataProvider
+    private Object[][] dataProviderPairCaseNegative() {
+        final List<Card> tableCards = this.prepareTableCards();
+        final List<Card> highCard = Lists.newArrayList(new Card("J", "diamonds"),
+                new Card("K", "diamonds"));
+
+        return new Object[][]{
+                {ListUtils.union(tableCards, highCard)},
+        };
     }
 
     @Test
@@ -80,52 +90,32 @@ public class PlayValidatorTest {
         BDDAssertions.assertThat(result).isTrue();
     }
 
-    @Test
-    public void testIsDoublePairNegativeCaseHighCard() {
+    @Test(dataProvider = "dataProviderDoublePairCaseNegative")
+    public void testIsDoublePairCaseNegative(final List<Card> joinedCards) {
         // Given
+
+        // When
+        final boolean result = validator.isDoublePair(joinedCards);
+
+        // Then
+        BDDAssertions.assertThat(result).isFalse();
+    }
+
+    @DataProvider
+    private Object[][] dataProviderDoublePairCaseNegative() {
         final List<Card> tableCards = this.prepareTableCards();
-        final List<Card> own = Lists.newArrayList(new Card("J", "diamonds"),
+        final List<Card> highCard = Lists.newArrayList(new Card("J", "diamonds"),
                 new Card("4", "diamonds"));
-
-        final List<Card> joinedCards = ListUtils.union(tableCards, own);
-
-        // When
-        final boolean result = validator.isDoublePair(joinedCards);
-
-        // Then
-        BDDAssertions.assertThat(result).isFalse();
-    }
-
-    @Test
-    public void testIsDoublePairNegativeCasePair() {
-        // Given
-        final List<Card> tableCards = this.prepareTableCards();
-        final List<Card> own = Lists.newArrayList(new Card("A", "diamonds"),
+        final List<Card> pair = Lists.newArrayList(new Card("A", "diamonds"),
                 new Card("10", "diamonds"));
-
-        final List<Card> joinedCards = ListUtils.union(tableCards, own);
-
-        // When
-        final boolean result = validator.isDoublePair(joinedCards);
-
-        // Then
-        BDDAssertions.assertThat(result).isFalse();
-    }
-
-    @Test
-    public void testIsDoublePairNegativeCaseThreeOfAKind() {
-        // Given
-        final List<Card> tableCards = this.prepareTableCards();
-        final List<Card> own = Lists.newArrayList(new Card("A", "diamonds"),
+        final List<Card> threeOfAKind = Lists.newArrayList(new Card("A", "diamonds"),
                 new Card("A", "jacks"));
 
-        final List<Card> joinedCards = ListUtils.union(tableCards, own);
-
-        // When
-        final boolean result = validator.isDoublePair(joinedCards);
-
-        // Then
-        BDDAssertions.assertThat(result).isFalse();
+        return new Object[][]{
+                {ListUtils.union(tableCards, highCard)},
+                {ListUtils.union(tableCards, pair)},
+                {ListUtils.union(tableCards, threeOfAKind)}
+        };
     }
 
     @Test
@@ -144,14 +134,9 @@ public class PlayValidatorTest {
         BDDAssertions.assertThat(result).isTrue();
     }
 
-    @Test
-    public void testIsThreeOfAKindNegativeCaseHighCard() {
+    @Test(dataProvider = "dataProviderThreeOfAKindCaseNegative")
+    public void testIsThreeOfAKindCaseNegative(final List<Card> joinedCards) {
         // Given
-        final List<Card> tableCards = this.prepareTableCards();
-        final List<Card> own = Lists.newArrayList(new Card("K", "diamonds"),
-                new Card("J", "jacks"));
-
-        final List<Card> joinedCards = ListUtils.union(tableCards, own);
 
         // When
         final boolean result = validator.isThreeOfAKind(joinedCards);
@@ -160,20 +145,21 @@ public class PlayValidatorTest {
         BDDAssertions.assertThat(result).isFalse();
     }
 
-    @Test
-    public void testIsThreeOfAKindNegativeCaseDoublePair() {
-        // Given
+    @DataProvider
+    private Object[][] dataProviderThreeOfAKindCaseNegative() {
         final List<Card> tableCards = this.prepareTableCards();
-        final List<Card> own = Lists.newArrayList(new Card("2", "diamonds"),
+        final List<Card> highCard = Lists.newArrayList(new Card("J", "diamonds"),
+                new Card("4", "diamonds"));
+        final List<Card> pair = Lists.newArrayList(new Card("A", "diamonds"),
+                new Card("10", "diamonds"));
+        final List<Card> doublePair = Lists.newArrayList(new Card("2", "diamonds"),
                 new Card("3", "jacks"));
 
-        final List<Card> joinedCards = ListUtils.union(tableCards, own);
-
-        // When
-        final boolean result = validator.isThreeOfAKind(joinedCards);
-
-        // Then
-        BDDAssertions.assertThat(result).isFalse();
+        return new Object[][]{
+                {ListUtils.union(tableCards, highCard)},
+                {ListUtils.union(tableCards, pair)},
+                {ListUtils.union(tableCards, doublePair)}
+        };
     }
 
     @Test

@@ -173,20 +173,38 @@ public class PlayValidatorTest extends PokerTest {
         BDDAssertions.assertThat(result).isTrue();
     }
 
-    @Test
-    public void testIsStraightNegativeCaseAlmost() {
+    @Test(dataProvider = "dataProviderStraightCaseNegative")
+    public void testIsStraightCaseNegative(final List<Card> joinedCards) {
         // Given
-        final List<Card> tableCards = this.prepareTableCards();
-        final List<Card> own = Lists.newArrayList(new Card("6", "diamonds"),
-                new Card("7", "jacks"));
-
-        final List<Card> joinedCards = ListUtils.union(tableCards, own);
 
         // When
         final boolean result = validator.isStraight(joinedCards);
 
         // Then
         BDDAssertions.assertThat(result).isFalse();
+    }
+
+    @DataProvider
+    private Object[][] dataProviderStraightCaseNegative() {
+        final List<Card> tableCards = this.prepareTableCards();
+        final List<Card> highCard = Lists.newArrayList(new Card("J", "diamonds"),
+                new Card("4", "diamonds"));
+        final List<Card> pair = Lists.newArrayList(new Card("A", "diamonds"),
+                new Card("10", "diamonds"));
+        final List<Card> doublePair = Lists.newArrayList(new Card("2", "diamonds"),
+                new Card("3", "jacks"));
+        final List<Card> threeOfAKind = Lists.newArrayList(new Card("2", "diamonds"),
+                new Card("2", "jacks"));
+        final List<Card> brokenStraight = Lists.newArrayList(new Card("6", "diamonds"),
+                new Card("7", "jacks"));
+
+        return new Object[][]{
+                {ListUtils.union(tableCards, highCard)},
+                {ListUtils.union(tableCards, pair)},
+                {ListUtils.union(tableCards, doublePair)},
+                {ListUtils.union(tableCards, threeOfAKind)},
+                {ListUtils.union(tableCards, brokenStraight)}
+        };
     }
 
 }

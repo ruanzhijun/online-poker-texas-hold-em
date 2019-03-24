@@ -157,20 +157,41 @@ public class PlayValidatorTest extends PokerTest {
         };
     }
 
-    @Test
-    public void testIsStraight() {
+    @Test(dataProvider = "dataProviderStraight")
+    public void testIsStraight(final List<Card> joinedCards) {
         // Given
-        final List<Card> tableCards = this.prepareTableCards();
-        final List<Card> own = Lists.newArrayList(new Card("5", "diamonds"),
-                new Card("6", "jacks"));
-
-        final List<Card> joinedCards = ListUtils.union(tableCards, own);
 
         // When
         final boolean result = validator.isStraight(joinedCards);
 
         // Then
         BDDAssertions.assertThat(result).isTrue();
+    }
+
+    @DataProvider
+    private Object[][] dataProviderStraight() {
+        final List<Card> tableCards = this.prepareTableCards();
+        final List<Card> lowStraight = Lists.newArrayList(new Card("5", "diamonds"),
+                new Card("6", "jacks"));
+
+        final List<Card> tableCards2 = this.prepareTableCardsHigh();
+        final List<Card> highStraight = Lists.newArrayList(new Card("5", "diamonds"),
+                new Card("10", "jacks"));
+
+        return new Object[][]{
+                {ListUtils.union(tableCards, lowStraight)},
+                {ListUtils.union(tableCards2, highStraight)},
+        };
+    }
+
+    private List<Card> prepareTableCardsHigh() {
+        final List<Card> cards = new ArrayList<>();
+        cards.add(new Card("5", "hearts"));
+        cards.add(new Card("J", "hearts"));
+        cards.add(new Card("Q", "diamonds"));
+        cards.add(new Card("K", "diamonds"));
+        cards.add(new Card("A", "hearts"));
+        return cards;
     }
 
     @Test(dataProvider = "dataProviderStraightCaseNegative")

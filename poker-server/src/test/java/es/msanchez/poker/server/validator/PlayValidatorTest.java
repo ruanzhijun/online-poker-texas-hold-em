@@ -240,10 +240,45 @@ public class PlayValidatorTest extends PokerTest {
         final List<Card> joinedCards = ListUtils.union(tableCards, own);
 
         // When
-        // final boolean result = validator.isColor(joinedCards);
+        final boolean result = validator.isColor(joinedCards);
 
         // Then
-        // BDDAssertions.assertThat(result).isTrue();
+        BDDAssertions.assertThat(result).isTrue();
     }
+
+    @Test(dataProvider = "dataProviderColorCaseNegative")
+    public void testIsColorCaseNegative(final List<Card> joinedCards) {
+        // Given
+
+        // When
+        final boolean result = validator.isColor(joinedCards);
+
+        // Then
+        BDDAssertions.assertThat(result).isFalse();
+    }
+
+    @DataProvider
+    private Object[][] dataProviderColorCaseNegative() {
+        final List<Card> tableCards = this.prepareTableCards();
+        final List<Card> highCard = Lists.newArrayList(new Card("J", DIAMOND),
+                new Card("4", DIAMOND));
+        final List<Card> pair = Lists.newArrayList(new Card("A", DIAMOND),
+                new Card("10", DIAMOND));
+        final List<Card> doublePair = Lists.newArrayList(new Card("2", DIAMOND),
+                new Card("3", JACK));
+        final List<Card> threeOfAKind = Lists.newArrayList(new Card("2", DIAMOND),
+                new Card("2", JACK));
+        final List<Card> almostColor = Lists.newArrayList(new Card("6", DIAMOND),
+                new Card("7", HEARTS));
+
+        return new Object[][]{
+                {ListUtils.union(tableCards, highCard)},
+                {ListUtils.union(tableCards, pair)},
+                {ListUtils.union(tableCards, doublePair)},
+                {ListUtils.union(tableCards, threeOfAKind)},
+                {ListUtils.union(tableCards, almostColor)}
+        };
+    }
+
 
 }

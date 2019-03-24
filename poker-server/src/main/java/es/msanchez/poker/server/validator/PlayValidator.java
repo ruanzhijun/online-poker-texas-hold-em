@@ -1,6 +1,7 @@
 package es.msanchez.poker.server.validator;
 
 import es.msanchez.poker.server.entities.Card;
+import es.msanchez.poker.server.enums.Suit;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -22,6 +23,23 @@ import java.util.stream.Collectors;
  */
 @Component
 public class PlayValidator {
+
+    /**
+     * @param cards -
+     * @return true, if the {@code cards} contain, at least, five cards of the same {@link Suit}
+     */
+    public boolean isColor(final List<Card> cards) {
+        for (final Suit suit : Suit.values()) {
+            final long match = cards.stream()
+                    .map(Card::getSuit)
+                    .filter(suit::equals)
+                    .count();
+            if (match >= 5) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * @param cards -
@@ -61,12 +79,12 @@ public class PlayValidator {
     }
 
     /**
-     * @param values    -
-     * @param deadCards number of cards left, with which the play is impossible.
-     *                  <p>
-     *                  For example, if I didn't find Three of a Kind checking all the possible
-     *                  combinations for the first 5 cards, it's impossible I have it, missing
-     *                  only 2 cards to check. This also avoids a {@link ArrayIndexOutOfBoundsException}
+     * @param values       -
+     * @param deadCards    number of cards left, with which the play is impossible.
+     *                     <p>
+     *                     For example, if I didn't find Three of a Kind checking all the possible
+     *                     combinations for the first 5 cards, it's impossible I have it, missing
+     *                     only 2 cards to check. This also avoids a {@link ArrayIndexOutOfBoundsException}
      * @param playToSearch condition which will be true if we found the play we're looking for.
      * @return -
      */

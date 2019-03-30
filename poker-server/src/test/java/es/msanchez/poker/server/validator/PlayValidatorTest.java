@@ -280,5 +280,64 @@ public class PlayValidatorTest extends PokerTest {
         };
     }
 
+    @Test
+    public void testIsFullHouse() {
+        // Given
+        final List<Card> tableCards = this.prepareTableCardsFullHouse();
+        final List<Card> own = Lists.newArrayList(new Card("A", HEARTS),
+                new Card("A", HEARTS));
+
+        final List<Card> joinedCards = ListUtils.union(tableCards, own);
+
+        // When
+        final boolean result = validator.isFullHouse(joinedCards);
+
+        // Then
+        BDDAssertions.assertThat(result).isTrue();
+    }
+
+    private List<Card> prepareTableCardsFullHouse() {
+        final List<Card> cards = new ArrayList<>();
+        cards.add(new Card("2", HEARTS));
+        cards.add(new Card("2", JACK));
+        cards.add(new Card("2", DIAMOND));
+        cards.add(new Card("8", DIAMOND));
+        cards.add(new Card("3", HEARTS));
+        return cards;
+    }
+
+    @Test(dataProvider = "dataProviderFullHouseCaseNegative")
+    public void testIsFullHouseCaseNegative(final List<Card> joinedCards) {
+        // Given
+
+        // When
+        final boolean result = validator.isFullHouse(joinedCards);
+
+        // Then
+        BDDAssertions.assertThat(result).isFalse();
+    }
+
+    @DataProvider
+    private Object[][] dataProviderFullHouseCaseNegative() {
+        final List<Card> tableCards = this.prepareTableCards();
+        final List<Card> highCard = Lists.newArrayList(new Card("J", DIAMOND),
+                new Card("Q", DIAMOND));
+        final List<Card> pair = Lists.newArrayList(new Card("A", DIAMOND),
+                new Card("10", DIAMOND));
+        final List<Card> doublePair = Lists.newArrayList(new Card("2", DIAMOND),
+                new Card("3", JACK));
+        final List<Card> threeOfAKind = Lists.newArrayList(new Card("2", DIAMOND),
+                new Card("2", JACK));
+        final List<Card> color = Lists.newArrayList(new Card("6", HEARTS),
+                new Card("7", HEARTS));
+
+        return new Object[][]{
+                {ListUtils.union(tableCards, highCard)},
+                {ListUtils.union(tableCards, pair)},
+                {ListUtils.union(tableCards, doublePair)},
+                {ListUtils.union(tableCards, threeOfAKind)},
+                {ListUtils.union(tableCards, color)}
+        };
+    }
 
 }

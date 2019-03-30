@@ -2,10 +2,13 @@ package es.msanchez.poker.server.validator;
 
 import es.msanchez.poker.server.entities.Card;
 import es.msanchez.poker.server.enums.Suit;
+import es.msanchez.poker.server.utils.CustomBeanUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -23,6 +26,31 @@ import java.util.stream.Collectors;
  */
 @Component
 public class PlayValidator {
+
+    public boolean isFullHouse(final List<Card> cards) {
+        final List<Card> cardsCopy = CustomBeanUtils.deepCopy(cards, Card::new);
+        cardsCopy.sort(Comparator.comparing(Card::getValue));
+
+        final List<Integer> values = obtainOrderedValues(cardsCopy);
+        final Optional<Integer> optThreeIndex = searchPlayIndex(values, 3, this::threeOfAKindFound);
+        return optThreeIndex
+                .map(index -> checkPair(cardsCopy, index))
+                .orElse(false);
+    }
+
+    private boolean checkPair(final List<Card> cards,
+                              final Integer threeIndex) {
+        removeThreeOfAKind(cards, threeIndex);
+        return isPair(cards);
+    }
+
+    private void removeThreeOfAKind(final List<Card> cards,
+                                    final int threeIndex) {
+        // the list is already sorted. After every remove, the elements will be left-shifted
+        cards.remove(threeIndex);
+        cards.remove(threeIndex);
+        cards.remove(threeIndex);
+    }
 
     /**
      * @param cards -
@@ -48,7 +76,7 @@ public class PlayValidator {
     public boolean isStraight(final List<Card> cards) {
         final List<Integer> values = obtainOrderedValues(cards);
         final int deadCards = 4;
-        return searchPlay(values, deadCards, this::straightFound);
+        return isPlay(values, deadCards, this::straightFound);
     }
 
     private boolean straightFound(final List<Integer> values,
@@ -67,7 +95,7 @@ public class PlayValidator {
     public boolean isThreeOfAKind(final List<Card> cards) {
         final List<Integer> values = obtainOrderedValues(cards);
         final int deadCards = 2;
-        return this.searchPlay(values, deadCards, this::threeOfAKindFound);
+        return this.isPlay(values, deadCards, this::threeOfAKindFound);
     }
 
     private List<Integer> obtainOrderedValues(final List<Card> cards) {
@@ -79,6 +107,8 @@ public class PlayValidator {
     }
 
     /**
+     * TODO: Fix doc after the method was changed.
+     *
      * @param values       -
      * @param deadCards    number of cards left, with which the play is impossible.
      *                     <p>
@@ -88,16 +118,24 @@ public class PlayValidator {
      * @param playToSearch condition which will be true if we found the play we're looking for.
      * @return -
      */
-    private boolean searchPlay(final List<Integer> values,
-                               final int deadCards,
-                               final BiPredicate<List<Integer>, Integer> playToSearch) {
-        boolean matchFound = false;
-        for (int index = 0; index < values.size() - deadCards && !matchFound; index++) {
+    private boolean isPlay(final List<Integer> values,
+                           final int deadCards,
+                           final BiPredicate<List<Integer>, Integer> playToSearch) {
+        final Optional<Integer> optIndex = searchPlayIndex(values, deadCards, playToSearch);
+        return optIndex.isPresent();
+    }
+
+    // TODO: Doc
+    private Optional<Integer> searchPlayIndex(final List<Integer> values,
+                                              final int deadCards,
+                                              final BiPredicate<List<Integer>, Integer> playToSearch) {
+        Optional<Integer> optIndex = Optional.empty();
+        for (int index = 0; index < values.size() - deadCards && !optIndex.isPresent(); index++) {
             if (playToSearch.test(values, index)) {
-                matchFound = true;
+                optIndex = Optional.of(index);
             }
         }
-        return matchFound;
+        return optIndex;
     }
 
     private boolean threeOfAKindFound(final List<Integer> values,

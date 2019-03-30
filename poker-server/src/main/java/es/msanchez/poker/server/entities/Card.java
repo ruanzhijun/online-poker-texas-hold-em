@@ -19,6 +19,16 @@ public class Card implements Serializable {
     private final String value;
     private final Suit suit;
 
+    /**
+     * Constructor to do a deep copy.
+     *
+     * @param card card to get the params from
+     */
+    public Card(final Card card) {
+        this.value = card.value;
+        this.suit = card.suit;
+    }
+
     // FIXME: Convert this into an enum and do there the conversions. Same for Suit.
     public String getValue() {
         switch (this.value) {

@@ -27,6 +27,19 @@ import java.util.stream.Collectors;
 @Component
 public class PlayValidator {
 
+    public boolean isFourOfAKind(final List<Card> cards) {
+        final List<Integer> values = obtainOrderedValues(cards);
+        final int deadCards = 3;
+        return this.isPlay(values, deadCards, this::fourOfAKindFound);
+    }
+
+    private boolean fourOfAKindFound(final List<Integer> values,
+                                     final int index) {
+        return values.get(index).equals(values.get(index + 1))
+                && values.get(index).equals(values.get(index + 2))
+                && values.get(index).equals(values.get(index + 3));
+    }
+
     public boolean isFullHouse(final List<Card> cards) {
         final List<Card> cardsCopy = CustomBeanUtils.deepCopy(cards, Card::new);
         cardsCopy.sort(Comparator.comparing(Card::getValue));

@@ -340,4 +340,52 @@ public class PlayValidatorTest extends PokerTest {
         };
     }
 
+    @Test
+    public void testIsFourOfAKind() {
+        // Given
+        final List<Card> tableCards = this.prepareTableCardsFourOfAKind();
+        final List<Card> own = Lists.newArrayList(new Card("2", SPADES),
+                new Card("J", JACK));
+
+        final List<Card> joinedCards = ListUtils.union(tableCards, own);
+
+        // When
+        final boolean result = validator.isFourOfAKind(joinedCards);
+
+        // Then
+        BDDAssertions.assertThat(result).isTrue();
+    }
+
+    private List<Card> prepareTableCardsFourOfAKind() {
+        final List<Card> cards = new ArrayList<>();
+        cards.add(new Card("2", HEARTS));
+        cards.add(new Card("2", JACK));
+        cards.add(new Card("2", DIAMOND));
+        cards.add(new Card("3", SPADES));
+        cards.add(new Card("A", HEARTS));
+        return cards;
+    }
+
+    @Test(dataProvider = "dataProviderFourOfAKindCaseNegative")
+    public void testIsFourOfAKindCaseNegative(final List<Card> joinedCards) {
+        // Given
+
+        // When
+        final boolean result = validator.isFourOfAKind(joinedCards);
+
+        // Then
+        BDDAssertions.assertThat(result).isFalse();
+    }
+
+    @DataProvider
+    private Object[][] dataProviderFourOfAKindCaseNegative() {
+        final List<Card> tableCards = this.prepareTableCardsFourOfAKind();
+        final List<Card> almostFourOfAKind = Lists.newArrayList(new Card("J", DIAMOND),
+                new Card("K", JACK));
+
+        return new Object[][]{
+                {ListUtils.union(tableCards, almostFourOfAKind)}
+        };
+    }
+
 }
